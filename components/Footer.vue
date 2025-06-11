@@ -3,7 +3,7 @@
       <div class="container">
         <div class="footer-top">
           <div class="footer-logo">
-            <h2>Maya<span>Tools</span></h2>
+            <h2>Kithubs<span> Tools</span></h2>
             <p>提供各种实用的在线工具，帮助用户提高工作效率，简化日常任务。</p>
           </div>
           <div class="footer-links">
@@ -19,7 +19,7 @@
             <div class="link-group">
               <h3>热门工具</h3>
               <ul>
-                <li><a href="/tools/json">JSON 格式化</a></li>
+                <li><a href="/json-tool">JSON 格式化</a></li>
                 <li><a href="/tools/image">图片压缩</a></li>
                 <li><a href="/tools/code">代码美化</a></li>
                 <li><a href="/tools/color">颜色选择器</a></li>
@@ -28,14 +28,14 @@
             <div class="link-group">
               <h3>联系我们</h3>
               <ul>
-                <li><a href="mailto:contact@mayatools.com">邮箱: contact@mayatools.com</a></li>
-                <li><a href="#">微信: MayaTools</a></li>
+                <li><a href="mailto:chenyx1012@gmail.com">邮箱: chenyx1012@gmail.com</a></li>
+                
               </ul>
             </div>
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© {{ currentYear }} Maya Tools. 保留所有权利。</p>
+          <p>© {{ currentYear }} Kithubs Tools. 保留所有权利。</p>
         </div>
       </div>
     </footer>

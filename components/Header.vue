@@ -2,7 +2,7 @@
     <header class="header">
       <div class="container">
         <div class="logo">
-          <h1>Maya<span>Tools</span></h1>
+          <h1>Kithubs<span> Tools</span></h1>
         </div>
         <nav class="main-nav" :class="{ 'active': menuOpen }">
           <ul>

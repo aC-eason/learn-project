@@ -19,6 +19,7 @@
     "nuxt": "^3.14.1592",
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.2.0",
+    "tailwindcss": "^4.1.8",
     "vue": "latest",
     "vue-router": "latest"
   }
