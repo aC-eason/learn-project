@@ -21,10 +21,10 @@
           <div class="link-group">
             <h3>Popular Tools</h3>
             <ul>
-              <li><NuxtLink to="/tools/text/json-formatter">JSON Formatter</NuxtLink></li>
-              <li><NuxtLink to="/tools/image/compressor">Image Compressor</NuxtLink></li>
-              <li><NuxtLink to="/tools/video/facebook-downloader">Facebook Video Downloader</NuxtLink></li>
-              <li><NuxtLink to="/tools/text/content-detector">Sensitive Content Detector</NuxtLink></li>
+              <li><NuxtLink to="/json-formatter">JSON Formatter</NuxtLink></li>
+              <li><NuxtLink to="/">Image Compressor</NuxtLink></li>
+              <li><NuxtLink to="/facebook-video-downloader">Facebook Video Downloader</NuxtLink></li>
+              <li><NuxtLink to="/sensitive-word-check">Sensitive Content Detector</NuxtLink></li>
             </ul>
           </div>
           <div class="link-group">

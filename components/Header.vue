@@ -26,7 +26,7 @@
                 <Icon name="code" class="tool-icon" />
                 JSON Formatter
               </NuxtLink></li>
-              <li><NuxtLink to="/tools/text/content-detector" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/sensitive-word-check" class="dropdown-link" @click="closeMenu">
                 <Icon name="shield-check" class="tool-icon" />
                 Sensitive Content Detector
               </NuxtLink></li>
@@ -54,7 +54,7 @@
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
             <ul class="dropdown-menu" :class="{ 'show': activeDropdown === 'video' }">
-              <li><NuxtLink to="/tools/video/facebook-downloader" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/facebook-video-downloader" class="dropdown-link" @click="closeMenu">
                 <Icon name="facebook" class="tool-icon" />
                 Facebook Video Downloader
               </NuxtLink></li>
