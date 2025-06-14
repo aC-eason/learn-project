@@ -2,8 +2,8 @@
   <div class="json-parser-container">
     <!-- 标题区域 -->
     <div class="header">
-      <h1 class="title">JSON 结构解析器</h1>
-      <p class="subtitle">输入JSON字符串，实时解析并格式化展示结构</p>
+      <h1 class="title">JSON Formatter</h1>
+      <p class="subtitle"> Parse and format JSON content and display structure in real-time</p>
     </div>
 
     <!-- 主要内容区域 -->
@@ -11,28 +11,28 @@
       <!-- 左侧：JSON输入区域 -->
       <div class="input-panel">
         <div class="panel-header">
-          <h2 class="panel-title">JSON 输入</h2>
+          <h2 class="panel-title">Input JSON:</h2>
           <div class="header-buttons">
             <button @click="loadExample" class="btn btn-example">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                 <polyline points="14,2 14,8 20,8"></polyline>
               </svg>
-              示例
+              Example
             </button>
             <button @click="formatInput" :disabled="!jsonText.trim()" class="btn btn-format">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <polyline points="23 4 23 10 17 10"></polyline>
                 <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
               </svg>
-              格式化
+              Formate
             </button>
             <button @click="clearAll" class="btn btn-clear">
               <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <polyline points="3 6 5 6 21 6"></polyline>
                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
               </svg>
-              清空
+              clear
             </button>
           </div>
         </div>
@@ -41,7 +41,7 @@
           <textarea
             v-model="jsonText"
             @input="handleInputChange"
-            placeholder="请输入JSON字符串..."
+            placeholder="please enter json content..."
             class="json-textarea"
           ></textarea>
           
@@ -51,7 +51,7 @@
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
             </svg>
             <div class="error-text">
-              <strong>解析错误:</strong> {{ parseError }}
+              <strong>parse error:</strong> {{ parseError }}
             </div>
           </div>
           
@@ -60,11 +60,11 @@
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
             </svg>
             <div class="success-text">
-              <strong>解析成功:</strong> 
-              字符 {{ jsonText.length }} | 
-              对象 {{ objectCount }} | 
-              数组 {{ arrayCount }} | 
-              深度 {{ maxDepth }}
+              <strong>Parse Success:</strong> 
+              Str {{ jsonText.length }} | 
+              Obj {{ objectCount }} | 
+              Arr {{ arrayCount }} | 
+              Deepth {{ maxDepth }}
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@
       <!-- 右侧：结构展示区域 -->
       <div class="output-panel">
         <div class="panel-header">
-          <h2 class="panel-title">结构展示</h2>
+          <h2 class="panel-title">Result</h2>
         </div>
         
         <div class="output-content">
@@ -82,8 +82,8 @@
             <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
             </svg>
-            <h3>等待JSON输入</h3>
-            <p>请在左侧输入JSON字符串</p>
+            <h3>Wait Input…</h3>
+            <p>Please Enter JSON content</p>
           </div>
 
           <!-- 错误状态 -->
@@ -91,8 +91,8 @@
             <svg class="error-state-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
             </svg>
-            <h3>无法解析JSON</h3>
-            <p>请检查JSON格式</p>
+            <h3>Parse Failed:</h3>
+            <p>Pleas check</p>
           </div>
 
           <!-- 结构树 -->

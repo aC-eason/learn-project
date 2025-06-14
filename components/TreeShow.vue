@@ -3,7 +3,7 @@
     <div v-for="(value, key) in data" :key="key" class="mb-1">
       <div @click="toggle(key)" class="cursor-pointer font-semibold">
         <span v-if="isObjectOrArray(value)">
-          {{ isExpanded(key) ? '▼' : '►' }} <strong class="font-style">{{ key }}</strong>
+          <strong class="font-style">{{ isExpanded(key) ? '▼' : '►' }} {{ key }}</strong>
         </span>
         <span v-else>
           <strong class="font-style">{{ key }}:</strong> <a class="font-style">{{ value }}</a>
@@ -50,5 +50,6 @@ function isExpanded(key) {
 .font-style{
     font-size: 18px;
     line-height: 28px;
+    cursor: pointer;
 }
 </style>
