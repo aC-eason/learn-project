@@ -31,24 +31,24 @@ export default defineNuxtConfig({
         },
       ],
       script: [
-        // // 第三方脚本
-        // {
-        //   src: "https://g.alicdn.com/sls/sls-js-sdk/0.3.5/web-track-browser.js",
-        //   async: true,
-        // },
-        // {
-        //   src: "https://www.googletagmanager.com/gtag/js?id=G-W5EF24WGV7",
-        //   async: true,
-        // },
-        // Google Analytics
-        // {
-        //   innerHTML: `
-        //     window.dataLayer = window.dataLayer || [];
-        //     function gtag(){dataLayer.push(arguments);}
-        //     gtag('js', new Date());
-        //     gtag('config', 'G-W5EF24WGV7');
-        //   `,
-        // }
+        // 第三方脚本
+        {
+          src: "https://g.alicdn.com/sls/sls-js-sdk/0.3.5/web-track-browser.js",
+          async: true,
+        },
+        {
+          src: "https://www.googletagmanager.com/gtag/js?id=G-K0SZ0R79SM",
+          async: true,
+        },
+        //Google Analytics
+        {
+          innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-K0SZ0R79SM');
+          `,
+        }
       ],
     },
   },
