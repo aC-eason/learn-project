@@ -58,11 +58,11 @@
                 <Icon name="facebook" class="tool-icon" />
                 Facebook Video Downloader
               </NuxtLink></li>
-              <li><NuxtLink to="/tools/video/pinterest-downloader" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/pinterest-downloader" class="dropdown-link" @click="closeMenu">
                 <Icon name="pinterest" class="tool-icon" />
                 Pinterest Downloader
               </NuxtLink></li>
-              <li><NuxtLink to="/tools/video/instagram-downloader" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/" class="dropdown-link" @click="closeMenu">
                 <Icon name="instagram" class="tool-icon" />
                 Instagram Downloader
               </NuxtLink></li>
