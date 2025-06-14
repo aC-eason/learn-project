@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <!-- SEO Head -->
-
+    <Header />
     <div class="main-wrapper">
       <!-- Header Section -->
       <header class="hero-section">
@@ -416,6 +416,7 @@
         </section>
       </main>
     </div>
+    <Footer />
   </div>
 </template>
 
