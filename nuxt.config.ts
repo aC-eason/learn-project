@@ -1,17 +1,55 @@
-
 export default defineNuxtConfig({
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
   app: {
     head: {
-      title: 'Maya Tools - 便捷高效的Web工具集',
+      title:"kithubs",
       meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: '提供各种常用的在线工具，提高您的工作效率，简化您的日常任务' }
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
+        {
+          name: "msapplication-TileImage",
+          content: "/logo.png",
+        },
+        {
+          name: "robots",
+          content:
+            "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        },
+        { property: "og:type", content: "website" },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      ]
-    }
-  }
-})
+        {
+          rel: "icon",
+          type: "image/png",
+          href: "/logo.png",
+        },
+        {
+          rel: "apple-touch-icon",
+          type: "image/png",
+          href: "/logo.png",
+        },
+      ],
+      script: [
+        // // 第三方脚本
+        // {
+        //   src: "https://g.alicdn.com/sls/sls-js-sdk/0.3.5/web-track-browser.js",
+        //   async: true,
+        // },
+        // {
+        //   src: "https://www.googletagmanager.com/gtag/js?id=G-W5EF24WGV7",
+        //   async: true,
+        // },
+        // Google Analytics
+        // {
+        //   innerHTML: `
+        //     window.dataLayer = window.dataLayer || [];
+        //     function gtag(){dataLayer.push(arguments);}
+        //     gtag('js', new Date());
+        //     gtag('config', 'G-W5EF24WGV7');
+        //   `,
+        // }
+      ],
+    },
+  },
+});

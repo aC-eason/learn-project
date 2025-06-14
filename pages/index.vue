@@ -94,8 +94,8 @@
                   <span class="stat-label">Active Users</span>
                 </div>
                 <div class="stat">
-                  <span class="stat-number">100+</span>
-                  <span class="stat-label">Tools Available</span>
+                  <span class="stat-number">10M+</span>
+                  <span class="stat-label">Weekly Operations</span>
                 </div>
                 <div class="stat">
                   <span class="stat-number">99.9%</span>
