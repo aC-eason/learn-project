@@ -1,3 +1,165 @@
+
+<script setup>
+import { ref } from 'vue'
+import Header from '~/components/Header.vue'
+
+// State management
+const inputText = ref('')
+const isLoading = ref(false)
+const showResult = ref(false)
+const result = ref(null)
+const error = ref('')
+
+// Reusable API service class
+class ApiService {
+  constructor(baseURL = '') {
+    this.baseURL = baseURL
+  }
+
+  async request(url, options = {}) {
+    try {
+      const response = await fetch(`${this.baseURL}${url}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers
+        },
+        ...options
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      return await response.json()
+    } catch (err) {
+      console.error('API request failed:', err)
+      throw new Error(err.message || 'Network request failed')
+    }
+  }
+
+  async post(url, data, options = {}) {
+    return this.request(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      ...options
+    })
+  }
+
+  async get(url, options = {}) {
+    return this.request(url, {
+      method: 'GET',
+      ...options
+    })
+  }
+}
+
+// Initialize API service
+const apiService = new ApiService()
+
+// Sensitive word detection method
+const checkSensitiveWord = async () => {
+  if (!inputText.value.trim()) {
+    return
+  }
+
+  isLoading.value = true
+  showResult.value = false
+  result.value = null
+  error.value = ''
+
+  try {
+    const response = await apiService.post('https://kithubs.com/api/text/sensitiveWord/check', {
+      content: inputText.value.trim()
+    })
+
+    if (response.status === 200) {
+      result.value = {
+        has_sensitive_word: response.has_sensitive_word,
+        sensitive_word: response.sensitive_word
+      }
+    } else {
+      throw new Error('Invalid response from server')
+    }
+  } catch (err) {
+    error.value = 'Failed to analyze content. Please try again later.'
+    console.error('Sensitive word check failed:', err)
+  } finally {
+    isLoading.value = false
+    showResult.value = true
+  }
+}
+
+// Clear all content
+const clearAll = () => {
+  inputText.value = ''
+  showResult.value = false
+  result.value = null
+  error.value = ''
+}
+
+
+useHead({
+  title: "Sensitive Word Detector - Free Tool | Kithubs",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
+    },
+    { charset: "UTF-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+    { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
+    {
+      name: "robots",
+      content:
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    },
+    { property: "og:url", content: "https://kithubs.com/sensitive-word-checker" },
+    {
+      property: "og:title",
+      content: "Sensitive Word Detector - Free Tool | Kithubs",
+    },
+    {
+      property: "og:description",
+      content:
+        "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
+    },
+    {
+      property: "og:image",
+      content: "https://kithubs.com/logo.png",
+    },
+  ],
+  link: [{ rel: "canonical", href: "https://kithubs.com/sensitive-word-checker" }],
+  script: [
+    // JSON-LD
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Sensitive Word Detector - Free Tool | Kithubs",
+      description:
+        "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
+      url: "https://kithubs.com/sensitive-word-checker",
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Web Browser",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "Sensitive Word Detection",
+        "Real-time Analysis",
+        "High Accuracy",
+        "Secure & Private",
+      ],
+      author: {
+        "@type": "Organization",
+        name: "chenyx",
+      },
+    },
+  ],
+});
+</script>
 <template>
     
   <div class="app-container">
@@ -170,104 +332,6 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-import Header from '~/components/Header.vue'
-
-// State management
-const inputText = ref('')
-const isLoading = ref(false)
-const showResult = ref(false)
-const result = ref(null)
-const error = ref('')
-
-// Reusable API service class
-class ApiService {
-  constructor(baseURL = '') {
-    this.baseURL = baseURL
-  }
-
-  async request(url, options = {}) {
-    try {
-      const response = await fetch(`${this.baseURL}${url}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers
-        },
-        ...options
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      return await response.json()
-    } catch (err) {
-      console.error('API request failed:', err)
-      throw new Error(err.message || 'Network request failed')
-    }
-  }
-
-  async post(url, data, options = {}) {
-    return this.request(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      ...options
-    })
-  }
-
-  async get(url, options = {}) {
-    return this.request(url, {
-      method: 'GET',
-      ...options
-    })
-  }
-}
-
-// Initialize API service
-const apiService = new ApiService()
-
-// Sensitive word detection method
-const checkSensitiveWord = async () => {
-  if (!inputText.value.trim()) {
-    return
-  }
-
-  isLoading.value = true
-  showResult.value = false
-  result.value = null
-  error.value = ''
-
-  try {
-    const response = await apiService.post('https://kithubs.com/api/text/sensitiveWord/check', {
-      content: inputText.value.trim()
-    })
-
-    if (response.status === 200) {
-      result.value = {
-        has_sensitive_word: response.has_sensitive_word,
-        sensitive_word: response.sensitive_word
-      }
-    } else {
-      throw new Error('Invalid response from server')
-    }
-  } catch (err) {
-    error.value = 'Failed to analyze content. Please try again later.'
-    console.error('Sensitive word check failed:', err)
-  } finally {
-    isLoading.value = false
-    showResult.value = true
-  }
-}
-
-// Clear all content
-const clearAll = () => {
-  inputText.value = ''
-  showResult.value = false
-  result.value = null
-  error.value = ''
-}
-</script>
 
 <style scoped>
 /* Global Styles */

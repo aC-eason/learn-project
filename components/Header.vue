@@ -17,7 +17,7 @@
           
           <!-- Text Tools Dropdown -->
           <li class="nav-item dropdown" @mouseenter="showDropdown('text')" @mouseleave="hideDropdown('text')">
-            <NuxtLink to="/" class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/text') }" @click="closeMenu">
+            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/text') }" @click="closeMenu">
               Text Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
@@ -34,22 +34,22 @@
           </li>
 
           <!-- Image Tools Dropdown -->
-          <li class="nav-item dropdown" @mouseenter="showDropdown('image')" @mouseleave="hideDropdown('image')">
-            <NuxtLink to="/" class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/image') }" @click="closeMenu">
+          <!--<li class="nav-item dropdown" @mouseenter="showDropdown('image')" @mouseleave="hideDropdown('image')">
+            <NuxtLink  class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/image') }" @click="closeMenu">
               Image Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
             <ul class="dropdown-menu" :class="{ 'show': activeDropdown === 'image' }">
-              <li><NuxtLink to="/tools/image/compressor" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/" class="dropdown-link" @click="closeMenu">
                 <Icon name="minimize-2" class="tool-icon" />
                 Image Compressor
               </NuxtLink></li>
             </ul>
-          </li>
+          </li> -->
 
           <!-- Video Tools Dropdown -->
           <li class="nav-item dropdown" @mouseenter="showDropdown('video')" @mouseleave="hideDropdown('video')">
-            <NuxtLink to="/" class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/video') }" @click="closeMenu">
+            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/video') }" @click="closeMenu">
               Video Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
@@ -62,7 +62,7 @@
                 <Icon name="pinterest" class="tool-icon" />
                 Pinterest Downloader
               </NuxtLink></li>
-              <li><NuxtLink to="/" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/instagram-video-downloader" class="dropdown-link" @click="closeMenu">
                 <Icon name="instagram" class="tool-icon" />
                 Instagram Downloader
               </NuxtLink></li>

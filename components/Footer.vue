@@ -14,7 +14,7 @@
             <ul>
               <li><NuxtLink to="/">Home</NuxtLink></li>
               <li><NuxtLink to="/tools/text">Text Tools</NuxtLink></li>
-              <li><NuxtLink to="/tools/image">Image Tools</NuxtLink></li>
+              <!--<li><NuxtLink to="/tools/image">Image Tools</NuxtLink></li>-->
               <li><NuxtLink to="/tools/video">Video Tools</NuxtLink></li>
             </ul>
           </div>
@@ -22,7 +22,7 @@
             <h3>Popular Tools</h3>
             <ul>
               <li><NuxtLink to="/json-formatter">JSON Formatter</NuxtLink></li>
-              <li><NuxtLink to="/">Image Compressor</NuxtLink></li>
+             <!--<li><NuxtLink to="/tools/image">Image Tools</NuxtLink></li>-->
               <li><NuxtLink to="/facebook-video-downloader">Facebook Video Downloader</NuxtLink></li>
               <li><NuxtLink to="/sensitive-word-check">Sensitive Content Detector</NuxtLink></li>
             </ul>

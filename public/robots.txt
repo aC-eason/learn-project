@@ -1,1 +1,4 @@
+User-agent: *
+Disallow: /api/
 
+Sitemap: https://kithubs.com/sitemap.xml

@@ -12,7 +12,8 @@
                 <span class="highlight">Web Toolkit</span>
               </h1>
               <p class="hero-description">
-                Providing various commonly used online tools to improve your work efficiency
+                Providing various commonly used online tools to improve your
+                work efficiency
               </p>
               <div class="hero-buttons">
                 <button class="btn btn-primary">Get Started</button>
@@ -37,7 +38,11 @@
             What We <span class="highlight">Support</span>
           </h2>
           <div class="category-grid">
-            <div class="category-card" v-for="category in categories" :key="category.id">
+            <div
+              class="category-card"
+              v-for="category in categories"
+              :key="category.id"
+            >
               <div class="category-icon">
                 <component :is="category.icon" />
               </div>
@@ -76,7 +81,11 @@
                 Why Choose <span class="highlight">Our Tools</span>
               </h2>
               <div class="features-list">
-                <div class="feature-item" v-for="feature in features" :key="feature.id">
+                <div
+                  class="feature-item"
+                  v-for="feature in features"
+                  :key="feature.id"
+                >
                   <div class="feature-icon">
                     <component :is="feature.icon" />
                   </div>
@@ -112,141 +121,243 @@
 </template>
 
 <script setup>
-
 useHead({
-  title: 'Web Toolkit - Convenient & Efficient Online Tools',
+  title: "Web Toolkit - Convenient & Efficient Online Tools",
   meta: [
-    { name: 'description', content: 'Providing various commonly used online tools to improve your work efficiency' }
-  ]
-})
+    {
+      name: "description",
+      content:
+        "Providing various commonly used online tools to improve your work efficiency",
+    },
+    { charset: "UTF-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+    { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
+    {
+      name: "robots",
+      content:
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    },
+    { property: "og:url", content: "https://kithubs.com" },
+    {
+      property: "og:title",
+      content: "Web Toolkit - Convenient & Efficient Online Tools",
+    },
+    {
+      property: "og:description",
+      content:
+        "Providing various commonly used online tools to improve your work efficiency",
+    },
+    {
+      property: "og:image",
+      content: "https://kithubs.com/logo.png",
+    },
+  ],
+  link: [{ rel: "canonical", href: "https://kithubs.com" }],
+  script: [
+    // JSON-LD
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Web Toolkit - Convenient & Efficient Online Tools",
+      description:
+        "Providing various commonly used online tools to improve your work efficiency",
+      url: "https://kithubs.com",
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Web Browser",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "Video Downloader",
+        "Image Compressor",
+        "JSON Formatter",
+        "Text Converter",
+        "Image Editor",
+      ],
+      author: {
+        "@type": "Organization",
+        name: "chenyx",
+      },
+    },
+  ],
+});
 
 // Icon components (you can replace these with your preferred icon library)
-const FormatIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '48',
-  height: '48'
-}, [
-  h('path', { d: 'M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z' })
-])
+const FormatIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "48",
+      height: "48",
+    },
+    [
+      h("path", {
+        d: "M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z",
+      }),
+    ]
+  );
 
-const DownloadIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '48',
-  height: '48'
-}, [
-  h('path', { d: 'M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z' })
-])
+const DownloadIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "48",
+      height: "48",
+    },
+    [h("path", { d: "M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" })]
+  );
 
-const TextIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '48',
-  height: '48'
-}, [
-  h('path', { d: 'M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,7.87 17.26,7.87H5.74C5.21,7.87 4.75,7.74 4.3,8.61L3.34,8.35L4.5,4H18.5M6.31,10H17.69L16.5,20H7.5L6.31,10Z' })
-])
+const TextIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "48",
+      height: "48",
+    },
+    [
+      h("path", {
+        d: "M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,7.87 17.26,7.87H5.74C5.21,7.87 4.75,7.74 4.3,8.61L3.34,8.35L4.5,4H18.5M6.31,10H17.69L16.5,20H7.5L6.31,10Z",
+      }),
+    ]
+  );
 
-const ImageIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '48',
-  height: '48'
-}, [
-  h('path', { d: 'M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z' })
-])
+const ImageIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "48",
+      height: "48",
+    },
+    [
+      h("path", {
+        d: "M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z",
+      }),
+    ]
+  );
 
-const CheckIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '24',
-  height: '24'
-}, [
-  h('path', { d: 'M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z' })
-])
+const CheckIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "24",
+      height: "24",
+    },
+    [
+      h("path", {
+        d: "M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z",
+      }),
+    ]
+  );
 
-const SpeedIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '24',
-  height: '24'
-}, [
-  h('path', { d: 'M12,16A3,3 0 0,1 9,13C9,11.88 9.61,10.9 10.5,10.39L20.21,4.77L14.68,14.35C14.18,15.33 13.17,16 12,16M12,3C13.81,3 15.5,3.5 16.97,4.32L14.87,5.53C14,5.19 13,5 12,5A8,8 0 0,0 4,13C4,15.21 4.89,17.21 6.34,18.65H6.35C6.74,19.04 6.74,19.67 6.35,20.06C5.96,20.45 5.33,20.45 4.94,20.06C3.1,18.22 2,15.76 2,13A10,10 0 0,1 12,3Z' })
-])
+const SpeedIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "24",
+      height: "24",
+    },
+    [
+      h("path", {
+        d: "M12,16A3,3 0 0,1 9,13C9,11.88 9.61,10.9 10.5,10.39L20.21,4.77L14.68,14.35C14.18,15.33 13.17,16 12,16M12,3C13.81,3 15.5,3.5 16.97,4.32L14.87,5.53C14,5.19 13,5 12,5A8,8 0 0,0 4,13C4,15.21 4.89,17.21 6.34,18.65H6.35C6.74,19.04 6.74,19.67 6.35,20.06C5.96,20.45 5.33,20.45 4.94,20.06C3.1,18.22 2,15.76 2,13A10,10 0 0,1 12,3Z",
+      }),
+    ]
+  );
 
-const SecurityIcon = () => h('svg', {
-  viewBox: '0 0 24 24',
-  fill: 'currentColor',
-  width: '24',
-  height: '24'
-}, [
-  h('path', { d: 'M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V16H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z' })
-])
+const SecurityIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "currentColor",
+      width: "24",
+      height: "24",
+    },
+    [
+      h("path", {
+        d: "M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11H16V16H8V11H9.2V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.4,8.7 10.4,10V11H13.6V10C13.6,8.7 12.8,8.2 12,8.2Z",
+      }),
+    ]
+  );
 
 // Data
 const categories = ref([
   {
     id: 1,
-    title: 'Download',
-    description: 'Download videos, images and files from various platforms',
-    icon: DownloadIcon
+    title: "Download",
+    description: "Download videos, images and files from various platforms",
+    icon: DownloadIcon,
   },
   {
     id: 2,
-    title: 'Text',
-    description: 'Text processing, conversion and manipulation tools',
-    icon: TextIcon
+    title: "Text",
+    description: "Text processing, conversion and manipulation tools",
+    icon: TextIcon,
   },
   {
     id: 3,
-    title: 'Image',
-    description: 'Image editing, compression and conversion utilities',
-    icon: ImageIcon
-  }
-])
+    title: "Image",
+    description: "Image editing, compression and conversion utilities",
+    icon: ImageIcon,
+  },
+]);
 
 const popularTools = ref([
   {
     id: 1,
-    title: 'JSON Formatter',
-    description: 'Beautify and validate JSON data for easy reading and editing',
-    icon: FormatIcon
+    title: "JSON Formatter",
+    description: "Beautify and validate JSON data for easy reading and editing",
+    icon: FormatIcon,
   },
   {
     id: 2,
-    title: 'Image Compressor',
-    description: 'Optimize image size while maintaining good visual quality',
-    icon: ImageIcon
+    title: "Image Compressor",
+    description: "Optimize image size while maintaining good visual quality",
+    icon: ImageIcon,
   },
   {
     id: 3,
-    title: 'Video Downloader',
-    description: 'Download videos from popular platforms quickly and easily',
-    icon: DownloadIcon
-  }
-])
+    title: "Video Downloader",
+    description: "Download videos from popular platforms quickly and easily",
+    icon: DownloadIcon,
+  },
+]);
 
 const features = ref([
   {
     id: 1,
-    title: 'Fast & Reliable',
-    description: 'Lightning-fast processing with 99.9% uptime guarantee',
-    icon: SpeedIcon
+    title: "Fast & Reliable",
+    description: "Lightning-fast processing with 99.9% uptime guarantee",
+    icon: SpeedIcon,
   },
   {
     id: 2,
-    title: 'Secure & Private',
-    description: 'Your data is processed securely and never stored on our servers',
-    icon: SecurityIcon
+    title: "Secure & Private",
+    description:
+      "Your data is processed securely and never stored on our servers",
+    icon: SecurityIcon,
   },
   {
     id: 3,
-    title: 'Easy to Use',
-    description: 'Intuitive interface designed for both beginners and professionals',
-    icon: CheckIcon
-  }
-])
+    title: "Easy to Use",
+    description:
+      "Intuitive interface designed for both beginners and professionals",
+    icon: CheckIcon,
+  },
+]);
 </script>
 
 <style scoped>
@@ -282,7 +393,7 @@ const features = ref([
 }
 
 .hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -411,8 +522,13 @@ const features = ref([
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 /* Section Styles */
@@ -505,13 +621,18 @@ section {
 }
 
 .tool-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -650,25 +771,25 @@ section {
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .category-grid,
   .tools-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .btn {
     width: 100%;
     max-width: 300px;
@@ -679,19 +800,19 @@ section {
   .container {
     padding: 0 15px;
   }
-  
+
   section {
     padding: 60px 0;
   }
-  
+
   .hero {
     padding: 80px 0;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .category-card,
   .tool-card {
     padding: 30px 20px;

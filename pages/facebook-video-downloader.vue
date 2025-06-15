@@ -1,3 +1,169 @@
+
+<script setup>
+import { ref, computed } from "vue";
+
+// State management
+const videoUrl = ref("");
+const isLoading = ref(false);
+const showResult = ref(false);
+const result = ref(null);
+const error = ref("");
+
+// Computed properties
+const isValidUrl = computed(() => {
+  if (!videoUrl.value) return false;
+  try {
+    const url = new URL(videoUrl.value);
+    return (
+      url.hostname.includes("facebook.com") || url.hostname.includes("fb.com")
+    );
+  } catch {
+    return false;
+  }
+});
+
+// Reusable API service class
+class ApiService {
+  constructor(baseURL = "") {
+    this.baseURL = baseURL;
+  }
+
+  async request(url, options = {}) {
+    try {
+      const response = await fetch(`${this.baseURL}${url}`, {
+        headers: {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+        ...options,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (err) {
+      console.error("API request failed:", err);
+      throw new Error(err.message || "Network request failed");
+    }
+  }
+
+  async post(url, data, options = {}) {
+    return this.request(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      ...options,
+    });
+  }
+}
+
+// Initialize API service
+const apiService = new ApiService();
+
+// Download video method
+const downloadVideo = async () => {
+  if (!isValidUrl.value) {
+    error.value = "Please enter a valid Facebook video URL";
+    showResult.value = true;
+    return;
+  }
+
+  isLoading.value = true;
+  showResult.value = false;
+  result.value = null;
+  error.value = "";
+
+  try {
+    const response = await apiService.post(
+      "https://kithubs.com/api/video/facebook/download",
+      {
+        url: videoUrl.value.trim(),
+      }
+    );
+
+    result.value = response;
+  } catch (err) {
+    error.value =
+      "Failed to process video. Please check the URL and try again.";
+    console.error("Video download failed:", err);
+  } finally {
+    isLoading.value = false;
+    showResult.value = true;
+  }
+};
+
+// Clear all content
+const clearAll = () => {
+  videoUrl.value = "";
+  showResult.value = false;
+  result.value = null;
+  error.value = "";
+};
+
+useHead({
+  title: "Facebook Video Downloader - Free Tool | Kithub",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
+    },
+    { charset: "UTF-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+    { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
+    {
+      name: "robots",
+      content:
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    },
+    { property: "og:url", content: "https://kithubs.com/facebook-video-downloader" },
+    {
+      property: "og:title",
+      content: "Facebook Video Downloader - Free Tool | Kithubs",
+    },
+    {
+      property: "og:description",
+      content:
+        "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
+    },
+    {
+      property: "og:image",
+      content: "https://kithubs.com/logo.png",
+    },
+  ],
+  link: [{ rel: "canonical", href: "https://kithubs.com/facebook-video-downloader" }],
+  script: [
+    // JSON-LD
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Facebook Video Downloader - Free Tool | Kithubs",
+      description:
+        "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
+      url: "https://kithubs.com/facebook-video-downloader",
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Web Browser",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "Facebook Video Downloader",
+        "Download Reels and Stories",
+        "High-Quality MP4 Downloads",
+        "Fast and Free",
+        "No Registration Required",
+      ],
+      author: {
+        "@type": "Organization",
+        name: "chenyx",
+      },
+    },
+  ],
+});
+</script>
 <template>
   <div class="app-container">
     <Header />
@@ -415,108 +581,6 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
-
-// State management
-const videoUrl = ref("");
-const isLoading = ref(false);
-const showResult = ref(false);
-const result = ref(null);
-const error = ref("");
-
-// Computed properties
-const isValidUrl = computed(() => {
-  if (!videoUrl.value) return false;
-  try {
-    const url = new URL(videoUrl.value);
-    return (
-      url.hostname.includes("facebook.com") || url.hostname.includes("fb.com")
-    );
-  } catch {
-    return false;
-  }
-});
-
-// Reusable API service class
-class ApiService {
-  constructor(baseURL = "") {
-    this.baseURL = baseURL;
-  }
-
-  async request(url, options = {}) {
-    try {
-      const response = await fetch(`${this.baseURL}${url}`, {
-        headers: {
-          "Content-Type": "application/json",
-          ...options.headers,
-        },
-        ...options,
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (err) {
-      console.error("API request failed:", err);
-      throw new Error(err.message || "Network request failed");
-    }
-  }
-
-  async post(url, data, options = {}) {
-    return this.request(url, {
-      method: "POST",
-      body: JSON.stringify(data),
-      ...options,
-    });
-  }
-}
-
-// Initialize API service
-const apiService = new ApiService();
-
-// Download video method
-const downloadVideo = async () => {
-  if (!isValidUrl.value) {
-    error.value = "Please enter a valid Facebook video URL";
-    showResult.value = true;
-    return;
-  }
-
-  isLoading.value = true;
-  showResult.value = false;
-  result.value = null;
-  error.value = "";
-
-  try {
-    const response = await apiService.post(
-      "https://kithubs.com/api/video/facebook/download",
-      {
-        url: videoUrl.value.trim(),
-      }
-    );
-
-    result.value = response;
-  } catch (err) {
-    error.value =
-      "Failed to process video. Please check the URL and try again.";
-    console.error("Video download failed:", err);
-  } finally {
-    isLoading.value = false;
-    showResult.value = true;
-  }
-};
-
-// Clear all content
-const clearAll = () => {
-  videoUrl.value = "";
-  showResult.value = false;
-  result.value = null;
-  error.value = "";
-};
-</script>
 
 <style scoped>
 /* Global Styles */

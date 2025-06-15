@@ -521,6 +521,71 @@ const clearAll = () => {
   result.value = null;
   error.value = "";
 };
+
+
+
+useHead({
+  title: "Free Pinterest Video & Image Downloader | Kithubs",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
+    },
+    { charset: "UTF-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+    { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
+    {
+      name: "robots",
+      content:
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    },
+    { property: "og:url", content: "https://kithubs.com/pinterest-downloader" },
+    {
+      property: "og:title",
+      content: "Free Pinterest Video & Image Downloader | Kithubs",
+    },
+    {
+      property: "og:description",
+      content:
+        "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
+    },
+    {
+      property: "og:image",
+      content: "https://kithubs.com/logo.png",
+    },
+  ],
+  link: [{ rel: "canonical", href: "https://kithubs.com/pinterest-downloader" }],
+  script: [
+    // JSON-LD
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "Free Pinterest Video & Image Downloader | Kithubs",
+      description:
+        "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
+      url: "https://kithubs.com/pinterest-downloader",
+      applicationCategory: "MultimediaApplication",
+      operatingSystem: "Web Browser",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
+      featureList: [
+        "Pinterest Video Downloader",
+        "Pinterest Image Downloader",
+        "High Quality Downloads",
+        "No Login Required",
+        "Fast and Secure"
+      ],
+      author: {
+        "@type": "Organization",
+        name: "chenyx",
+      },
+    },
+  ],
+});
 </script>
 
 <style scoped>
