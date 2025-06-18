@@ -1,102 +1,104 @@
 
 <script setup>
-import { ref } from 'vue'
-import Header from '~/components/Header.vue'
+import { ref } from "vue";
+import Header from "~/components/Header.vue";
 
 // State management
-const inputText = ref('')
-const isLoading = ref(false)
-const showResult = ref(false)
-const result = ref(null)
-const error = ref('')
+const inputText = ref("");
+const isLoading = ref(false);
+const showResult = ref(false);
+const result = ref(null);
+const error = ref("");
 
 // Reusable API service class
 class ApiService {
-  constructor(baseURL = '') {
-    this.baseURL = baseURL
+  constructor(baseURL = "") {
+    this.baseURL = baseURL;
   }
 
   async request(url, options = {}) {
     try {
       const response = await fetch(`${this.baseURL}${url}`, {
         headers: {
-          'Content-Type': 'application/json',
-          ...options.headers
+          "Content-Type": "application/json",
+          ...options.headers,
         },
-        ...options
-      })
+        ...options,
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (err) {
-      console.error('API request failed:', err)
-      throw new Error(err.message || 'Network request failed')
+      console.error("API request failed:", err);
+      throw new Error(err.message || "Network request failed");
     }
   }
 
   async post(url, data, options = {}) {
     return this.request(url, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
-      ...options
-    })
+      ...options,
+    });
   }
 
   async get(url, options = {}) {
     return this.request(url, {
-      method: 'GET',
-      ...options
-    })
+      method: "GET",
+      ...options,
+    });
   }
 }
 
 // Initialize API service
-const apiService = new ApiService()
+const apiService = new ApiService();
 
 // Sensitive word detection method
 const checkSensitiveWord = async () => {
   if (!inputText.value.trim()) {
-    return
+    return;
   }
 
-  isLoading.value = true
-  showResult.value = false
-  result.value = null
-  error.value = ''
+  isLoading.value = true;
+  showResult.value = false;
+  result.value = null;
+  error.value = "";
 
   try {
-    const response = await apiService.post('https://kithubs.com/api/text/sensitiveWord/check', {
-      content: inputText.value.trim()
-    })
+    const response = await apiService.post(
+      "https://kithubs.com/api/text/sensitiveWord/check",
+      {
+        content: inputText.value.trim(),
+      }
+    );
 
     if (response.status === 200) {
       result.value = {
         has_sensitive_word: response.has_sensitive_word,
-        sensitive_word: response.sensitive_word
-      }
+        sensitive_word: response.sensitive_word,
+      };
     } else {
-      throw new Error('Invalid response from server')
+      throw new Error("Invalid response from server");
     }
   } catch (err) {
-    error.value = 'Failed to analyze content. Please try again later.'
-    console.error('Sensitive word check failed:', err)
+    error.value = "Failed to analyze content. Please try again later.";
+    console.error("Sensitive word check failed:", err);
   } finally {
-    isLoading.value = false
-    showResult.value = true
+    isLoading.value = false;
+    showResult.value = true;
   }
-}
+};
 
 // Clear all content
 const clearAll = () => {
-  inputText.value = ''
-  showResult.value = false
-  result.value = null
-  error.value = ''
-}
-
+  inputText.value = "";
+  showResult.value = false;
+  result.value = null;
+  error.value = "";
+};
 
 useHead({
   title: "Sensitive Word Detector - Free Tool | Kithubs",
@@ -104,7 +106,7 @@ useHead({
     {
       name: "description",
       content:
-        "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
+        "Detect sensitive words instantly with Kithubs' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
     },
     { charset: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
@@ -114,7 +116,10 @@ useHead({
       content:
         "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     },
-    { property: "og:url", content: "https://kithubs.com/sensitive-word-checker" },
+    {
+      property: "og:url",
+      content: "https://kithubs.com/sensitive-word-checker",
+    },
     {
       property: "og:title",
       content: "Sensitive Word Detector - Free Tool | Kithubs",
@@ -122,58 +127,62 @@ useHead({
     {
       property: "og:description",
       content:
-        "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
+        "Detect sensitive words instantly with Kithubs' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
     },
     {
       property: "og:image",
       content: "https://kithubs.com/logo.png",
     },
   ],
-  link: [{ rel: "canonical", href: "https://kithubs.com/sensitive-word-checker" }],
+  link: [
+    { rel: "canonical", href: "https://kithubs.com/sensitive-word-checker" },
+  ],
   script: [
     // JSON-LD
     {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "Sensitive Word Detector - Free Tool | Kithubs",
-      description:
-        "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
-      url: "https://kithubs.com/sensitive-word-checker",
-      logo:"https://kithubs.com/logo.png",
-      applicationCategory: "MultimediaApplication",
-      operatingSystem: "Web Browser",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      featureList: [
-        "Sensitive Word Detection",
-        "Real-time Analysis",
-        "High Accuracy",
-        "Secure & Private",
-      ],
-      author: {
-        "@type": "Organization",
-        name: "chenyx",
-      },
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Kithubs Sensitive Word Detector - Free Online Tool",
+        description:
+          "Quickly identify sensitive words in text with Kithubs’ free online tool. Ensure content safety with secure, real-time scanning!",
+        url: "https://kithubs.com/sensitive-word-checker",
+        logo: "https://kithubs.com/logo.png",
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Web Browser",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        featureList: [
+          "Sensitive Word Detection",
+          "Real-Time Scanning",
+          "High Accuracy",
+          "Secure and Private",
+        ],
+        author: {
+          "@type": "Organization",
+          name: "Chenyx",
+        },
+      }),
     },
   ],
 });
 </script>
 <template>
-    
   <div class="app-container">
     <Header />
     <div class="main-wrapper">
       <!-- Header Section -->
       <header class="hero-section">
         <div class="hero-content">
-          <h1 class="hero-title">
-            Sensitive Word Detection Tool
-          </h1>
+          <h1 class="hero-title">Sensitive Word Detection Tool</h1>
           <p class="hero-subtitle">
-            AI-powered content moderation system that instantly detects sensitive words and ensures your content meets safety standards. Fast, accurate, and secure.
+            AI-powered content moderation system that instantly detects
+            sensitive words and ensures your content meets safety standards.
+            Fast, accurate, and secure.
           </p>
         </div>
       </header>
@@ -195,9 +204,7 @@ useHead({
                 placeholder="Enter the text content you want to analyze for sensitive words..."
                 maxlength="200"
               ></textarea>
-              <div class="char-counter">
-                {{ inputText.length }}/200
-              </div>
+              <div class="char-counter">{{ inputText.length }}/200</div>
             </div>
           </div>
 
@@ -209,9 +216,9 @@ useHead({
               class="btn btn-primary"
             >
               <span v-if="isLoading" class="loading-spinner"></span>
-              {{ isLoading ? 'Analyzing...' : 'Analyze Text' }}
+              {{ isLoading ? "Analyzing..." : "Analyze Text" }}
             </button>
-            
+
             <button
               @click="clearAll"
               :disabled="isLoading"
@@ -224,30 +231,50 @@ useHead({
           <!-- Results Section -->
           <div v-if="showResult" class="results-section">
             <h3 class="results-title">Analysis Results</h3>
-            
+
             <!-- Success Result -->
-            <div v-if="result && !result.has_sensitive_word" class="result-card success">
+            <div
+              v-if="result && !result.has_sensitive_word"
+              class="result-card success"
+            >
               <div class="result-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               </div>
               <div class="result-content">
                 <h4 class="result-status">Content Approved</h4>
-                <p class="result-message">Your text is safe and contains no sensitive words</p>
+                <p class="result-message">
+                  Your text is safe and contains no sensitive words
+                </p>
               </div>
             </div>
 
             <!-- Warning Result -->
-            <div v-else-if="result && result.has_sensitive_word" class="result-card warning">
+            <div
+              v-else-if="result && result.has_sensitive_word"
+              class="result-card warning"
+            >
               <div class="result-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"
+                  ></path>
                 </svg>
               </div>
               <div class="result-content">
                 <h4 class="result-status">Sensitive Word Detected</h4>
-                <p class="result-message">The following sensitive word was found in your text:</p>
+                <p class="result-message">
+                  The following sensitive word was found in your text:
+                </p>
                 <div class="sensitive-word-tag">
                   {{ result.sensitive_word }}
                 </div>
@@ -258,7 +285,12 @@ useHead({
             <div v-else-if="error" class="result-card error">
               <div class="result-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               </div>
               <div class="result-content">
@@ -276,31 +308,55 @@ useHead({
             <div class="feature-card">
               <div class="feature-icon lightning">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">Real-time Analysis</h3>
-              <p class="feature-description">Instant detection and analysis of sensitive content with lightning-fast response times</p>
+              <p class="feature-description">
+                Instant detection and analysis of sensitive content with
+                lightning-fast response times
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon accuracy">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">High Accuracy</h3>
-              <p class="feature-description">Advanced AI algorithms ensure precise detection with over 95% accuracy rate</p>
+              <p class="feature-description">
+                Advanced AI algorithms ensure precise detection with over 95%
+                accuracy rate
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon security">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">Secure & Private</h3>
-              <p class="feature-description">Your data is encrypted and never stored. Complete privacy protection guaranteed</p>
+              <p class="feature-description">
+                Your data is encrypted and never stored. Complete privacy
+                protection guaranteed
+              </p>
             </div>
           </div>
         </section>
@@ -310,20 +366,41 @@ useHead({
           <h2 class="section-title">Frequently Asked Questions</h2>
           <div class="faq-container">
             <div class="faq-item">
-              <h3 class="faq-question">What types of sensitive words can be detected?</h3>
-              <p class="faq-answer">Our tool detects various categories including political sensitive content, illegal content, inappropriate language, and other potentially harmful words.</p>
+              <h3 class="faq-question">
+                What types of sensitive words can be detected?
+              </h3>
+              <p class="faq-answer">
+                Our tool detects various categories including political
+                sensitive content, illegal content, inappropriate language, and
+                other potentially harmful words.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">How accurate is the detection system?</h3>
-              <p class="faq-answer">Our AI-powered system maintains over 95% accuracy rate, continuously improving through advanced natural language processing techniques.</p>
+              <h3 class="faq-question">
+                How accurate is the detection system?
+              </h3>
+              <p class="faq-answer">
+                Our AI-powered system maintains over 95% accuracy rate,
+                continuously improving through advanced natural language
+                processing techniques.
+              </p>
             </div>
             <div class="faq-item">
               <h3 class="faq-question">Is my input data stored or saved?</h3>
-              <p class="faq-answer">No, we do not store any user input data. All content is processed in real-time and immediately discarded after analysis.</p>
+              <p class="faq-answer">
+                No, we do not store any user input data. All content is
+                processed in real-time and immediately discarded after analysis.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">Can I use this tool for commercial purposes?</h3>
-              <p class="faq-answer">Yes, our tool is suitable for both personal and commercial use, helping businesses maintain content compliance and safety standards.</p>
+              <h3 class="faq-question">
+                Can I use this tool for commercial purposes?
+              </h3>
+              <p class="faq-answer">
+                Yes, our tool is suitable for both personal and commercial use,
+                helping businesses maintain content compliance and safety
+                standards.
+              </p>
             </div>
           </div>
         </section>
@@ -343,7 +420,8 @@ useHead({
 .app-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   line-height: 1.6;
 }
 
@@ -739,35 +817,35 @@ useHead({
   .main-wrapper {
     padding: 0 16px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.125rem;
   }
-  
+
   .detection-card {
     padding: 32px 24px;
   }
-  
+
   .action-section {
     flex-direction: column;
   }
-  
+
   .btn {
     min-width: auto;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .faq-section {
     padding: 32px 24px;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
@@ -777,15 +855,15 @@ useHead({
   .hero-section {
     padding: 60px 0 40px;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .detection-card {
     padding: 24px 16px;
   }
-  
+
   .text-input {
     height: 120px;
     padding: 16px;

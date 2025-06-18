@@ -13,9 +13,9 @@
             <h3>Quick Links</h3>
             <ul>
               <li><NuxtLink to="/">Home</NuxtLink></li>
-              <li><NuxtLink to="/tools/text">Text Tools</NuxtLink></li>
+              <li><NuxtLink to="/">Text Tools</NuxtLink></li>
               <!--<li><NuxtLink to="/tools/image">Image Tools</NuxtLink></li>-->
-              <li><NuxtLink to="/tools/video">Video Tools</NuxtLink></li>
+              <li><NuxtLink to="/">Video Tools</NuxtLink></li>
             </ul>
           </div>
           <div class="link-group">

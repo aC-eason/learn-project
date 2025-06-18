@@ -156,31 +156,34 @@ useHead({
   script: [
     // JSON-LD
     {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "Web Toolkit - Convenient & Efficient Online Tools",
-      description:
-        "Providing various commonly used online tools to improve your work efficiency",
-      url: "https://kithubs.com",
-      logo:"https://kithubs.com/logo.png",
-      applicationCategory: "MultimediaApplication",
-      operatingSystem: "Web Browser",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      featureList: [
-        "Video Downloader",
-        "Image Compressor",
-        "JSON Formatter",
-        "Text Converter",
-        "Image Editor",
-      ],
-      author: {
-        "@type": "Organization",
-        name: "chenyx",
-      },
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Web Toolkit - Efficient Online Utilities",
+        description:
+          "A suite of practical online tools designed to enhance your productivity",
+        url: "https://kithubs.com",
+        logo: "https://kithubs.com/logo.png",
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Web Browser",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        featureList: [
+          "Video Downloader",
+          "Image Compressor",
+          "JSON Formatter",
+          "Text Converter",
+          "Image Editor",
+        ],
+        author: {
+          "@type": "Organization",
+          name: "Chenyx",
+        },
+      }),
     },
   ],
 });

@@ -522,8 +522,6 @@ const clearAll = () => {
   error.value = "";
 };
 
-
-
 useHead({
   title: "Free Pinterest Video & Image Downloader | Kithubs",
   meta: [
@@ -555,35 +553,40 @@ useHead({
       content: "https://kithubs.com/logo.png",
     },
   ],
-  link: [{ rel: "canonical", href: "https://kithubs.com/pinterest-downloader" }],
+  link: [
+    { rel: "canonical", href: "https://kithubs.com/pinterest-downloader" },
+  ],
   script: [
     // JSON-LD
     {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "Free Pinterest Video & Image Downloader | Kithubs",
-      description:
-        "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
-      url: "https://kithubs.com/pinterest-downloader",
-      logo:"https://kithubs.com/logo.png",
-      applicationCategory: "MultimediaApplication",
-      operatingSystem: "Web Browser",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      featureList: [
-        "Pinterest Video Downloader",
-        "Pinterest Image Downloader",
-        "High Quality Downloads",
-        "No Login Required",
-        "Fast and Secure"
-      ],
-      author: {
-        "@type": "Organization",
-        name: "chenyx",
-      },
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Kithubs Pinterest Video & Image Downloader - Free Tool",
+        description:
+          "Quickly download Pinterest videos and images in HD with Kithubs’ free online tool. No login required, fast and secure!",
+        url: "https://kithubs.com/pinterest-downloader",
+        logo: "https://kithubs.com/logo.png",
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Web Browser",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        featureList: [
+          "Pinterest Video Downloader",
+          "Pinterest Image Downloader",
+          "High-Quality Downloads",
+          "No Account Needed",
+          "Fast and Secure",
+        ],
+        author: {
+          "@type": "Organization",
+          name: "Chenyx",
+        },
+      }),
     },
   ],
 });

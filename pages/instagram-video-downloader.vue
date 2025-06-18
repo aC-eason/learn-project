@@ -1,136 +1,149 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
 
 // State management
-const instagramUrl = ref('')
-const isLoading = ref(false)
-const showResult = ref(false)
-const result = ref(null)
-const error = ref('')
+const instagramUrl = ref("");
+const isLoading = ref(false);
+const showResult = ref(false);
+const result = ref(null);
+const error = ref("");
 
 // Computed properties
 const isValidUrl = computed(() => {
-  if (!instagramUrl.value) return false
+  if (!instagramUrl.value) return false;
   try {
-    const url = new URL(instagramUrl.value)
-    return url.hostname.includes('instagram.com') || url.hostname.includes('instagr.am')
+    const url = new URL(instagramUrl.value);
+    return (
+      url.hostname.includes("instagram.com") ||
+      url.hostname.includes("instagr.am")
+    );
   } catch {
-    return false
+    return false;
   }
-})
+});
 
 // Helper functions
 const getSuccessTitle = () => {
-  if (!result.value) return ''
-  switch(result.value.data.type) {
-    case 1: return 'Photo Ready for Download'
-    case 2: return 'Video Ready for Download'
-    case 3: return 'Carousel Photos Ready'
-    default: return 'Content Ready'
+  if (!result.value) return "";
+  switch (result.value.data.type) {
+    case 1:
+      return "Photo Ready for Download";
+    case 2:
+      return "Video Ready for Download";
+    case 3:
+      return "Carousel Photos Ready";
+    default:
+      return "Content Ready";
   }
-}
+};
 
 const getContentTypeText = () => {
-  if (!result.value) return ''
-  switch(result.value.data.type) {
-    case 1: return 'Single Instagram Photo'
-    case 2: return 'Instagram Video/Reel'
-    case 3: return `Carousel Post (${result.value.data.source_url.length} photos)`
-    default: return 'Instagram Content'
+  if (!result.value) return "";
+  switch (result.value.data.type) {
+    case 1:
+      return "Single Instagram Photo";
+    case 2:
+      return "Instagram Video/Reel";
+    case 3:
+      return `Carousel Post (${result.value.data.source_url.length} photos)`;
+    default:
+      return "Instagram Content";
   }
-}
+};
 
 // Reusable API service class
 class ApiService {
-  constructor(baseURL = '') {
-    this.baseURL = baseURL
+  constructor(baseURL = "") {
+    this.baseURL = baseURL;
   }
 
   async request(url, options = {}) {
     try {
       const response = await fetch(`${this.baseURL}${url}`, {
         headers: {
-          'Content-Type': 'application/json',
-          ...options.headers
+          "Content-Type": "application/json",
+          ...options.headers,
         },
-        ...options
-      })
+        ...options,
+      });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json()
+      return await response.json();
     } catch (err) {
-      console.error('API request failed:', err)
-      throw new Error(err.message || 'Network request failed')
+      console.error("API request failed:", err);
+      throw new Error(err.message || "Network request failed");
     }
   }
 
   async post(url, data, options = {}) {
     return this.request(url, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(data),
-      ...options
-    })
+      ...options,
+    });
   }
 }
 
 // Initialize API service
-const apiService = new ApiService()
+const apiService = new ApiService();
 
 // Download content method
 const downloadContent = async () => {
   if (!isValidUrl.value) {
-    error.value = 'Please enter a valid Instagram URL'
-    showResult.value = true
-    return
+    error.value = "Please enter a valid Instagram URL";
+    showResult.value = true;
+    return;
   }
 
-  isLoading.value = true
-  showResult.value = false
-  result.value = null
-  error.value = ''
+  isLoading.value = true;
+  showResult.value = false;
+  result.value = null;
+  error.value = "";
 
   try {
-    const response = await apiService.post('https://kithubs.com/api/video/instagram/download', {
-      url: instagramUrl.value.trim()
-    })
+    const response = await apiService.post(
+      "https://kithubs.com/api/video/instagram/download",
+      {
+        url: instagramUrl.value.trim(),
+      }
+    );
 
-    result.value = response
+    result.value = response;
   } catch (err) {
-    error.value = 'Failed to process content. Please check the URL and try again.'
-    console.error('Content download failed:', err)
+    error.value =
+      "Failed to process content. Please check the URL and try again.";
+    console.error("Content download failed:", err);
   } finally {
-    isLoading.value = false
-    showResult.value = true
+    isLoading.value = false;
+    showResult.value = true;
   }
-}
+};
 
 // Download all photos from carousel
 const downloadAllPhotos = () => {
   if (result.value && result.value.data.source_url) {
     result.value.data.source_url.forEach((url, index) => {
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `instagram_photo_${index + 1}.jpg`
-      link.target = '_blank'
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    })
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `instagram_photo_${index + 1}.jpg`;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   }
-}
+};
 
 // Clear all content
 const clearAll = () => {
-  instagramUrl.value = ''
-  showResult.value = false
-  result.value = null
-  error.value = ''
-}
-
-
+  instagramUrl.value = "";
+  showResult.value = false;
+  result.value = null;
+  error.value = "";
+};
 
 useHead({
   title: "Free Instagram Video & Photo Downloader | Kithubs",
@@ -148,7 +161,10 @@ useHead({
       content:
         "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     },
-    { property: "og:url", content: "https://kithubs.com/instagram-video-downloader" },
+    {
+      property: "og:url",
+      content: "https://kithubs.com/instagram-video-downloader",
+    },
     {
       property: "og:title",
       content: "Free Instagram Video & Photo Downloader | Kithubs",
@@ -163,31 +179,43 @@ useHead({
       content: "https://kithubs.com/logo.png",
     },
   ],
-  link: [{ rel: "canonical", href: "https://kithubs.com/instagram-video-downloader" }],
+  link: [
+    {
+      rel: "canonical",
+      href: "https://kithubs.com/instagram-video-downloader",
+    },
+  ],
   script: [
     // JSON-LD
     {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "Free Instagram Video & Photo Downloader | Kithubs",
-      description:
-        "Download Instagram videos, photos, Reels, and stories for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
-      url: "https://kithubs.com/instagram-video-downloader",
-      logo:"https://kithubs.com/logo.png",
-      applicationCategory: "MultimediaApplication",
-      operatingSystem: "Web Browser",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      featureList: [
-
-      ],
-      author: {
-        "@type": "Organization",
-        name: "chenyx",
-      },
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Kithubs Instagram Video & Photo Downloader - Free Tool",
+        description:
+          "Effortlessly download Instagram videos, photos, Reels, and Stories in HD with Kithubs’ free online tool. No login required!",
+        url: "https://kithubs.com/instagram-video-downloader",
+        logo: "https://kithubs.com/logo.png",
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Web Browser",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        featureList: [
+          "Instagram Video Downloader",
+          "Photo Downloader",
+          "Reels and Stories Downloader",
+          "HD Quality Downloads",
+          "No Login Needed",
+        ],
+        author: {
+          "@type": "Organization",
+          name: "Chenyx",
+        },
+      }),
     },
   ],
 });
@@ -203,33 +231,65 @@ useHead({
         <div class="hero-content">
           <div class="hero-icon">
             <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              <path
+                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+              />
             </svg>
           </div>
-          <h1 class="hero-title">
-            Instagram Downloader
-          </h1>
+          <h1 class="hero-title">Instagram Downloader</h1>
           <p class="hero-subtitle">
-            Download Instagram photos, videos, reels, and carousel posts in original quality. Fast, free, and secure Instagram content downloader.
+            Download Instagram photos, videos, reels, and carousel posts in
+            original quality. Fast, free, and secure Instagram content
+            downloader.
           </p>
-          
+
           <!-- Content Type Indicators -->
           <div class="content-types">
             <div class="type-badge">
-              <svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              <svg
+                class="type-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
               </svg>
               Photos
             </div>
             <div class="type-badge">
-              <svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+              <svg
+                class="type-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                ></path>
               </svg>
               Videos
             </div>
             <div class="type-badge">
-              <svg class="type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+              <svg
+                class="type-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                ></path>
               </svg>
               Carousels
             </div>
@@ -243,8 +303,18 @@ useHead({
           <!-- Input Section -->
           <div class="input-section">
             <label for="instagramUrl" class="input-label">
-              <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+              <svg
+                class="label-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                ></path>
               </svg>
               Instagram Post URL
             </label>
@@ -261,8 +331,18 @@ useHead({
               <div class="input-decoration"></div>
             </div>
             <p class="input-hint">
-              <svg class="hint-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <svg
+                class="hint-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
               </svg>
               Supports posts, reels, stories, IGTV, and carousel posts
             </p>
@@ -276,19 +356,40 @@ useHead({
               class="btn btn-primary"
             >
               <span v-if="isLoading" class="loading-spinner"></span>
-              <svg v-else class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+              <svg
+                v-else
+                class="btn-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                ></path>
               </svg>
-              {{ isLoading ? 'Processing...' : 'Download Content' }}
+              {{ isLoading ? "Processing..." : "Download Content" }}
             </button>
-            
+
             <button
               @click="clearAll"
               :disabled="isLoading"
               class="btn btn-secondary"
             >
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              <svg
+                class="btn-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                ></path>
               </svg>
               Clear
             </button>
@@ -297,11 +398,19 @@ useHead({
           <!-- Results Section -->
           <div v-if="showResult" class="results-section">
             <!-- Success Result -->
-            <div v-if="result && result.status === 200 && result.data.type > 0" class="result-card success">
+            <div
+              v-if="result && result.status === 200 && result.data.type > 0"
+              class="result-card success"
+            >
               <div class="result-header">
                 <div class="result-icon success-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
                   </svg>
                 </div>
                 <div class="result-info">
@@ -309,84 +418,172 @@ useHead({
                   <p class="content-type">{{ getContentTypeText() }}</p>
                 </div>
               </div>
-              
+
               <div class="download-section">
                 <!-- Single Photo/Video -->
-                <div v-if="result.data.type === 1 || result.data.type === 2" class="single-download">
+                <div
+                  v-if="result.data.type === 1 || result.data.type === 2"
+                  class="single-download"
+                >
                   <div class="media-preview">
                     <div class="media-icon">
-                      <svg v-if="result.data.type === 1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                      <svg
+                        v-if="result.data.type === 1"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        ></path>
                       </svg>
-                      <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                      <svg
+                        v-else
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                        ></path>
                       </svg>
                     </div>
                     <div class="media-info">
-                      <h4 class="media-title">{{ result.data.type === 1 ? 'Instagram Photo' : 'Instagram Video' }}</h4>
-                      <p class="media-desc">High quality {{ result.data.type === 1 ? 'image' : 'video' }} ready for download</p>
+                      <h4 class="media-title">
+                        {{
+                          result.data.type === 1
+                            ? "Instagram Photo"
+                            : "Instagram Video"
+                        }}
+                      </h4>
+                      <p class="media-desc">
+                        High quality
+                        {{ result.data.type === 1 ? "image" : "video" }} ready
+                        for download
+                      </p>
                     </div>
                   </div>
-                  <a 
-                    :href="result.data.source_url[0]" 
-                    download 
+                  <a
+                    :href="result.data.source_url[0]"
+                    download
                     class="download-btn primary"
                     target="_blank"
                   >
-                    <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                    <svg
+                      class="download-icon"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                      ></path>
                     </svg>
-                    Download {{ result.data.type === 1 ? 'Photo' : 'Video' }}
+                    Download {{ result.data.type === 1 ? "Photo" : "Video" }}
                   </a>
                 </div>
 
                 <!-- Multiple Photos (Carousel) -->
-                <div v-else-if="result.data.type === 3" class="multiple-download">
+                <div
+                  v-else-if="result.data.type === 3"
+                  class="multiple-download"
+                >
                   <div class="carousel-header">
                     <div class="carousel-icon">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                        ></path>
                       </svg>
                     </div>
                     <div class="carousel-info">
                       <h4 class="carousel-title">Instagram Carousel Post</h4>
-                      <p class="carousel-desc">{{ result.data.source_url.length }} photos found in this post</p>
+                      <p class="carousel-desc">
+                        {{ result.data.source_url.length }} photos found in this
+                        post
+                      </p>
                     </div>
                   </div>
 
                   <div class="photos-grid">
-                    <div 
-                      v-for="(url, index) in result.data.source_url" 
+                    <div
+                      v-for="(url, index) in result.data.source_url"
                       :key="index"
                       class="photo-item"
                     >
                       <div class="photo-preview">
                         <div class="photo-number">{{ index + 1 }}</div>
-                        <svg class="photo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        <svg
+                          class="photo-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          ></path>
                         </svg>
                       </div>
                       <div class="photo-details">
                         <span class="photo-name">Photo {{ index + 1 }}</span>
                         <span class="photo-format">JPG Format</span>
                       </div>
-                      <a 
-                        :href="url" 
-                        download 
+                      <a
+                        :href="url"
+                        download
                         class="download-btn small"
                         target="_blank"
                       >
-                        <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                        <svg
+                          class="download-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                          ></path>
                         </svg>
                       </a>
                     </div>
                   </div>
-                  
+
                   <div class="bulk-download">
                     <button @click="downloadAllPhotos" class="btn-bulk">
-                      <svg class="bulk-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                      <svg
+                        class="bulk-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                        ></path>
                       </svg>
                       Download All Photos ({{ result.data.source_url.length }})
                     </button>
@@ -396,22 +593,47 @@ useHead({
             </div>
 
             <!-- Not Found Result -->
-            <div v-else-if="result && (result.status === 404 || result.data.type === 0)" class="result-card error">
+            <div
+              v-else-if="
+                result && (result.status === 404 || result.data.type === 0)
+              "
+              class="result-card error"
+            >
               <div class="result-icon error-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               </div>
               <div class="result-content">
                 <h4 class="result-status">Content Not Found</h4>
-                <p class="result-message">The Instagram URL is invalid or the content is not accessible. Please check the URL and try again.</p>
+                <p class="result-message">
+                  The Instagram URL is invalid or the content is not accessible.
+                  Please check the URL and try again.
+                </p>
                 <div class="error-tips">
                   <h5>Common Issues & Solutions:</h5>
                   <ul>
-                    <li><strong>Private Account:</strong> Make sure the Instagram post is public</li>
-                    <li><strong>Invalid URL:</strong> Check if the URL is complete and correct</li>
-                    <li><strong>Deleted Content:</strong> The post may have been removed</li>
-                    <li><strong>Region Restricted:</strong> Content might not be available in your region</li>
+                    <li>
+                      <strong>Private Account:</strong> Make sure the Instagram
+                      post is public
+                    </li>
+                    <li>
+                      <strong>Invalid URL:</strong> Check if the URL is complete
+                      and correct
+                    </li>
+                    <li>
+                      <strong>Deleted Content:</strong> The post may have been
+                      removed
+                    </li>
+                    <li>
+                      <strong>Region Restricted:</strong> Content might not be
+                      available in your region
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -421,15 +643,30 @@ useHead({
             <div v-else-if="error" class="result-card error">
               <div class="result-icon error-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               </div>
               <div class="result-content">
                 <h4 class="result-status">Download Failed</h4>
                 <p class="result-message">{{ error }}</p>
                 <button @click="downloadContent" class="retry-btn">
-                  <svg class="retry-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  <svg
+                    class="retry-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    ></path>
                   </svg>
                   Try Again
                 </button>
@@ -446,23 +683,33 @@ useHead({
               <div class="step-number">1</div>
               <div class="step-content">
                 <h3 class="step-title">Find Instagram Content</h3>
-                <p class="step-description">Open Instagram and navigate to the post, reel, story, or IGTV video you want to download. Works with photos, videos, and carousel posts.</p>
+                <p class="step-description">
+                  Open Instagram and navigate to the post, reel, story, or IGTV
+                  video you want to download. Works with photos, videos, and
+                  carousel posts.
+                </p>
               </div>
             </div>
-            
+
             <div class="step-item">
               <div class="step-number">2</div>
               <div class="step-content">
                 <h3 class="step-title">Copy the URL</h3>
-                <p class="step-description">Tap the three dots menu (⋯) and select "Copy Link" or copy the URL from your browser's address bar if using desktop.</p>
+                <p class="step-description">
+                  Tap the three dots menu (⋯) and select "Copy Link" or copy the
+                  URL from your browser's address bar if using desktop.
+                </p>
               </div>
             </div>
-            
+
             <div class="step-item">
               <div class="step-number">3</div>
               <div class="step-content">
                 <h3 class="step-title">Download Content</h3>
-                <p class="step-description">Paste the URL into our tool above, click "Download Content", and save your photos or videos in original quality.</p>
+                <p class="step-description">
+                  Paste the URL into our tool above, click "Download Content",
+                  and save your photos or videos in original quality.
+                </p>
               </div>
             </div>
           </div>
@@ -475,61 +722,109 @@ useHead({
             <div class="feature-card">
               <div class="feature-icon all-types">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">All Content Types</h3>
-              <p class="feature-description">Download single photos, videos, reels, stories, IGTV, and carousel posts with multiple images.</p>
+              <p class="feature-description">
+                Download single photos, videos, reels, stories, IGTV, and
+                carousel posts with multiple images.
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon quality">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">Original Quality</h3>
-              <p class="feature-description">Download Instagram content in its original resolution and quality without any compression or watermarks.</p>
+              <p class="feature-description">
+                Download Instagram content in its original resolution and
+                quality without any compression or watermarks.
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon batch">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">Batch Downloads</h3>
-              <p class="feature-description">Download all photos from carousel posts at once with our convenient batch download feature.</p>
+              <p class="feature-description">
+                Download all photos from carousel posts at once with our
+                convenient batch download feature.
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon speed">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">Lightning Fast</h3>
-              <p class="feature-description">Get download links instantly with our optimized processing system. No waiting time or delays.</p>
+              <p class="feature-description">
+                Get download links instantly with our optimized processing
+                system. No waiting time or delays.
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon privacy">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">Privacy Protected</h3>
-              <p class="feature-description">We don't store your downloads or personal data. Your privacy and security are our top priority.</p>
+              <p class="feature-description">
+                We don't store your downloads or personal data. Your privacy and
+                security are our top priority.
+              </p>
             </div>
 
             <div class="feature-card">
               <div class="feature-icon free">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  ></path>
                 </svg>
               </div>
               <h3 class="feature-title">100% Free</h3>
-              <p class="feature-description">Download unlimited Instagram content without any cost, registration, or subscription required.</p>
+              <p class="feature-description">
+                Download unlimited Instagram content without any cost,
+                registration, or subscription required.
+              </p>
             </div>
           </div>
         </section>
@@ -539,36 +834,83 @@ useHead({
           <h2 class="section-title">Frequently Asked Questions</h2>
           <div class="faq-container">
             <div class="faq-item">
-              <h3 class="faq-question">Is it legal to download Instagram content?</h3>
-              <p class="faq-answer">You should only download content that you have permission to download, such as your own posts or content where you have explicit permission from the creator. Always respect copyright and intellectual property rights.</p>
+              <h3 class="faq-question">
+                Is it legal to download Instagram content?
+              </h3>
+              <p class="faq-answer">
+                You should only download content that you have permission to
+                download, such as your own posts or content where you have
+                explicit permission from the creator. Always respect copyright
+                and intellectual property rights.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">What types of Instagram content can I download?</h3>
-              <p class="faq-answer">Our tool supports downloading single photos, videos, reels, stories, IGTV videos, and carousel posts with multiple images. It automatically detects the content type and provides appropriate download options.</p>
+              <h3 class="faq-question">
+                What types of Instagram content can I download?
+              </h3>
+              <p class="faq-answer">
+                Our tool supports downloading single photos, videos, reels,
+                stories, IGTV videos, and carousel posts with multiple images.
+                It automatically detects the content type and provides
+                appropriate download options.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">Can I download private Instagram content?</h3>
-              <p class="faq-answer">No, our tool can only download public Instagram content. Private posts require special permissions and cannot be accessed through our downloader.</p>
+              <h3 class="faq-question">
+                Can I download private Instagram content?
+              </h3>
+              <p class="faq-answer">
+                No, our tool can only download public Instagram content. Private
+                posts require special permissions and cannot be accessed through
+                our downloader.
+              </p>
             </div>
             <div class="faq-item">
               <h3 class="faq-question">Do you store the downloaded content?</h3>
-              <p class="faq-answer">No, we don't store any content on our servers. The download links are generated in real-time and expire after a certain period. Your privacy is protected.</p>
+              <p class="faq-answer">
+                No, we don't store any content on our servers. The download
+                links are generated in real-time and expire after a certain
+                period. Your privacy is protected.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">Why can't I download some Instagram content?</h3>
-              <p class="faq-answer">Some content may be private, deleted, region-restricted, or have download restrictions. Make sure the content is public and accessible from your location.</p>
+              <h3 class="faq-question">
+                Why can't I download some Instagram content?
+              </h3>
+              <p class="faq-answer">
+                Some content may be private, deleted, region-restricted, or have
+                download restrictions. Make sure the content is public and
+                accessible from your location.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">What quality will the downloaded content be?</h3>
-              <p class="faq-answer">Our tool downloads Instagram content in its original quality and resolution, maintaining the same quality as posted on Instagram without any compression.</p>
+              <h3 class="faq-question">
+                What quality will the downloaded content be?
+              </h3>
+              <p class="faq-answer">
+                Our tool downloads Instagram content in its original quality and
+                resolution, maintaining the same quality as posted on Instagram
+                without any compression.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">How do I download carousel posts with multiple photos?</h3>
-              <p class="faq-answer">When you paste a carousel post URL, our tool will detect all photos in the post and provide individual download links plus a "Download All" option for convenience.</p>
+              <h3 class="faq-question">
+                How do I download carousel posts with multiple photos?
+              </h3>
+              <p class="faq-answer">
+                When you paste a carousel post URL, our tool will detect all
+                photos in the post and provide individual download links plus a
+                "Download All" option for convenience.
+              </p>
             </div>
             <div class="faq-item">
-              <h3 class="faq-question">Is there a limit to how many files I can download?</h3>
-              <p class="faq-answer">No, there are no limits. You can download as many Instagram photos and videos as you want, completely free of charge.</p>
+              <h3 class="faq-question">
+                Is there a limit to how many files I can download?
+              </h3>
+              <p class="faq-answer">
+                No, there are no limits. You can download as many Instagram
+                photos and videos as you want, completely free of charge.
+              </p>
             </div>
           </div>
         </section>
@@ -588,7 +930,8 @@ useHead({
 .app-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   line-height: 1.6;
 }
 
@@ -1385,7 +1728,8 @@ useHead({
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -1398,55 +1742,55 @@ useHead({
   .main-wrapper {
     padding: 0 16px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.125rem;
   }
-  
+
   .content-types {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .downloader-card {
     padding: 32px 24px;
   }
-  
+
   .action-section {
     flex-direction: column;
   }
-  
+
   .btn {
     min-width: auto;
   }
-  
+
   .single-download {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .photo-item {
     flex-direction: column;
     gap: 12px;
     text-align: center;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .faq-section {
     padding: 32px 24px;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .step-item {
     flex-direction: column;
     text-align: center;
@@ -1457,15 +1801,15 @@ useHead({
   .hero-section {
     padding: 60px 0 40px;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .downloader-card {
     padding: 24px 16px;
   }
-  
+
   .url-input {
     padding: 16px 20px;
   }

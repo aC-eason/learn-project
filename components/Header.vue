@@ -17,7 +17,7 @@
           
           <!-- Text Tools Dropdown -->
           <li class="nav-item dropdown" @mouseenter="showDropdown('text')" @mouseleave="hideDropdown('text')">
-            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/text') }" @click="closeMenu">
+            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/') }" @click="closeMenu">
               Text Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
@@ -49,7 +49,7 @@
 
           <!-- Video Tools Dropdown -->
           <li class="nav-item dropdown" @mouseenter="showDropdown('video')" @mouseleave="hideDropdown('video')">
-            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/video') }" @click="closeMenu">
+            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/') }" @click="closeMenu">
               Video Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>

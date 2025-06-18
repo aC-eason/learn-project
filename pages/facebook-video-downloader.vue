@@ -107,7 +107,7 @@ useHead({
     {
       name: "description",
       content:
-        "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
+        "Download Facebook videos, Reels, and stories for free with Kithubs' online tool. Save high-quality MP4 videos easily. Try now!",
     },
     { charset: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
@@ -117,7 +117,10 @@ useHead({
       content:
         "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
     },
-    { property: "og:url", content: "https://kithubs.com/facebook-video-downloader" },
+    {
+      property: "og:url",
+      content: "https://kithubs.com/facebook-video-downloader",
+    },
     {
       property: "og:title",
       content: "Facebook Video Downloader - Free Tool | Kithubs",
@@ -125,42 +128,47 @@ useHead({
     {
       property: "og:description",
       content:
-        "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
+        "Download Facebook videos, Reels, and stories for free with Kithubs' online tool. Save high-quality MP4 videos easily. Try now!",
     },
     {
       property: "og:image",
       content: "https://kithubs.com/logo.png",
     },
   ],
-  link: [{ rel: "canonical", href: "https://kithubs.com/facebook-video-downloader" }],
+  link: [
+    { rel: "canonical", href: "https://kithubs.com/facebook-video-downloader" },
+  ],
   script: [
     // JSON-LD
     {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      name: "Facebook Video Downloader - Free Tool | Kithubs",
-      description:
-        "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
-      url: "https://kithubs.com/facebook-video-downloader",
-      logo:"https://kithubs.com/logo.png",
-      applicationCategory: "MultimediaApplication",
-      operatingSystem: "Web Browser",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-      },
-      featureList: [
-        "Facebook Video Downloader",
-        "Download Reels and Stories",
-        "High-Quality MP4 Downloads",
-        "Fast and Free",
-        "No Registration Required",
-      ],
-      author: {
-        "@type": "Organization",
-        name: "chenyx",
-      },
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        name: "Kithubs Facebook Video Downloader - Free Online Tool",
+        description:
+          "Easily download Facebook videos, Reels, and Stories in high-quality MP4 format with Kithubs' free online tool. No registration needed!",
+        url: "https://kithubs.com/facebook-video-downloader",
+        logo: "https://kithubs.com/logo.png",
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Web Browser",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        featureList: [
+          "Facebook Video Downloader",
+          "Reels and Stories Downloader",
+          "High-Quality MP4 Output",
+          "Free and Fast Downloads",
+          "No Account Required",
+        ],
+        author: {
+          "@type": "Organization",
+          name: "Chenyx",
+        },
+      }),
     },
   ],
 });
