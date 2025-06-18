@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
+  plugins: ["~/plugins/element-plus"],
   app: {
     head: {
       title:"kithubs - Kittools Hub",

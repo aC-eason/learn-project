@@ -3,21 +3,28 @@
     <div class="container">
       <div class="logo">
         <NuxtLink to="/">
-          <h1>Kit<span>hubs</span></h1>
+          <!-- 将 h1 修改为 div，并添加语义化属性 -->
+          <div class="logo-text" role="heading" aria-level="2">Kit<span>hubs</span></div>
         </NuxtLink>
       </div>
       
       <nav class="main-nav" :class="{ 'active': menuOpen }">
         <ul class="nav-list">
           <li class="nav-item">
-            <NuxtLink to="/" class="nav-link" :class="{ 'active': currentRoute === '/' }" @click="closeMenu">
+            <NuxtLink to="/" class="nav-link" :class="{ 'active': currentRoute === '/' }" @click="handleNavLinkClick(false)">
               Home
             </NuxtLink>
           </li>
           
           <!-- Text Tools Dropdown -->
-          <li class="nav-item dropdown" @mouseenter="showDropdown('text')" @mouseleave="hideDropdown('text')">
-            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/') }" @click="closeMenu">
+          <li class="nav-item dropdown" 
+              @mouseenter="showDropdown('text')" 
+              @mouseleave="hideDropdown('text')">
+            <NuxtLink class="nav-link" 
+                      :class="{ 'active': currentRoute.startsWith('/json-formatter') || currentRoute.startsWith('/sensitive-word-check'), 'dropdown-active': activeDropdown === 'text' }" 
+                      @click="handleNavLinkClick(true, 'text')"
+                      aria-haspopup="true"
+                      :aria-expanded="activeDropdown === 'text' ? 'true' : 'false'">
               Text Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
@@ -33,9 +40,10 @@
             </ul>
           </li>
 
-          <!-- Image Tools Dropdown -->
-          <!--<li class="nav-item dropdown" @mouseenter="showDropdown('image')" @mouseleave="hideDropdown('image')">
-            <NuxtLink  class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/image') }" @click="closeMenu">
+          <!-- Image Tools Dropdown (如果需要，可以取消注释并完善逻辑) -->
+          <!--
+          <li class="nav-item dropdown" @mouseenter="showDropdown('image')" @mouseleave="hideDropdown('image')">
+            <NuxtLink  class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/image'), 'dropdown-active': activeDropdown === 'image' }" @click="handleNavLinkClick(true, 'image')" aria-haspopup="true" :aria-expanded="activeDropdown === 'image' ? 'true' : 'false'">
               Image Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
@@ -45,11 +53,18 @@
                 Image Compressor
               </NuxtLink></li>
             </ul>
-          </li> -->
+          </li>
+          -->
 
           <!-- Video Tools Dropdown -->
-          <li class="nav-item dropdown" @mouseenter="showDropdown('video')" @mouseleave="hideDropdown('video')">
-            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/') }" @click="closeMenu">
+          <li class="nav-item dropdown" 
+              @mouseenter="showDropdown('video')" 
+              @mouseleave="hideDropdown('video')">
+            <NuxtLink class="nav-link" 
+                      :class="{ 'active': currentRoute.startsWith('/facebook-video-downloader') || currentRoute.startsWith('/pinterest-downloader') || currentRoute.startsWith('/instagram-video-downloader'), 'dropdown-active': activeDropdown === 'video' }" 
+                      @click="handleNavLinkClick(true, 'video')"
+                      aria-haspopup="true"
+                      :aria-expanded="activeDropdown === 'video' ? 'true' : 'false'">
               Video Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
@@ -77,7 +92,7 @@
         </div>
       </nav>
       
-      <div class="nav-toggle" @click="toggleMenu" :class="{ 'active': menuOpen }">
+      <div class="nav-toggle" @click="toggleMenu" :class="{ 'active': menuOpen }" role="button" aria-label="Toggle navigation menu" :aria-expanded="menuOpen ? 'true' : 'false'">
         <span></span>
         <span></span>
         <span></span>
@@ -88,11 +103,11 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, defineComponent, h } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router'; // 假设你的 Nuxt 3 项目正确配置了 vue-router 别名，否则应为 '#app'
 
 // Reactive state
 const menuOpen = ref(false)
-const activeDropdown = ref(null)
+const activeDropdown = ref(null) // Stores the name of the currently open dropdown (e.g., 'text', 'video')
 const isDark = ref(false)
 
 // Get current route
@@ -102,26 +117,57 @@ const currentRoute = computed(() => route.path)
 // Methods
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value
+  if (!menuOpen.value) { // If closing the main menu, also close any active dropdown
+    activeDropdown.value = null
+  }
 }
 
 const closeMenu = () => {
   menuOpen.value = false
-  activeDropdown.value = null
+  activeDropdown.value = null // Always close dropdowns when main menu closes
 }
 
-const showDropdown = (dropdown) => {
+// Desktop dropdown hover logic
+const showDropdown = (dropdownName) => {
   if (window.innerWidth > 768) {
-    activeDropdown.value = dropdown
+    activeDropdown.value = dropdownName
   }
 }
 
-const hideDropdown = (dropdown) => {
+const hideDropdown = (dropdownName) => {
   if (window.innerWidth > 768) {
+    // Use a small delay to allow moving between dropdown items without closing
     setTimeout(() => {
-      if (activeDropdown.value === dropdown) {
+      if (activeDropdown.value === dropdownName) {
         activeDropdown.value = null
       }
-    }, 100)
+    }, 100);
+  }
+}
+
+// Mobile dropdown click logic
+const toggleMobileDropdown = (dropdownName) => {
+  if (window.innerWidth <= 768) {
+    if (activeDropdown.value === dropdownName) {
+      activeDropdown.value = null // Close if already open
+    } else {
+      activeDropdown.value = dropdownName // Open this dropdown
+    }
+  }
+}
+
+// This function will be called on NuxtLink click for both regular and dropdown items
+const handleNavLinkClick = (isDropdownLink, dropdownName = null) => {
+  if (window.innerWidth <= 768) {
+    if (isDropdownLink) {
+      toggleMobileDropdown(dropdownName);
+    } else {
+      closeMenu(); // Close main menu for regular links
+    }
+  } else {
+    // On desktop, regular links close the menu (though it's usually not open)
+    // Dropdown links don't need special click handling as hover manages them
+    closeMenu(); // For desktop, clicking any link should close the menu if it was somehow open
   }
 }
 
@@ -132,6 +178,7 @@ const toggleTheme = () => {
 }
 
 const handleClickOutside = (event) => {
+  // 确保点击事件不在 header 内部时才关闭菜单
   if (!event.target.closest('.header')) {
     closeMenu()
   }
@@ -149,7 +196,7 @@ onMounted(() => {
   const savedTheme = localStorage.getItem('theme')
   isDark.value = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
   document.documentElement.classList.toggle('dark', isDark.value)
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
+  localStorage.setItem('theme', isDark.value ? 'dark' : 'light') // Ensure localStorage is set on initial load
   
   // Add event listeners
   document.addEventListener('click', handleClickOutside)
@@ -161,7 +208,7 @@ onUnmounted(() => {
   document.removeEventListener('keydown', handleEscape)
 })
 
-// Simple Icon component
+// Simple Icon component (保持原样，但建议考虑使用 lucide-vue-next 等库)
 const Icon = defineComponent({
   props: {
     name: String,
@@ -226,11 +273,13 @@ const Icon = defineComponent({
   height: 70px;
 }
 
+
 .logo a {
   text-decoration: none;
 }
 
-.logo h1 {
+/* 修改 h1 为 .logo-text */
+.logo .logo-text { 
   font-size: 32px;
   font-weight: 800;
   color: #1f2937;
@@ -239,7 +288,7 @@ const Icon = defineComponent({
   transition: color 0.3s ease;
 }
 
-:global(.dark) .logo h1 {
+:global(.dark) .logo .logo-text { /* 修改 h1 为 .logo-text */
   color: #f9fafb;
 }
 
@@ -307,8 +356,19 @@ const Icon = defineComponent({
   transition: transform 0.2s ease;
 }
 
+/* 桌面端悬停时旋转图标 */
 .dropdown:hover .dropdown-icon {
   transform: rotate(180deg);
+}
+
+/* 移动端下拉菜单激活时旋转图标 */
+@media (max-width: 768px) {
+  .nav-link.dropdown-active .dropdown-icon {
+    transform: rotate(180deg);
+  }
+  .container{
+    justify-content: space-between;
+  }
 }
 
 .dropdown-menu {
@@ -386,6 +446,7 @@ const Icon = defineComponent({
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-left: auto; /* Push actions to the right on desktop */
 }
 
 .theme-toggle {
@@ -413,7 +474,7 @@ const Icon = defineComponent({
 }
 
 .nav-toggle {
-  display: none;
+  display: none; /* Hidden on desktop */
   flex-direction: column;
   cursor: pointer;
   padding: 0.5rem;
@@ -455,11 +516,9 @@ const Icon = defineComponent({
   height: 20px;
 }
 
-/* Removed .mega-menu specific styles */
-
 @media (max-width: 768px) {
   .nav-toggle {
-    display: flex;
+    display: flex; /* Show on mobile */
   }
   
   .main-nav {
@@ -478,6 +537,8 @@ const Icon = defineComponent({
     flex-direction: column;
     align-items: stretch;
     gap: 0;
+    height: calc(100vh - 70px); /* Make it full height minus header */
+    overflow-y: auto; /* Allow scrolling if content overflows */
   }
   
   :global(.dark) .main-nav {
@@ -503,7 +564,7 @@ const Icon = defineComponent({
   
   .nav-link {
     padding: 1rem;
-    justify-content: space-between;
+    justify-content: space-between; /* To align text and dropdown icon */
     border-radius: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
@@ -513,16 +574,16 @@ const Icon = defineComponent({
   }
   
   .dropdown-menu {
-    position: static;
+    position: static; /* Important for mobile to flow naturally */
     box-shadow: none;
     border: none;
     background: rgba(59, 130, 246, 0.05);
     border-radius: 0;
     margin-left: 1rem;
-    opacity: 1;
-    visibility: visible;
+    opacity: 1; /* Always visible opacity on mobile when parent is active */
+    visibility: visible; /* Always visible visibility on mobile when parent is active */
     transform: none;
-    display: none; /* Hidden by default on mobile, controlled by JS */
+    display: none; /* Hidden by default on mobile, controlled by JS .show class */
     padding: 0; /* Reset padding for mobile */
   }
   
@@ -531,7 +592,7 @@ const Icon = defineComponent({
   }
   
   .dropdown-menu.show {
-    display: block;
+    display: block; /* Show when activeDropdown matches */
   }
   
   .dropdown-link {
@@ -549,6 +610,7 @@ const Icon = defineComponent({
     padding-top: 1rem;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     justify-content: center;
+    margin-left: 0; /* Reset margin-left for mobile */
   }
   
   :global(.dark) .nav-actions {
@@ -561,7 +623,7 @@ const Icon = defineComponent({
     padding: 0 15px;
   }
   
-  .logo h1 {
+  .logo .logo-text { /* 修改 h1 为 .logo-text */
     font-size: 28px;
   }
 }
