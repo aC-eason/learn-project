@@ -40,6 +40,7 @@ useHead({
       description:
         "Format and validate JSON instantly with Kithubs\' free online tool. Beautify, edit, and parse JSON data easily. Try now!",
       url: "https://kithubs.com/json-formatter",
+      logo:"https://kithubs.com/logo.png",
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web Browser",
       offers: {

@@ -565,6 +565,7 @@ useHead({
       description:
         "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
       url: "https://kithubs.com/pinterest-downloader",
+      logo:"https://kithubs.com/logo.png",
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web Browser",
       offers: {

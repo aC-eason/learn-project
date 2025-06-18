@@ -162,6 +162,7 @@ useHead({
       description:
         "Providing various commonly used online tools to improve your work efficiency",
       url: "https://kithubs.com",
+      logo:"https://kithubs.com/logo.png",
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web Browser",
       offers: {

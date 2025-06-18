@@ -9,7 +9,7 @@ export default defineNuxtConfig({
         { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
         {
           name: "msapplication-TileImage",
-          content: "/logo.png",
+          content: "https://kithubs.com/logo.png",
         },
         {
           name: "robots",

@@ -173,6 +173,7 @@ useHead({
       description:
         "Download Instagram videos, photos, Reels, and stories for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
       url: "https://kithubs.com/instagram-video-downloader",
+      logo:"https://kithubs.com/logo.png",
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web Browser",
       offers: {

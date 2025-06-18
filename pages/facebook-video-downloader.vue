@@ -142,6 +142,7 @@ useHead({
       description:
         "Download Facebook videos, Reels, and stories for free with Kithubs\' online tool. Save high-quality MP4 videos easily. Try now!",
       url: "https://kithubs.com/facebook-video-downloader",
+      logo:"https://kithubs.com/logo.png",
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web Browser",
       offers: {

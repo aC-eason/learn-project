@@ -139,6 +139,7 @@ useHead({
       description:
         "Detect sensitive words instantly with Kithubs\' free online tool. Filter content, ensure safety, and scan text easily. Try now!",
       url: "https://kithubs.com/sensitive-word-checker",
+      logo:"https://kithubs.com/logo.png",
       applicationCategory: "MultimediaApplication",
       operatingSystem: "Web Browser",
       offers: {
