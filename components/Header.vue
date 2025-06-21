@@ -41,20 +41,20 @@
           </li>
 
           <!-- Image Tools Dropdown (如果需要，可以取消注释并完善逻辑) -->
-          <!--
+          
           <li class="nav-item dropdown" @mouseenter="showDropdown('image')" @mouseleave="hideDropdown('image')">
-            <NuxtLink  class="nav-link" :class="{ 'active': currentRoute.startsWith('/tools/image'), 'dropdown-active': activeDropdown === 'image' }" @click="handleNavLinkClick(true, 'image')" aria-haspopup="true" :aria-expanded="activeDropdown === 'image' ? 'true' : 'false'">
+            <NuxtLink  class="nav-link" :class="{ 'active':  currentRoute.startsWith('/image-compressor'), 'dropdown-active': activeDropdown === 'image' }" >
               Image Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
             <ul class="dropdown-menu" :class="{ 'show': activeDropdown === 'image' }">
-              <li><NuxtLink to="/" class="dropdown-link" @click="closeMenu">
+              <li><NuxtLink to="/image-compressor" class="dropdown-link" @click="closeMenu">
                 <Icon name="minimize-2" class="tool-icon" />
                 Image Compressor
               </NuxtLink></li>
             </ul>
           </li>
-          -->
+         
 
           <!-- Video Tools Dropdown -->
           <li class="nav-item dropdown" 

@@ -13,16 +13,16 @@
             <h3>Quick Links</h3>
             <ul>
               <li><NuxtLink to="/">Home</NuxtLink></li>
-              <li><NuxtLink to="/">Text Tools</NuxtLink></li>
-              <!--<li><NuxtLink to="/tools/image">Image Tools</NuxtLink></li>-->
-              <li><NuxtLink to="/">Video Tools</NuxtLink></li>
+              <li><NuxtLink to="/sensitive-word-check">Text Tools</NuxtLink></li>
+              <li><NuxtLink to="/image-compressor">Image Tools</NuxtLink></li>
+              <li><NuxtLink to="/instagram-video-downloader">Video Tools</NuxtLink></li>
             </ul>
           </div>
           <div class="link-group">
             <h3>Popular Tools</h3>
             <ul>
               <li><NuxtLink to="/json-formatter">JSON Formatter</NuxtLink></li>
-             <!--<li><NuxtLink to="/tools/image">Image Tools</NuxtLink></li>-->
+             <li><NuxtLink to="/image-compressor">Image Compressor</NuxtLink></li>
               <li><NuxtLink to="/facebook-video-downloader">Facebook Video Downloader</NuxtLink></li>
               <li><NuxtLink to="/sensitive-word-check">Sensitive Content Detector</NuxtLink></li>
             </ul>

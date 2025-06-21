@@ -66,7 +66,7 @@
               </div>
               <h3 class="tool-title">{{ tool.title }}</h3>
               <p class="tool-description">{{ tool.description }}</p>
-              <button class="tool-button">Try Now</button>
+              <a class="tool-button"  :href="tool.href">Try Now</a>
             </div>
           </div>
         </div>
@@ -325,19 +325,22 @@ const popularTools = ref([
     title: "JSON Formatter",
     description: "Beautify and validate JSON data for easy reading and editing",
     icon: FormatIcon,
+    href: "/json-formatter",
   },
   {
     id: 2,
     title: "Image Compressor",
     description: "Optimize image size while maintaining good visual quality",
     icon: ImageIcon,
+    href: "/image-compressor",
   },
   {
     id: 3,
     title: "Video Downloader",
     description: "Download videos from popular platforms quickly and easily",
     icon: DownloadIcon,
-  },
+    href: "/instagram-video-downloader",
+  }
 ]);
 
 const features = ref([
@@ -683,6 +686,7 @@ section {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .tool-button:hover {
