@@ -175,7 +175,7 @@ useHead({
 </script>
 <template>
   <div class="app-container">
-    <Header />
+
 
     <div class="main-wrapper">
       <!-- Header Section -->
@@ -586,7 +586,6 @@ useHead({
         </section>
       </main>
     </div>
-    <Footer />
   </div>
 </template>
 

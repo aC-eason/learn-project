@@ -1,6 +1,6 @@
 <template>
   <div class="page-wrapper">
-    <Header />
+    
     <main class="main-content">
       <!-- Hero Section -->
       <section class="hero">
@@ -116,7 +116,6 @@
         </div>
       </section>
     </main>
-    <Footer />
   </div>
 </template>
 

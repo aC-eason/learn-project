@@ -1,5 +1,7 @@
 <template>
-   <NuxtLayout>
+  <div>
+    <Header  />
     <NuxtPage />
-  </NuxtLayout>
+    <LoginDialog />
+  </div>
 </template>

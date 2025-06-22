@@ -68,9 +68,7 @@ useHead({
 </script>
 <template>
   <div>
-    <Header />
     <json-parser-tool />
-    <Footer />
   </div>
 </template>
 

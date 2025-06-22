@@ -224,7 +224,7 @@ useHead({
 
 <template>
   <div class="app-container">
-    <Header />
+    
     <div class="main-wrapper">
       <!-- Header Section -->
       <header class="hero-section">
@@ -916,7 +916,6 @@ useHead({
         </section>
       </main>
     </div>
-    <Footer />
   </div>
 </template>
 

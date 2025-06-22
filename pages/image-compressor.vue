@@ -1,8 +1,5 @@
 <template>
   <div class="page-wrapper">
-    <!-- Assuming Header component is globally available -->
-    <Header />
-
     <div class="main-wrapper">
       <!-- Hero Section for the Tool -->
       <header class="hero-section">
@@ -221,8 +218,6 @@
       </main>
     </div>
 
-    <!-- Assuming Footer component is globally available -->
-    <Footer />
   </div>
 </template>
 
