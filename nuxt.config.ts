@@ -1,9 +1,16 @@
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   plugins: ["~/plugins/element-plus"],
+  modules: ["@pinia/nuxt"],
+  runtimeConfig: {
+    public: {
+      googleClientId:
+        "519092715425-725koi7qiqephplo3ur4cd9cu656j145.apps.googleusercontent.com",
+    },
+  },
   app: {
     head: {
-      title:"kithubs - Kittools Hub",
+      title: "kithubs - Kittools Hub",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -49,7 +56,7 @@ export default defineNuxtConfig({
             gtag('js', new Date());
             gtag('config', 'G-K0SZ0R79SM');
           `,
-        }
+        },
       ],
     },
   },

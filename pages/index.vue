@@ -1,6 +1,5 @@
 <template>
   <div class="page-wrapper">
-    
     <main class="main-content">
       <!-- Hero Section -->
       <section class="hero">

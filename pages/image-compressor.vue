@@ -223,7 +223,6 @@
 
 <script setup lang="ts">
 import { ref, watch, reactive, h, onMounted } from 'vue';
-import { useHead } from '#app';
 
 // --- Icon Components (Matching your homepage's style) ---
 const ImageIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'currentColor', width: '40', height: '40' }, [
