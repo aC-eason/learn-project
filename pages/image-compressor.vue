@@ -291,12 +291,12 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
     { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
     { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
-    { property: 'og:url', content: 'https://kithubs.com/image-tool' }, // Update with your actual URL
+    { property: 'og:url', content: 'https://kithubs.com/image-compressor' }, // Update with your actual URL
     { property: 'og:title', content: 'Image Processing Tool - Resize, Compress, Convert | Kithubs' },
     { property: 'og:description', content: 'A free online tool to resize, compress, and convert your images (JPG, PNG, WebP) instantly. Optimize image size and format for web and more.' },
     { property: 'og:image', content: 'https://kithubs.com/logo.png' }, // Use your site's logo
   ],
-  link: [{ rel: 'canonical', href: 'https://kithubs.com/image-tool' }], // Update with your actual URL
+  link: [{ rel: 'canonical', href: 'https://kithubs.com/image-compressor' }], // Update with your actual URL
   script: [
     {
       type: 'application/ld+json',
@@ -305,7 +305,7 @@ useHead({
         "@type": "WebApplication",
         name: "Kithubs Image Processing Tool",
         description: "Easily resize, compress, and convert images online for free. Supports JPG, PNG, WebP formats with custom dimensions and quality settings.",
-        url: "https://kithubs.com/image-tool", // Update with your actual URL
+        url: "https://kithubs.com/image-compressor", // Update with your actual URL
         logo: "https://kithubs.com/logo.png",
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Web Browser",
