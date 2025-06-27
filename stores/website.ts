@@ -1,12 +1,11 @@
-// stores/website.ts
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 type UserInfo = {
-  id: string
-  username: string
-  email: string
-  avatar: string
-} | null
+  id: string;
+  username: string;
+  email: string;
+  avatar: string;
+} | null;
 
 export const useWebsiteStore = defineStore('websiteStore', {
   state: () => ({
@@ -16,19 +15,22 @@ export const useWebsiteStore = defineStore('websiteStore', {
   }),
   actions: {
     setToken(token: string) {
-      this.token = token
+      this.token = token;
     },
     setShowLoginModal(show: boolean) {
-      console.log('Setting showLoginModal to:', show)
-      this.showLoginModal = show
+      console.log('Setting showLoginModal to:', show);
+      this.showLoginModal = show;
     },
     setUserInfo(user: Partial<NonNullable<UserInfo>>) {
-      this.userInfo = { ...this.userInfo, ...user }
+      this.userInfo = { ...this.userInfo, ...user };
     },
     logout() {
-      this.token = ''
-      this.userInfo = null
-    }
+      this.token = '';
+      this.userInfo = null;
+    },
   },
-  persist: true
-})
+  persist: {
+    storage: process.client ? localStorage : undefined, // 仅在客户端使用 localStorage
+    paths: ['token', 'userInfo', 'showLoginModal'], // 显式指定持久化的字段
+  },
+});

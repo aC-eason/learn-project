@@ -118,7 +118,7 @@ useHead({
     },
     {
       property: "og:url",
-      content: "https://kithubs.com/sensitive-word-checker",
+      content: "https://kithubs.com/sensitive-word-check",
     },
     {
       property: "og:title",
@@ -135,7 +135,7 @@ useHead({
     },
   ],
   link: [
-    { rel: "canonical", href: "https://kithubs.com/sensitive-word-checker" },
+    { rel: "canonical", href: "https://kithubs.com/sensitive-word-check" },
   ],
   script: [
     // JSON-LD
@@ -147,7 +147,7 @@ useHead({
         name: "Kithubs Sensitive Word Detector - Free Online Tool",
         description:
           "Quickly identify sensitive words in text with Kithubs’ free online tool. Ensure content safety with secure, real-time scanning!",
-        url: "https://kithubs.com/sensitive-word-checker",
+        url: "https://kithubs.com/sensitive-word-check",
         logo: "https://kithubs.com/logo.png",
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Web Browser",

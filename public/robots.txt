@@ -2,5 +2,6 @@ User-agent: *
 Disallow: /api/
 Disallow: /_nuxt/
 Disallow: /cdn-cgi/
+Disallow: /link/
 
 Sitemap: https://kithubs.com/sitemap.xml

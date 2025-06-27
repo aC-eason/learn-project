@@ -125,7 +125,7 @@ useHead({
     {
       name: "description",
       content:
-        "Providing various commonly used online tools to improve your work efficiency",
+        "Providing various commonly used online tools to improve your work efficiency, Text processing, Image editing, Video downloading and more.",
     },
     { charset: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
@@ -143,7 +143,7 @@ useHead({
     {
       property: "og:description",
       content:
-        "Providing various commonly used online tools to improve your work efficiency",
+        "Providing various commonly used online tools to improve your work efficiency, Text processing, Image editing, Video downloading and more.",
     },
     {
       property: "og:image",
@@ -160,7 +160,7 @@ useHead({
         "@type": "WebApplication",
         name: "Web Toolkit - Efficient Online Utilities",
         description:
-          "A suite of practical online tools designed to enhance your productivity",
+          "Providing various commonly used online tools to improve your work efficiency, Text processing, Image editing, Video downloading and more.",
         url: "https://kithubs.com",
         logo: "https://kithubs.com/logo.png",
         applicationCategory: "MultimediaApplication",

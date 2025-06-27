@@ -1,15 +1,22 @@
 <template>
   <div>
-    <Header  />
+    <Header />
     <NuxtPage />
     <Footer />
-    <LoginModel :show="store.showLoginModal"/>
+    <ClientOnly>
+      <LoginModel :show="store.showLoginModal" />
+    </ClientOnly>
   </div>
 </template>
+
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useWebsiteStore } from '~/stores/website'
+import { onMounted } from 'vue';
+import { useWebsiteStore } from '~/stores/website';
 
-const store = useWebsiteStore()
+const store = useWebsiteStore();
+
+// 可选：在客户端初始化时检查状态
+onMounted(() => {
+  console.log('Client mounted, showLoginModal:', store.showLoginModal);
+});
 </script>
-
