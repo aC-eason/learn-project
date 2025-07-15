@@ -12,11 +12,11 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useWebsiteStore } from '~/stores/website';
+import { UserInfoApi } from "@/services/apiServices";
 
 const store = useWebsiteStore();
-
-// 可选：在客户端初始化时检查状态
 onMounted(() => {
-  console.log('Client mounted, showLoginModal:', store.showLoginModal);
+  UserInfoApi();
 });
+
 </script>

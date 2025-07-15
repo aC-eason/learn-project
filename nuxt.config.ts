@@ -62,10 +62,6 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "static",
-    output: {
-      dir: "work", // 自定义输出目录，相对于项目根目录
-      publicDir: "work/kithubs", // 自定义静态文件目录
-    },
   },
   experimental: {
     payloadExtraction: false,

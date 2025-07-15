@@ -8,6 +8,49 @@ const showResult = ref(false);
 const result = ref(null);
 const error = ref("");
 
+const faq_data = ref([
+   {
+    question: "Is it legal to download Instagram content?",
+    answer:
+      "You should only download content that you have permission to download, such as your own posts or content where you have explicit permission from the creator. Always respect copyright and intellectual property rights.",
+  },
+   {
+    question: "What types of Instagram content can I download?",
+    answer:
+      "Our tool supports downloading single photos, videos, reels, stories, IGTV videos, and carousel posts with multiple images. It automatically detects the content type and provides appropriate download options.",
+  },
+  {
+    question: "Can I download private Instagram content?",
+    answer:
+      "No, our tool can only download public Instagram content. Private posts require special permissions and cannot be accessed through our downloader.",
+  },
+  {
+    question: "Do you store the downloaded content?",
+    answer:
+      "No, we don't store any content on our servers. The download links are generated in real-time and expire after a certain period. Your privacy is protected.",
+  },
+  {
+    question: "Why can't I download some Instagram content?",
+    answer:
+      "Some content may be private, deleted, region-restricted, or have download restrictions. Make sure the content is public and accessible from your location.",
+  },
+  {
+    question: "What quality will the downloaded content be?",
+    answer:
+      "Our tool downloads Instagram content in its original quality and resolution, maintaining the same quality as posted on Instagram without any compression.",
+  },
+  {
+    question: "How do I download carousel posts with multiple photos?",
+    answer:
+      "When you paste a carousel post URL, our tool will detect all photos in the post and provide individual download links plus a \"Download All\" option for convenience.",
+  },
+  {
+    question: "Is there a limit to how many files I can download?",
+    answer:
+      "No, there are no limits. You can download as many Instagram photos and videos as you want, completely free of charge.",
+  },
+])
+
 // Computed properties
 const isValidUrl = computed(() => {
   if (!instagramUrl.value) return false;
@@ -830,90 +873,7 @@ useHead({
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <div class="faq-container">
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Is it legal to download Instagram content?
-              </h3>
-              <p class="faq-answer">
-                You should only download content that you have permission to
-                download, such as your own posts or content where you have
-                explicit permission from the creator. Always respect copyright
-                and intellectual property rights.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                What types of Instagram content can I download?
-              </h3>
-              <p class="faq-answer">
-                Our tool supports downloading single photos, videos, reels,
-                stories, IGTV videos, and carousel posts with multiple images.
-                It automatically detects the content type and provides
-                appropriate download options.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Can I download private Instagram content?
-              </h3>
-              <p class="faq-answer">
-                No, our tool can only download public Instagram content. Private
-                posts require special permissions and cannot be accessed through
-                our downloader.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Do you store the downloaded content?</h3>
-              <p class="faq-answer">
-                No, we don't store any content on our servers. The download
-                links are generated in real-time and expire after a certain
-                period. Your privacy is protected.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Why can't I download some Instagram content?
-              </h3>
-              <p class="faq-answer">
-                Some content may be private, deleted, region-restricted, or have
-                download restrictions. Make sure the content is public and
-                accessible from your location.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                What quality will the downloaded content be?
-              </h3>
-              <p class="faq-answer">
-                Our tool downloads Instagram content in its original quality and
-                resolution, maintaining the same quality as posted on Instagram
-                without any compression.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                How do I download carousel posts with multiple photos?
-              </h3>
-              <p class="faq-answer">
-                When you paste a carousel post URL, our tool will detect all
-                photos in the post and provide individual download links plus a
-                "Download All" option for convenience.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Is there a limit to how many files I can download?
-              </h3>
-              <p class="faq-answer">
-                No, there are no limits. You can download as many Instagram
-                photos and videos as you want, completely free of charge.
-              </p>
-            </div>
-          </div>
-        </section>
+         <Faqs :faqs_data="faq_data"></Faqs>
       </main>
     </div>
   </div>

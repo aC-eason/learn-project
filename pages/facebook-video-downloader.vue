@@ -9,6 +9,39 @@ const showResult = ref(false);
 const result = ref(null);
 const error = ref("");
 
+const faq_data = ref([
+  {
+    question: "Is this Facebook video downloader free to use?",
+    answer:
+      "Yes, our Facebook video downloader is completely free. No registration or payment is required to download public Facebook videos.",
+  },
+  {
+    question: "Do I need to install software or create an account?",
+    answer:
+      "No software or account is needed! Our Facebook video downloader is web-based and works on all browsers and devices, including PC, Mac, Android, and iOS.",
+  },
+   {
+    question: "Can I download videos from private Facebook profiles or groups?",
+    answer:
+      "No, our Facebook video downloader only supports downloading publicly available videos. Downloading from private profiles or groups violates Facebook’s terms of service.",
+  },
+  {
+    question: "Will downloaded videos have watermarks?",
+    answer:
+      "Our tool provides watermark-free downloads, ensuring clean, high-quality Facebook videos.",
+  },
+  {
+    question: "Are there limits to how many videos I can download?",
+    answer:
+      "No limits! You can use our Facebook video downloader to save as many public videos as you need, anytime, anywhere.",
+  },
+  {
+    question: "Can I download live Facebook videos or private content?",
+    answer:
+      "Our tool only supports downloading public Facebook videos after they’ve been posted. Live or private videos cannot be downloaded due to platform restrictions.",
+  },
+])
+
 // Computed properties
 const isValidUrl = computed(() => {
   if (!videoUrl.value) return false;
@@ -102,12 +135,12 @@ const clearAll = () => {
 };
 
 useHead({
-  title: "Facebook Video Downloader - Free Tool | Kithub",
+  title: "Download Facebook Videos Online - Free & Fast | Kithub",
   meta: [
     {
       name: "description",
       content:
-        "Download Facebook videos, Reels, and stories for free with Kithubs' online tool. Save high-quality MP4 videos easily. Try now!",
+        "Easily download HD Facebook video with our free online tool. No software needed! Paste the video URL, choose MP4 format, and save videos in seconds with kithubs",
     },
     { charset: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
@@ -123,12 +156,12 @@ useHead({
     },
     {
       property: "og:title",
-      content: "Facebook Video Downloader - Free Tool | Kithubs",
+      content: "Download Facebook Videos Online - Free & Fast | Kithub",
     },
     {
       property: "og:description",
       content:
-        "Download Facebook videos, Reels, and stories for free with Kithubs' online tool. Save high-quality MP4 videos easily. Try now!",
+        "Easily download HD Facebook video with our free online tool. No software needed! Paste the video URL, choose MP4 format, and save videos in seconds with kithubs",
     },
     {
       property: "og:image",
@@ -145,9 +178,9 @@ useHead({
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        name: "Kithubs Facebook Video Downloader - Free Online Tool",
+        name: "Download Facebook Videos Online - Free & Fast | Kithub",
         description:
-          "Easily download Facebook videos, Reels, and Stories in high-quality MP4 format with Kithubs' free online tool. No registration needed!",
+          "Easily download HD Facebook video with our free online tool. No software needed! Paste the video URL, choose MP4 format, and save videos in seconds with kithubs",
         url: "https://kithubs.com/facebook-video-downloader",
         logo: "https://kithubs.com/logo.png",
         applicationCategory: "MultimediaApplication",
@@ -536,54 +569,7 @@ useHead({
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <div class="faq-container">
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Is it legal to download Facebook videos?
-              </h3>
-              <p class="faq-answer">
-                You should only download videos that you have permission to
-                download, such as your own videos or videos where you have
-                explicit permission from the owner.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">What video formats are supported?</h3>
-              <p class="faq-answer">
-                Our tool downloads Facebook videos in MP4 format, which is
-                compatible with most devices and media players.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Can I download private Facebook videos?
-              </h3>
-              <p class="faq-answer">
-                No, our tool can only download public Facebook videos. Private
-                videos require special permissions and cannot be accessed.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Do you store the downloaded videos?</h3>
-              <p class="faq-answer">
-                No, we don't store any videos on our servers. The download links
-                are generated in real-time and expire after a certain period.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Why can't I download some Facebook videos?
-              </h3>
-              <p class="faq-answer">
-                Some videos may be restricted, private, or have special
-                protection settings that prevent downloading. Make sure the
-                video is public and accessible.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Faqs :faqs_data="faq_data" ></Faqs>
       </main>
     </div>
   </div>

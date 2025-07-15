@@ -23,5 +23,8 @@
     "vue": "latest",
     "vue-router": "latest",
     "vue3-google-login": "^2.0.33"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.89.2"
   }
 }

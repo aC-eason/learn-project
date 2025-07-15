@@ -1,6 +1,5 @@
 <template>
   <div class="app-container">
-    
     <div class="main-wrapper">
       <!-- Header Section -->
       <header class="hero-section">
@@ -358,61 +357,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <div class="faq-container">
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Is it legal to download Pinterest videos?
-              </h3>
-              <p class="faq-answer">
-                You should only download videos that you have permission to
-                download, such as your own content or videos where you have
-                explicit permission from the creator.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">What video formats are supported?</h3>
-              <p class="faq-answer">
-                Our tool downloads Pinterest videos in MP4 format, which is
-                compatible with most devices and media players.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Can I download private Pinterest videos?
-              </h3>
-              <p class="faq-answer">
-                No, our tool can only download public Pinterest videos. Private
-                pins require special permissions and cannot be accessed.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Do you store the downloaded videos?</h3>
-              <p class="faq-answer">
-                No, we don't store any videos on our servers. The download links
-                are generated in real-time and expire after a certain period.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Why can't I download some Pinterest videos?
-              </h3>
-              <p class="faq-answer">
-                Some pins may not contain videos, be private, or have
-                restrictions that prevent downloading. Make sure the pin is
-                public and contains a video.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Is this service free to use?</h3>
-              <p class="faq-answer">
-                Yes, our Pinterest video downloader is completely free to use
-                with no hidden costs or premium subscriptions required.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Faqs :faqs_data="faq_data"></Faqs>
       </main>
     </div>
   </div>
@@ -427,6 +372,34 @@ const isLoading = ref(false);
 const showResult = ref(false);
 const result = ref(null);
 const error = ref("");
+
+const faq_data = ref([
+  {
+    question: "Is this Pinterest video downloader free to use?",
+    answer:
+      "Yes, our Pinterest downloader is completely free. No registration or payment is required to download public Pinterest videos, images, or GIFs.",
+  },
+  {
+    question: "Do I need to install software or create an account?",
+    answer:
+      "No software or account is needed! Our tool is web-based and works on all browsers and devices, including PC, Mac, Android, and iOS.",
+  },
+  {
+    question: "What types of content can I download?",
+    answer:
+      "You can download Pinterest videos (MP4), images (JPEG, PNG), and GIFs, with support for up to 4K quality (depending on the original content).",
+  },
+  {
+    question: "Will downloaded content have watermarks?",
+    answer:
+      "Our tool allows watermark-free downloads, ensuring clean, high-quality videos and images.",
+  },
+  {
+    question: "Can I download content from private Pinterest boards?",
+    answer:
+      "No, our tool only supports downloading publicly available content. Downloading from private boards violates Pinterest’s terms of service.",
+  },
+]);
 
 // Computed properties
 const isValidUrl = computed(() => {
@@ -521,12 +494,12 @@ const clearAll = () => {
 };
 
 useHead({
-  title: "Free Pinterest Video & Image Downloader | Kithubs",
+  title: "Free Pinterest Video Downloader | HD, 4K, Fast",
   meta: [
     {
       name: "description",
       content:
-        "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
+        "Download Pinterest videos and images quickly with our user-friendly tool. Save high-quality pins in seconds. Enjoy fast, easy, and unlimited downloads today!",
     },
     { charset: "UTF-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1.0" },
@@ -539,12 +512,12 @@ useHead({
     { property: "og:url", content: "https://kithubs.com/pinterest-downloader" },
     {
       property: "og:title",
-      content: "Free Pinterest Video & Image Downloader | Kithubs",
+      content: "Free Pinterest Video Downloader | HD, 4K, Fast",
     },
     {
       property: "og:description",
       content:
-        "Download Pinterest videos, images for free with Kithubs’ online tool. Save HD content easily, no login needed. Try now!",
+        "Download Pinterest videos and images quickly with our user-friendly tool. Save high-quality pins in seconds. Enjoy fast, easy, and unlimited downloads today!",
     },
     {
       property: "og:image",
@@ -561,9 +534,9 @@ useHead({
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        name: "Kithubs Pinterest Video & Image Downloader - Free Tool",
+        name: "Free Pinterest Video Downloader | HD, 4K, Fast",
         description:
-          "Quickly download Pinterest videos and images in HD with Kithubs’ free online tool. No login required, fast and secure!",
+          "Download Pinterest videos and images quickly with our user-friendly tool. Save high-quality pins in seconds. Enjoy fast, easy, and unlimited downloads today!",
         url: "https://kithubs.com/pinterest-downloader",
         logo: "https://kithubs.com/logo.png",
         applicationCategory: "MultimediaApplication",

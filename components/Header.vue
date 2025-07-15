@@ -3,81 +3,252 @@
     <div class="container">
       <div class="logo">
         <NuxtLink to="/">
-          <div class="logo-text" role="heading" aria-level="2">Kit<span>hubs</span></div>
+          <div class="logo-text" role="heading" aria-level="2">
+            Kit<span>hubs</span>
+          </div>
         </NuxtLink>
       </div>
-      
-      <nav class="main-nav" :class="{ 'active': menuOpen }">
+
+      <nav class="main-nav" :class="{ active: menuOpen }">
         <ul class="nav-list">
           <li class="nav-item">
-            <NuxtLink to="/" class="nav-link" :class="{ 'active': currentRoute === '/' }" @click="handleNavLinkClick(false)">
+            <NuxtLink
+              to="/"
+              class="nav-link"
+              :class="{ active: currentRoute === '/' }"
+              @click="handleNavLinkClick(false)"
+            >
               Home
             </NuxtLink>
           </li>
-          
+
+          <!-- Short Tools Dropdown -->
+          <li
+            class="nav-item dropdown"
+            @mouseenter="showDropdown('url')"
+            @mouseleave="hideDropdown('url')"
+          >
+            <NuxtLink
+              class="nav-link"
+              :class="{
+                active:
+                  currentRoute.startsWith('/short-urls'),
+                'dropdown-active': activeDropdown === 'url',
+              }"
+              @click="handleNavLinkClick(true, 'url')"
+              aria-haspopup="true"
+              :aria-expanded="activeDropdown === 'url' ? 'true' : 'false'"
+            >
+              Url Tools
+              <Icon name="chevron-down" class="dropdown-icon" />
+            </NuxtLink>
+            <ul
+              class="dropdown-menu"
+              :class="{ show: activeDropdown === 'url' }"
+            >
+              <li>
+                <NuxtLink
+                  to="/short-link-generator"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <Icon name="code" class="tool-icon" />
+                  Short Links Tool
+                </NuxtLink>
+              </li>
+            </ul>
+          </li>
+
           <!-- Text Tools Dropdown -->
-          <li class="nav-item dropdown" 
-              @mouseenter="showDropdown('text')" 
-              @mouseleave="hideDropdown('text')">
-            <NuxtLink class="nav-link" 
-                      :class="{ 'active': currentRoute.startsWith('/json-formatter') || currentRoute.startsWith('/sensitive-word-check'), 'dropdown-active': activeDropdown === 'text' }" 
-                      @click="handleNavLinkClick(true, 'text')"
-                      aria-haspopup="true"
-                      :aria-expanded="activeDropdown === 'text' ? 'true' : 'false'">
+          <li
+            class="nav-item dropdown"
+            @mouseenter="showDropdown('text')"
+            @mouseleave="hideDropdown('text')"
+          >
+            <NuxtLink
+              class="nav-link"
+              :class="{
+                active:
+                  currentRoute.startsWith('/json-formatter') ||
+                  currentRoute.startsWith('/sensitive-word-check'),
+                'dropdown-active': activeDropdown === 'text',
+              }"
+              @click="handleNavLinkClick(true, 'text')"
+              aria-haspopup="true"
+              :aria-expanded="activeDropdown === 'text' ? 'true' : 'false'"
+            >
               Text Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
-            <ul class="dropdown-menu" :class="{ 'show': activeDropdown === 'text' }">
-              <li><NuxtLink to="/json-formatter" class="dropdown-link" @click="closeMenu">
-                <Icon name="code" class="tool-icon" />
-                JSON Formatter
-              </NuxtLink></li>
-              <li><NuxtLink to="/sensitive-word-check" class="dropdown-link" @click="closeMenu">
-                <Icon name="shield-check" class="tool-icon" />
-                Sensitive Content Detector
-              </NuxtLink></li>
+            <ul
+              class="dropdown-menu"
+              :class="{ show: activeDropdown === 'text' }"
+            >
+              <li>
+                <NuxtLink
+                  to="/json-formatter"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <Icon name="code" class="tool-icon" />
+                  JSON Formatter
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/sensitive-word-check"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <Icon name="shield-check" class="tool-icon" />
+                  Sensitive Content Detector
+                </NuxtLink>
+              </li>
             </ul>
           </li>
 
           <!-- Image Tools Dropdown -->
-          <li class="nav-item dropdown" @mouseenter="showDropdown('image')" @mouseleave="hideDropdown('image')">
-            <NuxtLink class="nav-link" :class="{ 'active': currentRoute.startsWith('/image-compressor'), 'dropdown-active': activeDropdown === 'image' }">
+          <li
+            class="nav-item dropdown"
+            @mouseenter="showDropdown('image')"
+            @mouseleave="hideDropdown('image')"
+          >
+            <NuxtLink
+              class="nav-link"
+              :class="{
+                active: currentRoute.startsWith('/image-compressor'),
+                'dropdown-active': activeDropdown === 'image',
+              }"
+            >
               Image Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
-            <ul class="dropdown-menu" :class="{ 'show': activeDropdown === 'image' }">
-              <li><NuxtLink to="/image-compressor" class="dropdown-link" @click="closeMenu">
-                <Icon name="minimize-2" class="tool-icon" />
-                Image Compressor
-              </NuxtLink></li>
+            <ul
+              class="dropdown-menu"
+              :class="{ show: activeDropdown === 'image' }"
+            >
+              <li>
+                <NuxtLink
+                  to="/image-compressor"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <Icon name="minimize-2" class="tool-icon" />
+                  Image Compressor
+                </NuxtLink>
+              </li>
             </ul>
           </li>
 
           <!-- Video Tools Dropdown -->
-          <li class="nav-item dropdown" 
-              @mouseenter="showDropdown('video')" 
-              @mouseleave="hideDropdown('video')">
-            <NuxtLink class="nav-link" 
-                      :class="{ 'active': currentRoute.startsWith('/facebook-video-downloader') || currentRoute.startsWith('/pinterest-downloader') || currentRoute.startsWith('/instagram-video-downloader'), 'dropdown-active': activeDropdown === 'video' }" 
-                      @click="handleNavLinkClick(true, 'video')"
-                      aria-haspopup="true"
-                      :aria-expanded="activeDropdown === 'video' ? 'true' : 'false'">
+          <li
+            class="nav-item dropdown"
+            @mouseenter="showDropdown('video')"
+            @mouseleave="hideDropdown('video')"
+          >
+            <NuxtLink
+              class="nav-link"
+              :class="{
+                active:
+                  currentRoute.startsWith('/facebook-video-downloader') ||
+                  currentRoute.startsWith('/pinterest-downloader') ||
+                  currentRoute.startsWith('/instagram-video-downloader'),
+                'dropdown-active': activeDropdown === 'video',
+              }"
+              @click="handleNavLinkClick(true, 'video')"
+              aria-haspopup="true"
+              :aria-expanded="activeDropdown === 'video' ? 'true' : 'false'"
+            >
               Video Tools
               <Icon name="chevron-down" class="dropdown-icon" />
             </NuxtLink>
-            <ul class="dropdown-menu" :class="{ 'show': activeDropdown === 'video' }">
-              <li><NuxtLink to="/facebook-video-downloader" class="dropdown-link" @click="closeMenu">
-                <Icon name="facebook" class="tool-icon" />
-                Facebook Video Downloader
-              </NuxtLink></li>
-              <li><NuxtLink to="/pinterest-downloader" class="dropdown-link" @click="closeMenu">
-                <Icon name="pinterest" class="tool-icon" />
-                Pinterest Downloader
-              </NuxtLink></li>
-              <li><NuxtLink to="/instagram-video-downloader" class="dropdown-link" @click="closeMenu">
-                <Icon name="instagram" class="tool-icon" />
-                Instagram Downloader
-              </NuxtLink></li>
+            <ul
+              class="dropdown-menu"
+              :class="{ show: activeDropdown === 'video' }"
+            >
+              <li>
+                <NuxtLink
+                  to="/facebook-video-downloader"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <svg
+                    t="1751813932491"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="6492"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      d="M1024 512c0-282.763636-229.236364-512-512-512C229.236364 0 0 229.236364 0 512s229.236364 512 512 512C794.763636 1024 1024 794.763636 1024 512zM374.504727 512 374.504727 414.021818l60.043636 0L434.548364 354.769455c0-79.918545 23.877818-137.495273 111.383273-137.495273l104.075636 0 0 97.745455-73.262545 0c-36.724364 0-45.056 24.389818-45.056 49.943273l0 49.058909 112.919273 0L629.201455 512l-97.512727 0 0 295.517091L434.548364 807.517091 434.548364 512 374.504727 512z"
+                      p-id="6493"
+                    ></path>
+                  </svg>
+                  Facebook Video Downloader
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/pinterest-downloader"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <svg
+                    t="1751813932491"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      d="M1024 512c0-282.763636-229.236364-512-512-512C229.236364 0 0 229.236364 0 512s229.236364 512 512 512C794.763636 1024 1024 794.763636 1024 512z"
+                      fill="#E60023"
+                    />
+                    <path
+                      d="M512 704c-106.066909 0-192-85.933091-192-192s85.933091-192 192-192 192 85.933091 192 192-85.933091 192-192 192zm0-320c-70.692364 0-128 57.307636-128 128s57.307636 128 128 128 128-57.307636 128-128-57.307636-128-128-128z"
+                      fill="#FFFFFF"
+                    />
+                    <path
+                      d="M496 352c-8.837818 0-16 7.162182-16 16v192c0 8.837818 7.162182 16 16 16 52.945455 0 96-43.054545 96-96s-43.054545-96-96-96z"
+                      fill="#E60023"
+                    />
+                  </svg>
+                  Pinterest Downloader
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/instagram-video-downloader"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <svg
+                    t="1751813812382"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="5482"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      d="M512 306.9c-113.5 0-205.1 91.6-205.1 205.1S398.5 717.1 512 717.1 717.1 625.5 717.1 512 625.5 306.9 512 306.9z m0 338.4c-73.4 0-133.3-59.9-133.3-133.3S438.6 378.7 512 378.7 645.3 438.6 645.3 512 585.4 645.3 512 645.3zM725.5 250.7c-26.5 0-47.9 21.4-47.9 47.9s21.4 47.9 47.9 47.9 47.9-21.3 47.9-47.9c-0.1-26.6-21.4-47.9-47.9-47.9z"
+                      p-id="5483"
+                    ></path>
+                    <path
+                      d="M911.8 512c0-55.2 0.5-109.9-2.6-165-3.1-64-17.7-120.8-64.5-167.6-46.9-46.9-103.6-61.4-167.6-64.5-55.2-3.1-109.9-2.6-165-2.6-55.2 0-109.9-0.5-165 2.6-64 3.1-120.8 17.7-167.6 64.5C132.6 226.3 118.1 283 115 347c-3.1 55.2-2.6 109.9-2.6 165s-0.5 109.9 2.6 165c3.1 64 17.7 120.8 64.5 167.6 46.9 46.9 103.6 61.4 167.6 64.5 55.2 3.1 109.9 2.6 165 2.6 55.2 0 109.9 0.5 165-2.6 64-3.1 120.8-17.7 167.6-64.5 46.9-46.9 61.4-103.6 64.5-167.6 3.2-55.1 2.6-109.8 2.6-165z m-88 235.8c-7.3 18.2-16.1 31.8-30.2 45.8-14.1 14.1-27.6 22.9-45.8 30.2C695.2 844.7 570.3 840 512 840c-58.3 0-183.3 4.7-235.9-16.1-18.2-7.3-31.8-16.1-45.8-30.2-14.1-14.1-22.9-27.6-30.2-45.8C179.3 695.2 184 570.3 184 512c0-58.3-4.7-183.3 16.1-235.9 7.3-18.2 16.1-31.8 30.2-45.8s27.6-22.9 45.8-30.2C328.7 179.3 453.7 184 512 184s183.3-4.7 235.9 16.1c18.2 7.3 31.8 16.1 45.8 30.2 14.1 14.1 22.9 27.6 30.2 45.8C844.7 328.7 840 453.7 840 512c0 58.3 4.7 183.2-16.2 235.8z"
+                      p-id="5484"
+                    ></path>
+                  </svg>
+                  Instagram Downloader
+                </NuxtLink>
+              </li>
             </ul>
           </li>
         </ul>
@@ -94,12 +265,15 @@
             <span class="login-text">Login</span>
           </button>
         </div>
-        
+
         <!-- 已登录状态 - 显示用户头像和下拉菜单 -->
-        <div v-else class="user-info" 
-             @mouseenter="showUserDropdown" 
-             @mouseleave="hideUserDropdown"
-             @click="toggleUserDropdown">
+        <div
+          v-else
+          class="user-info"
+          @mouseenter="showUserDropdown"
+          @mouseleave="hideUserDropdown"
+          @click="toggleUserDropdown"
+        >
           <div class="user-avatar-container">
             <div class="user-avatar">
               <el-icon class="avatar-icon">
@@ -108,14 +282,17 @@
             </div>
             <div class="user-details">
               <span class="username">{{ store.userInfo.username }}</span>
-              <el-icon class="user-dropdown-icon" :class="{ 'rotated': userDropdownOpen }">
+              <el-icon
+                class="user-dropdown-icon"
+                :class="{ rotated: userDropdownOpen }"
+              >
                 <ArrowDown />
               </el-icon>
             </div>
           </div>
-          
+
           <!-- 用户下拉菜单 -->
-          <div class="user-dropdown-menu" :class="{ 'show': userDropdownOpen }">
+          <div class="user-dropdown-menu" :class="{ show: userDropdownOpen }">
             <div class="user-dropdown-header">
               <div class="user-avatar-large">
                 <el-icon class="avatar-icon-large">
@@ -124,12 +301,14 @@
               </div>
               <div class="user-info-details">
                 <div class="username-large">{{ store.userInfo.username }}</div>
-                <div class="user-email" v-if="store.userInfo.email">{{ store.userInfo.email }}</div>
+                <div class="user-email" v-if="store.userInfo.email">
+                  {{ store.userInfo.email }}
+                </div>
               </div>
             </div>
-            
+
             <div class="user-dropdown-divider"></div>
-            
+
             <ul class="user-dropdown-list">
               <!-- <li>
                 <NuxtLink to="/profile" class="user-dropdown-link" @click="closeUserDropdown">
@@ -148,7 +327,10 @@
                 </NuxtLink>
               </li> -->
               <li>
-                <button @click="handleLogout" class="user-dropdown-link logout-link">
+                <button
+                  @click="handleLogout"
+                  class="user-dropdown-link logout-link"
+                >
                   <el-icon class="dropdown-item-icon">
                     <SwitchButton />
                   </el-icon>
@@ -159,8 +341,15 @@
           </div>
         </div>
       </div>
-      
-      <div class="nav-toggle" @click="toggleMenu" :class="{ 'active': menuOpen }" role="button" aria-label="Toggle navigation menu" :aria-expanded="menuOpen ? 'true' : 'false'">
+
+      <div
+        class="nav-toggle"
+        @click="toggleMenu"
+        :class="{ active: menuOpen }"
+        role="button"
+        aria-label="Toggle navigation menu"
+        :aria-expanded="menuOpen ? 'true' : 'false'"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -170,186 +359,201 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, defineComponent, h } from 'vue'
-import { useRoute } from 'vue-router'
-import { User, Avatar, ArrowDown, Setting, SwitchButton } from '@element-plus/icons-vue'
+import { ref, computed, onMounted, onUnmounted, defineComponent, h } from "vue";
+import { useRoute } from "vue-router";
+import {
+  User,
+  Avatar,
+  ArrowDown,
+  Setting,
+  SwitchButton,
+} from "@element-plus/icons-vue";
 
-const store = useWebsiteStore() 
+const store = useWebsiteStore();
 
 // Reactive state
-const menuOpen = ref(false)
-const activeDropdown = ref(null)
-const userDropdownOpen = ref(false)
-const isDark = ref(false)
+const menuOpen = ref(false);
+const activeDropdown = ref(null);
+const userDropdownOpen = ref(false);
+const isDark = ref(false);
 
 // Get current route
-const route = useRoute()
-const currentRoute = computed(() => route.path)
+const route = useRoute();
+const currentRoute = computed(() => route.path);
 
 // Methods
 const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value
+  menuOpen.value = !menuOpen.value;
   if (!menuOpen.value) {
-    activeDropdown.value = null
+    activeDropdown.value = null;
   }
-}
+};
 
 const closeMenu = () => {
-  menuOpen.value = false
-  activeDropdown.value = null
-}
+  menuOpen.value = false;
+  activeDropdown.value = null;
+};
 
 const setShowLoginModal = (value) => {
-  store.setShowLoginModal(value)
-}
+  store.setShowLoginModal(value);
+};
 
 // 用户下拉菜单控制
 const showUserDropdown = () => {
   if (window.innerWidth > 768) {
-    userDropdownOpen.value = true
+    userDropdownOpen.value = true;
   }
-}
+};
 
 const hideUserDropdown = () => {
   if (window.innerWidth > 768) {
     setTimeout(() => {
-      userDropdownOpen.value = false
-    }, 150)
+      userDropdownOpen.value = false;
+    }, 150);
   }
-}
+};
 
 const toggleUserDropdown = () => {
   if (window.innerWidth <= 768) {
-    userDropdownOpen.value = !userDropdownOpen.value
+    userDropdownOpen.value = !userDropdownOpen.value;
   }
-}
+};
 
 const closeUserDropdown = () => {
-  userDropdownOpen.value = false
-}
+  userDropdownOpen.value = false;
+};
 
 // 登出功能
 const handleLogout = async () => {
   try {
-    await store.logout()
-    closeUserDropdown()
-    closeMenu()
+    await store.logout();
+    closeUserDropdown();
+    closeMenu();
   } catch (error) {
-    console.error('Logout failed:', error)
+    console.error("Logout failed:", error);
   }
-}
+};
 
 // Desktop dropdown hover logic
 const showDropdown = (dropdownName) => {
   if (window.innerWidth > 768) {
-    activeDropdown.value = dropdownName
+    activeDropdown.value = dropdownName;
   }
-}
+};
 
 const hideDropdown = (dropdownName) => {
   if (window.innerWidth > 768) {
     setTimeout(() => {
       if (activeDropdown.value === dropdownName) {
-        activeDropdown.value = null
+        activeDropdown.value = null;
       }
-    }, 100)
+    }, 100);
   }
-}
+};
 
 // Mobile dropdown click logic
 const toggleMobileDropdown = (dropdownName) => {
   if (window.innerWidth <= 768) {
     if (activeDropdown.value === dropdownName) {
-      activeDropdown.value = null
+      activeDropdown.value = null;
     } else {
-      activeDropdown.value = dropdownName
+      activeDropdown.value = dropdownName;
     }
   }
-}
+};
 
 const handleNavLinkClick = (isDropdownLink, dropdownName = null) => {
   if (window.innerWidth <= 768) {
     if (isDropdownLink) {
-      toggleMobileDropdown(dropdownName)
+      toggleMobileDropdown(dropdownName);
     } else {
-      closeMenu()
+      closeMenu();
     }
   } else {
-    closeMenu()
+    closeMenu();
   }
-}
+};
 
 const toggleTheme = () => {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle('dark', isDark.value)
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-}
+  isDark.value = !isDark.value;
+  document.documentElement.classList.toggle("dark", isDark.value);
+  localStorage.setItem("theme", isDark.value ? "dark" : "light");
+};
 
 const handleClickOutside = (event) => {
-  if (!event.target.closest('.header')) {
-    closeMenu()
-    closeUserDropdown()
+  if (!event.target.closest(".header")) {
+    closeMenu();
+    closeUserDropdown();
   }
-}
+};
 
 const handleEscape = (event) => {
-  if (event.key === 'Escape') {
-    closeMenu()
-    closeUserDropdown()
+  if (event.key === "Escape") {
+    closeMenu();
+    closeUserDropdown();
   }
-}
+};
 
 // Lifecycle
 onMounted(() => {
-  const savedTheme = localStorage.getItem('theme')
-  isDark.value = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  document.documentElement.classList.toggle('dark', isDark.value)
-  localStorage.setItem('theme', isDark.value ? 'dark' : 'light')
-  
-  document.addEventListener('click', handleClickOutside)
-  document.addEventListener('keydown', handleEscape)
-})
+  const savedTheme = localStorage.getItem("theme");
+  isDark.value =
+    savedTheme === "dark" ||
+    (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  document.documentElement.classList.toggle("dark", isDark.value);
+  localStorage.setItem("theme", isDark.value ? "dark" : "light");
+
+  document.addEventListener("click", handleClickOutside);
+  document.addEventListener("keydown", handleEscape);
+});
 
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside)
-  document.removeEventListener('keydown', handleEscape)
-})
+  document.removeEventListener("click", handleClickOutside);
+  document.removeEventListener("keydown", handleEscape);
+});
 
 // Simple Icon component
 const Icon = defineComponent({
   props: {
     name: String,
-    class: String
+    class: String,
   },
   setup(props) {
     const icons = {
-      'chevron-down': 'M19 9l-7 7-7-7',
-      'sun': 'M12 2v2m0 16v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42',
-      'moon': 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z',
-      'type': 'M4 7V4h16v3M9 20h6M12 4v16',
-      'code': 'M16 18l6-6-6-6M8 6l-6 6 6 6',
-      'shield-check': 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-      'image': 'M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 8.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM21 15l-5-5L5 21',
-      'minimize-2': 'M4 14h6m0 0v6m0-6l-7 7M20 10h-6m0 0V4m0 6l7-7',
-      'video': 'M23 7l-7 5 7 5V7zM1 5a2 2 0 012-2h9a2 2 0 012 2v14a2 2 0 01-2 2H3a2 2 0 01-2-2V5z',
-      'facebook': 'M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z',
-      'pinterest': 'M8 11.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.853 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.334.135-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.97-.527-2.297-1.155l-.624 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z',
-      'user': 'M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8a4 4 0 0 0 0 8Z'
-    }
-    
-    return () => h('svg', {
-      class: ['icon', props.class],
-      viewBox: '0 0 24 24',
-      fill: 'none',
-      stroke: 'currentColor',
-      'stroke-width': '2',
-      'stroke-linecap': 'round',
-      'stroke-linejoin': 'round'
-    }, [
-      h('path', { d: icons[props.name] })
-    ])
-  }
-})
+      "chevron-down": "M19 9l-7 7-7-7",
+      sun: "M12 2v2m0 16v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42",
+      moon: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z",
+      type: "M4 7V4h16v3M9 20h6M12 4v16",
+      code: "M16 18l6-6-6-6M8 6l-6 6 6 6",
+      "shield-check": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
+      image:
+        "M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 8.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM21 15l-5-5L5 21",
+      "minimize-2": "M4 14h6m0 0v6m0-6l-7 7M20 10h-6m0 0V4m0 6l7-7",
+      video:
+        "M23 7l-7 5 7 5V7zM1 5a2 2 0 012-2h9a2 2 0 012 2v14a2 2 0 01-2 2H3a2 2 0 01-2-2V5z",
+      facebook:
+        "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z",
+      pinterest:
+        "M8 11.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.853 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.334.135-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.97-.527-2.297-1.155l-.624 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z",
+      user: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8a4 4 0 0 0 0 8Z",
+    };
+
+    return () =>
+      h(
+        "svg",
+        {
+          class: ["icon", props.class],
+          viewBox: "0 0 24 24",
+          fill: "none",
+          stroke: "currentColor",
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+        },
+        [h("path", { d: icons[props.name] })]
+      );
+  },
+});
 </script>
 
 <style scoped>
@@ -383,7 +587,7 @@ const Icon = defineComponent({
   text-decoration: none;
 }
 
-.logo .logo-text { 
+.logo .logo-text {
   font-size: 32px;
   font-weight: 800;
   color: #1f2937;
@@ -468,7 +672,7 @@ const Icon = defineComponent({
   .nav-link.dropdown-active .dropdown-icon {
     transform: rotate(180deg);
   }
-  .container{
+  .container {
     justify-content: space-between;
   }
 }
@@ -864,7 +1068,7 @@ const Icon = defineComponent({
   .nav-toggle {
     display: flex;
   }
-  
+
   .main-nav {
     position: fixed;
     top: 70px;
@@ -884,39 +1088,39 @@ const Icon = defineComponent({
     height: calc(100vh - 70px);
     overflow-y: auto;
   }
-  
+
   :global(.dark) .main-nav {
     background: rgba(17, 24, 39, 0.98);
     border-top-color: rgba(255, 255, 255, 0.1);
   }
-  
+
   .main-nav.active {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
-  
+
   .nav-list {
     flex-direction: column;
     gap: 0;
     width: 100%;
   }
-  
+
   .nav-item {
     width: 100%;
   }
-  
+
   .nav-link {
     padding: 1rem;
     justify-content: space-between;
     border-radius: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
-  
+
   :global(.dark) .nav-link {
     border-bottom-color: rgba(255, 255, 255, 0.1);
   }
-  
+
   .dropdown-menu {
     position: static;
     box-shadow: none;
@@ -930,15 +1134,15 @@ const Icon = defineComponent({
     display: none;
     padding: 0;
   }
-  
+
   :global(.dark) .dropdown-menu {
     background: rgba(59, 130, 246, 0.1);
   }
-  
+
   .dropdown-menu.show {
     display: block;
   }
-  
+
   .dropdown-link {
     margin: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
@@ -1001,7 +1205,7 @@ const Icon = defineComponent({
   .container {
     padding: 0 15px;
   }
-  
+
   .logo .logo-text {
     font-size: 28px;
   }

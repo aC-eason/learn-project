@@ -21,6 +21,7 @@
           <div class="link-group">
             <h3>Popular Tools</h3>
             <ul>
+              <li><NuxtLink to="/short-link-generator">Short Links Tool</NuxtLink></li>
               <li><NuxtLink to="/json-formatter">JSON Formatter</NuxtLink></li>
              <li><NuxtLink to="/image-compressor">Image Compressor</NuxtLink></li>
               <li><NuxtLink to="/facebook-video-downloader">Facebook Video Downloader</NuxtLink></li>

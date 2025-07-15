@@ -8,7 +8,7 @@
             <div class="hero-text">
               <h1 class="hero-title">
                 Convenient & Efficient<br />
-                <span class="highlight">Web Toolkit</span>
+                <span class="highlight">Web tools</span>
               </h1>
               <p class="hero-description">
                 Providing various commonly used online tools to improve your

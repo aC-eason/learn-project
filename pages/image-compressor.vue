@@ -9,7 +9,8 @@
           </div>
           <h1 class="hero-title">Image Processing Tool</h1>
           <p class="hero-subtitle">
-            Resize, compress, and convert your images instantly. Fast, free, and secure.
+            Resize, compress, and convert your images instantly. Fast, free, and
+            secure.
           </p>
         </div>
       </header>
@@ -44,17 +45,35 @@
             <div class="image-preview-container">
               <div class="image-card">
                 <h3>Original Image</h3>
-                <img :src="originalImageSrc" alt="Original Image" class="image-preview" />
-                <p class="image-info">Dimensions: {{ originalImage.width }}x{{ originalImage.height }}px</p>
-                <p class="image-info">Size: {{ (originalImageInfo.size / 1024).toFixed(2) }} KB</p>
+                <img
+                  :src="originalImageSrc"
+                  alt="Original Image"
+                  class="image-preview"
+                />
+                <p class="image-info">
+                  Dimensions: {{ originalImage.width }}x{{
+                    originalImage.height
+                  }}px
+                </p>
+                <p class="image-info">
+                  Size: {{ (originalImageInfo.size / 1024).toFixed(2) }} KB
+                </p>
               </div>
               <div class="image-card">
                 <h3>Processed Image</h3>
-                <canvas ref="canvas" class="image-preview processed-canvas"></canvas>
+                <canvas
+                  ref="canvas"
+                  class="image-preview processed-canvas"
+                ></canvas>
                 <p v-if="processedImageInfo" class="image-info">
-                  Dimensions: {{ processedImageInfo.width }}x{{ processedImageInfo.height }}px
+                  Dimensions: {{ processedImageInfo.width }}x{{
+                    processedImageInfo.height
+                  }}px
                 </p>
-                <p v-if="processedImageInfo && processedImageInfo.size" class="image-info">
+                <p
+                  v-if="processedImageInfo && processedImageInfo.size"
+                  class="image-info"
+                >
                   Size: {{ (processedImageInfo.size / 1024).toFixed(2) }} KB
                 </p>
                 <p v-else class="image-info">Process image to see preview.</p>
@@ -67,24 +86,53 @@
                 <h3>Resize Options</h3>
                 <div class="input-row">
                   <label for="width-input">Width (px):</label>
-                  <input id="width-input" type="number" v-model.number="newWidth" placeholder="Auto" class="text-input" />
+                  <input
+                    id="width-input"
+                    type="number"
+                    v-model.number="newWidth"
+                    placeholder="Auto"
+                    class="text-input"
+                  />
                 </div>
                 <div class="input-row">
                   <label for="height-input">Height (px):</label>
-                  <input id="height-input" type="number" v-model.number="newHeight" placeholder="Auto" class="text-input" />
+                  <input
+                    id="height-input"
+                    type="number"
+                    v-model.number="newHeight"
+                    placeholder="Auto"
+                    class="text-input"
+                  />
                 </div>
                 <div class="input-row">
                   <label for="scale-input">Scale (%):</label>
-                  <input id="scale-input" type="number" v-model.number="scaleFactor" min="1" max="200" placeholder="100" class="text-input" />
+                  <input
+                    id="scale-input"
+                    type="number"
+                    v-model.number="scaleFactor"
+                    min="1"
+                    max="200"
+                    placeholder="100"
+                    class="text-input"
+                  />
                 </div>
-                <button @click="resetDimensions" class="btn btn-secondary reset-button">Reset Dimensions</button>
+                <button
+                  @click="resetDimensions"
+                  class="btn btn-secondary reset-button"
+                >
+                  Reset Dimensions
+                </button>
               </div>
 
               <div class="control-group">
                 <h3>Output Format & Quality</h3>
                 <div class="input-row">
                   <label for="format-select">Format:</label>
-                  <select id="format-select" v-model="outputFormat" class="select-input">
+                  <select
+                    id="format-select"
+                    v-model="outputFormat"
+                    class="select-input"
+                  >
                     <option value="image/jpeg">JPEG</option>
                     <option value="image/png">PNG</option>
                     <option value="image/webp">WebP</option>
@@ -92,7 +140,15 @@
                 </div>
                 <div v-if="outputFormat === 'image/jpeg'" class="input-row">
                   <label for="quality-slider">Quality (JPEG):</label>
-                  <input id="quality-slider" type="range" v-model.number="jpegQuality" min="10" max="100" step="1" class="range-input" />
+                  <input
+                    id="quality-slider"
+                    type="range"
+                    v-model.number="jpegQuality"
+                    min="10"
+                    max="100"
+                    step="1"
+                    class="range-input"
+                  />
                   <span>{{ jpegQuality }}%</span>
                 </div>
               </div>
@@ -100,12 +156,20 @@
 
             <!-- Action Buttons -->
             <div class="action-section">
-              <button @click="processImage" :disabled="isLoading" class="btn btn-primary">
+              <button
+                @click="processImage"
+                :disabled="isLoading"
+                class="btn btn-primary"
+              >
                 <span v-if="isLoading" class="loading-spinner"></span>
                 <ProcessIcon v-else />
-                {{ isLoading ? 'Processing...' : 'Process Image' }}
+                {{ isLoading ? "Processing..." : "Process Image" }}
               </button>
-              <button @click="downloadImage" :disabled="!processedImageSrc" class="btn btn-secondary">
+              <button
+                @click="downloadImage"
+                :disabled="!processedImageSrc"
+                class="btn btn-secondary"
+              >
                 <DownloadIcon />
                 Download Image
               </button>
@@ -122,7 +186,8 @@
               <div class="step-content">
                 <h3 class="step-title">Upload Your Image</h3>
                 <p class="step-description">
-                  Click the "Upload Your Image" button or drag and drop your image file into the designated area.
+                  Click the "Upload Your Image" button or drag and drop your
+                  image file into the designated area.
                 </p>
               </div>
             </div>
@@ -132,7 +197,8 @@
               <div class="step-content">
                 <h3 class="step-title">Adjust Settings</h3>
                 <p class="step-description">
-                  Choose your desired options: resize by width/height/scale, adjust JPEG quality, or convert to a new format.
+                  Choose your desired options: resize by width/height/scale,
+                  adjust JPEG quality, or convert to a new format.
                 </p>
               </div>
             </div>
@@ -142,7 +208,8 @@
               <div class="step-content">
                 <h3 class="step-title">Process & Download</h3>
                 <p class="step-description">
-                  Click "Process Image" to see the result, then click "Download Image" to save it to your device.
+                  Click "Process Image" to see the result, then click "Download
+                  Image" to save it to your device.
                 </p>
               </div>
             </div>
@@ -159,7 +226,8 @@
               </div>
               <h3 class="feature-title">Lightning Fast</h3>
               <p class="feature-description">
-                Get your images processed instantly with our optimized client-side engine.
+                Get your images processed instantly with our optimized
+                client-side engine.
               </p>
             </div>
 
@@ -169,7 +237,8 @@
               </div>
               <h3 class="feature-title">100% Private & Secure</h3>
               <p class="feature-description">
-                All image processing happens directly in your browser. Your files never leave your device.
+                All image processing happens directly in your browser. Your
+                files never leave your device.
               </p>
             </div>
 
@@ -179,90 +248,178 @@
               </div>
               <h3 class="feature-title">Completely Free</h3>
               <p class="feature-description">
-                Enjoy unlimited image processing without any cost or hidden fees.
+                Enjoy unlimited image processing without any cost or hidden
+                fees.
               </p>
             </div>
           </div>
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <div class="faq-container">
-            <div class="faq-item">
-              <h3 class="faq-question">What image formats are supported for upload?</h3>
-              <p class="faq-answer">
-                Our tool supports common image formats like JPEG, PNG, and WebP for upload.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Can I convert images to different formats?</h3>
-              <p class="faq-answer">
-                Yes, you can convert your images to JPEG, PNG, or WebP formats using the "Output Format" option.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Is there a limit to image file size?</h3>
-              <p class="faq-answer">
-                While there's no strict limit imposed by the tool, very large images might take longer to process depending on your device's performance.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Are my images uploaded to a server?</h3>
-              <p class="faq-answer">
-                No, all image processing is done locally in your browser. Your images are never uploaded to our servers, ensuring your privacy.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Faqs :faqs_data="faq_data"></Faqs>
       </main>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, reactive, h, onMounted } from 'vue';
+import { ref, watch, reactive, h, onMounted } from "vue";
+
+const faq_data = ref([
+  {
+    question: "What image formats are supported for upload?",
+    answer:
+      "Our tool supports common image formats like JPEG, PNG, and WebP for upload.",
+  },
+  {
+    question: "Can I convert images to different formats?",
+    answer:
+      'Yes, you can convert your images to JPEG, PNG, or WebP formats using the "Output Format" option.',
+  },
+  {
+    question: "Is there a limit to image file size?",
+    answer:
+      "While there's no strict limit imposed by the tool, very large images might take longer to process depending on your device's performance.",
+  },
+  {
+    question: "Are my images uploaded to a server?",
+    answer:
+      "No, all image processing is done locally in your browser. Your images are never uploaded to our servers, ensuring your privacy.",
+  },
+]);
 
 // --- Icon Components (Matching your homepage's style) ---
-const ImageIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'currentColor', width: '40', height: '40' }, [
-  h('path', { d: 'M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z' })
-]);
+const ImageIcon = () =>
+  h(
+    "svg",
+    { viewBox: "0 0 24 24", fill: "currentColor", width: "40", height: "40" },
+    [
+      h("path", {
+        d: "M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z",
+      }),
+    ]
+  );
 
-const UploadIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', width: '20', height: '20' }, [
-  h('path', { d: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' }),
-  h('polyline', { points: '17 8 12 3 7 8' }),
-  h('line', { x1: '12', y1: '3', x2: '12', y2: '15' })
-]);
+const UploadIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      width: "20",
+      height: "20",
+    },
+    [
+      h("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+      h("polyline", { points: "17 8 12 3 7 8" }),
+      h("line", { x1: "12", y1: "3", x2: "12", y2: "15" }),
+    ]
+  );
 
-const ProcessIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', width: '20', height: '20' }, [
-  h('path', { d: 'M12 2v4' }),
-  h('path', { d: 'M12 18v4' }),
-  h('path', { d: 'M4.93 4.93l2.83 2.83' }),
-  h('path', { d: 'M16.24 16.24l2.83 2.83' }),
-  h('path', { d: 'M2 12h4' }),
-  h('path', { d: 'M18 12h4' }),
-  h('path', { d: 'M4.93 19.07l2.83-2.83' }),
-  h('path', { d: 'M16.24 7.76l2.83-2.83' })
-]);
+const ProcessIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      width: "20",
+      height: "20",
+    },
+    [
+      h("path", { d: "M12 2v4" }),
+      h("path", { d: "M12 18v4" }),
+      h("path", { d: "M4.93 4.93l2.83 2.83" }),
+      h("path", { d: "M16.24 16.24l2.83 2.83" }),
+      h("path", { d: "M2 12h4" }),
+      h("path", { d: "M18 12h4" }),
+      h("path", { d: "M4.93 19.07l2.83-2.83" }),
+      h("path", { d: "M16.24 7.76l2.83-2.83" }),
+    ]
+  );
 
-const DownloadIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', width: '20', height: '20' }, [
-  h('path', { d: 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' }),
-  h('polyline', { points: '7 10 12 15 17 10' }),
-  h('line', { x1: '12', y1: '15', x2: '12', y2: '3' })
-]);
+const DownloadIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      width: "20",
+      height: "20",
+    },
+    [
+      h("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+      h("polyline", { points: "7 10 12 15 17 10" }),
+      h("line", { x1: "12", y1: "15", x2: "12", y2: "3" }),
+    ]
+  );
 
-const SpeedIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', width: '32', height: '32' }, [
-  h('path', { d: 'M13 10V3L4 14h7v7l9-11h-7z' })
-]);
+const SpeedIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      width: "32",
+      height: "32",
+    },
+    [h("path", { d: "M13 10V3L4 14h7v7l9-11h-7z" })]
+  );
 
-const SecurityIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', width: '32', height: '32' }, [
-  h('path', { d: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z' })
-]);
+const SecurityIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      width: "32",
+      height: "32",
+    },
+    [
+      h("path", {
+        d: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z",
+      }),
+    ]
+  );
 
-const FreeIcon = () => h('svg', { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '2', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', width: '32', height: '32' }, [
-  h('path', { d: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1' })
-]);
+const FreeIcon = () =>
+  h(
+    "svg",
+    {
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round",
+      width: "32",
+      height: "32",
+    },
+    [
+      h("path", {
+        d: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1",
+      }),
+    ]
+  );
 
 // --- Reactive State ---
 const originalImage = ref<HTMLImageElement | null>(null);
@@ -276,7 +433,7 @@ const newWidth = ref<number | null>(null);
 const newHeight = ref<number | null>(null);
 const scaleFactor = ref<number>(100); // Default 100%
 
-const outputFormat = ref<string>('image/jpeg');
+const outputFormat = ref<string>("image/jpeg");
 const jpegQuality = ref<number>(80); // Default JPEG quality
 
 const isLoading = ref<boolean>(false);
@@ -284,27 +441,43 @@ const canvas = ref<HTMLCanvasElement | null>(null); // Reference to the canvas e
 
 // --- SEO Setup ---
 useHead({
-  title: 'Image Processing Tool - Resize, Compress, Convert | Kithubs',
+  title: "Image Processing Tool - Resize, Compress, Convert | Kithubs",
   meta: [
-    { name: 'description', content: 'A free online tool to resize, compress, and convert your images (JPG, PNG, WebP) instantly. Optimize image size and format for web and more.' },
-    { charset: 'UTF-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-    { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-    { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
-    { property: 'og:url', content: 'https://kithubs.com/image-compressor' }, // Update with your actual URL
-    { property: 'og:title', content: 'Image Processing Tool - Resize, Compress, Convert | Kithubs' },
-    { property: 'og:description', content: 'A free online tool to resize, compress, and convert your images (JPG, PNG, WebP) instantly. Optimize image size and format for web and more.' },
-    { property: 'og:image', content: 'https://kithubs.com/logo.png' }, // Use your site's logo
+    {
+      name: "description",
+      content:
+        "A free online tool to resize, compress, and convert your images (JPG, PNG, WebP) instantly. Optimize image size and format for web and more.",
+    },
+    { charset: "UTF-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+    { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
+    {
+      name: "robots",
+      content:
+        "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    },
+    { property: "og:url", content: "https://kithubs.com/image-compressor" }, // Update with your actual URL
+    {
+      property: "og:title",
+      content: "Image Processing Tool - Resize, Compress, Convert | Kithubs",
+    },
+    {
+      property: "og:description",
+      content:
+        "A free online tool to resize, compress, and convert your images (JPG, PNG, WebP) instantly. Optimize image size and format for web and more.",
+    },
+    { property: "og:image", content: "https://kithubs.com/logo.png" }, // Use your site's logo
   ],
-  link: [{ rel: 'canonical', href: 'https://kithubs.com/image-compressor' }], // Update with your actual URL
+  link: [{ rel: "canonical", href: "https://kithubs.com/image-compressor" }], // Update with your actual URL
   script: [
     {
-      type: 'application/ld+json',
+      type: "application/ld+json",
       innerHTML: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebApplication",
         name: "Kithubs Image Processing Tool",
-        description: "Easily resize, compress, and convert images online for free. Supports JPG, PNG, WebP formats with custom dimensions and quality settings.",
+        description:
+          "Easily resize, compress, and convert images online for free. Supports JPG, PNG, WebP formats with custom dimensions and quality settings.",
         url: "https://kithubs.com/image-compressor", // Update with your actual URL
         logo: "https://kithubs.com/logo.png",
         applicationCategory: "MultimediaApplication",
@@ -358,7 +531,7 @@ const handleFileChange = (event: Event) => {
       };
       img.onerror = () => {
         isLoading.value = false;
-        alert('Could not load image. Please ensure it is a valid image file.');
+        alert("Could not load image. Please ensure it is a valid image file.");
         resetToolState();
       };
       img.src = e.target?.result as string;
@@ -394,12 +567,12 @@ const resetToolState = () => {
   newWidth.value = null;
   newHeight.value = null;
   scaleFactor.value = 100;
-  outputFormat.value = 'image/jpeg';
+  outputFormat.value = "image/jpeg";
   jpegQuality.value = 80;
   isLoading.value = false;
 
   if (canvas.value) {
-    const ctx = canvas.value.getContext('2d');
+    const ctx = canvas.value.getContext("2d");
     if (ctx) {
       ctx.clearRect(0, 0, canvas.value.width, canvas.value.height);
     }
@@ -419,7 +592,7 @@ const processImage = async () => {
   }
 
   isLoading.value = true;
-  const ctx = canvas.value.getContext('2d');
+  const ctx = canvas.value.getContext("2d");
   if (!ctx) {
     isLoading.value = false;
     return;
@@ -435,15 +608,22 @@ const processImage = async () => {
   }
 
   // Apply explicit width/height, maintaining aspect ratio if only one is set
-  if (newWidth.value && newWidth.value > 0 && newHeight.value && newHeight.value > 0) {
+  if (
+    newWidth.value &&
+    newWidth.value > 0 &&
+    newHeight.value &&
+    newHeight.value > 0
+  ) {
     targetWidth = newWidth.value;
     targetHeight = newHeight.value;
   } else if (newWidth.value && newWidth.value > 0) {
     targetWidth = newWidth.value;
-    targetHeight = (originalImage.value.height / originalImage.value.width) * targetWidth;
+    targetHeight =
+      (originalImage.value.height / originalImage.value.width) * targetWidth;
   } else if (newHeight.value && newHeight.value > 0) {
     targetHeight = newHeight.value;
-    targetWidth = (originalImage.value.width / originalImage.value.height) * targetHeight;
+    targetWidth =
+      (originalImage.value.width / originalImage.value.height) * targetHeight;
   }
 
   // Ensure dimensions are integers
@@ -458,8 +638,11 @@ const processImage = async () => {
 
   // Get processed image data URL
   let dataUrl;
-  if (outputFormat.value === 'image/jpeg') {
-    dataUrl = canvas.value.toDataURL(outputFormat.value, jpegQuality.value / 100);
+  if (outputFormat.value === "image/jpeg") {
+    dataUrl = canvas.value.toDataURL(
+      outputFormat.value,
+      jpegQuality.value / 100
+    );
   } else {
     dataUrl = canvas.value.toDataURL(outputFormat.value);
   }
@@ -483,9 +666,11 @@ const processImage = async () => {
 // Download the processed image
 const downloadImage = () => {
   if (processedImageSrc.value) {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = processedImageSrc.value;
-    const filename = `kithubs_image.${outputFormat.value.split('/')[1].split('+')[0]}`;
+    const filename = `kithubs_image.${
+      outputFormat.value.split("/")[1].split("+")[0]
+    }`;
     link.download = filename;
     document.body.appendChild(link);
     link.click();
@@ -494,11 +679,15 @@ const downloadImage = () => {
 };
 
 // Watch for changes in processing options to re-process automatically
-watch([newWidth, newHeight, scaleFactor, outputFormat, jpegQuality], () => {
-  if (originalImage.value && !isLoading.value) {
-    processImage();
-  }
-}, { deep: true }); // Deep watch for reactive objects like newWidth/newHeight
+watch(
+  [newWidth, newHeight, scaleFactor, outputFormat, jpegQuality],
+  () => {
+    if (originalImage.value && !isLoading.value) {
+      processImage();
+    }
+  },
+  { deep: true }
+); // Deep watch for reactive objects like newWidth/newHeight
 
 // Initial processing when component mounts and image is available
 watch(originalImage, (newVal) => {
@@ -518,8 +707,13 @@ watch(originalImage, (newVal) => {
 
 .page-wrapper {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); /* Matching video downloader */
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(
+    135deg,
+    #1e3c72 0%,
+    #2a5298 100%
+  ); /* Matching video downloader */
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   line-height: 1.6;
 }
 
@@ -780,7 +974,7 @@ watch(originalImage, (newVal) => {
   background: #ddd;
   outline: none;
   opacity: 0.7;
-  transition: opacity .2s;
+  transition: opacity 0.2s;
   border-radius: 4px;
 }
 
@@ -906,7 +1100,11 @@ watch(originalImage, (newVal) => {
 }
 
 .section-title .highlight {
-  background: linear-gradient(45deg, #ff6b6b, #feca57); /* Matching homepage highlight */
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #feca57
+  ); /* Matching homepage highlight */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

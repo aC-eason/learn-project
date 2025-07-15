@@ -1,7 +1,7 @@
 
 <script setup>
 import { ref } from "vue";
-import Header from "~/components/Header.vue";
+import Faqs from "~/components/Faqs.vue";
 
 // State management
 const inputText = ref("");
@@ -9,6 +9,28 @@ const isLoading = ref(false);
 const showResult = ref(false);
 const result = ref(null);
 const error = ref("");
+const faq_data = ref([
+  {
+    question: "What types of sensitive words can be detected?",
+    answer:
+      "Our tool detects various categories including political sensitive content, illegal content, inappropriate language, and other potentially harmful words.",
+  },
+  {
+    question: "How accurate is the detection system?",
+    answer:
+      "Our AI-powered system maintains over 95% accuracy rate, continuously improving through advanced natural language processing techniques.",
+  },
+  {
+    question: "Is my input data stored or saved?",
+    answer:
+      "No, we do not store any user input data. All content is processed in real-time and immediately discarded after analysis.",
+  },
+  {
+    question: "Can I use this tool for commercial purposes?",
+    answer:
+      "Yes, our tool is suitable for both personal and commercial use, helping businesses maintain content compliance and safety standards.",
+  },
+])
 
 // Reusable API service class
 class ApiService {
@@ -362,48 +384,7 @@ useHead({
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <div class="faq-container">
-            <div class="faq-item">
-              <h3 class="faq-question">
-                What types of sensitive words can be detected?
-              </h3>
-              <p class="faq-answer">
-                Our tool detects various categories including political
-                sensitive content, illegal content, inappropriate language, and
-                other potentially harmful words.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                How accurate is the detection system?
-              </h3>
-              <p class="faq-answer">
-                Our AI-powered system maintains over 95% accuracy rate,
-                continuously improving through advanced natural language
-                processing techniques.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">Is my input data stored or saved?</h3>
-              <p class="faq-answer">
-                No, we do not store any user input data. All content is
-                processed in real-time and immediately discarded after analysis.
-              </p>
-            </div>
-            <div class="faq-item">
-              <h3 class="faq-question">
-                Can I use this tool for commercial purposes?
-              </h3>
-              <p class="faq-answer">
-                Yes, our tool is suitable for both personal and commercial use,
-                helping businesses maintain content compliance and safety
-                standards.
-              </p>
-            </div>
-          </div>
-        </section>
+        <Faqs :faqs_data="faq_data"></Faqs>
       </main>
     </div>
 

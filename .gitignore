@@ -10,6 +10,7 @@ work
 # Node dependencies
 node_modules
 
+output/
 # Logs
 logs
 *.log
