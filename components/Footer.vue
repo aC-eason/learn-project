@@ -22,7 +22,7 @@
             <h3>Popular Tools</h3>
             <ul>
               <li><NuxtLink to="/short-link-generator">Short Links Tool</NuxtLink></li>
-              <li><NuxtLink to="/json-formatter">JSON Formatter</NuxtLink></li>
+              <li><NuxtLink to="/ip-address">IP Address</NuxtLink></li>
              <li><NuxtLink to="/image-compressor">Image Compressor</NuxtLink></li>
               <li><NuxtLink to="/facebook-video-downloader">Facebook Video Downloader</NuxtLink></li>
               <li><NuxtLink to="/sensitive-word-check">Sensitive Content Detector</NuxtLink></li>
@@ -31,7 +31,9 @@
           <div class="link-group">
             <h3>Contact Us</h3>
             <ul>
-              <li><a href="mailto:chenyx1012@gmail.com">Email: chenyx1012@gmail.com</a></li>
+              <li><a href="mailto:eason@kithubs.com">Email: eason@kithubs.com</a></li>
+              <li><NuxtLink to="/terms">Terms</NuxtLink></li>
+              <li><NuxtLink to="/privacy-policy">Privacy Policy</NuxtLink></li>
               <!-- Add more contact info if needed -->
             </ul>
           </div>

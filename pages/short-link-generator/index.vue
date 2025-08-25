@@ -290,6 +290,8 @@
           </div>
         </div>
 
+        <ShortListHistory ref="historyListRef" />
+
         <!-- Enhanced Features Section -->
         <div class="features-section">
           <div class="features-header">
@@ -367,6 +369,9 @@ import { ElMessage, ElNotification } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
 import { useWebsiteStore } from "~/stores/website";
 import { $fetch } from "ofetch";
+
+// 创建 ref 用于引用子组件
+const historyListRef = ref(null);
 
 // Store
 const store = useWebsiteStore();
@@ -475,6 +480,7 @@ const createShortLink = async () => {
         type: "success",
         duration: 3000,
       });
+      historyListRef.value?.fetchShortLinks(); // Refresh history list
     }
   } catch (error: any) {
     console.error("Error creating short link:", error);

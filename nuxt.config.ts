@@ -4,8 +4,7 @@ export default defineNuxtConfig({
   modules: ["@pinia/nuxt"],
   runtimeConfig: {
     public: {
-      googleClientId:
-        "519092715425-725koi7qiqephplo3ur4cd9cu656j145.apps.googleusercontent.com",
+      googleClientId: "519092715425-725koi7qiqephplo3ur4cd9cu656j145.apps.googleusercontent.com",
     },
   },
   app: {
@@ -14,6 +13,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { "http-equiv": "content-language", content: "en-GB" },
         { "http-equiv": "X-UA-Compatible", content: "IE=edge" },
         {
           name: "msapplication-TileImage",
@@ -21,10 +21,13 @@ export default defineNuxtConfig({
         },
         {
           name: "robots",
-          content:
-            "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+          content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
         },
         { property: "og:type", content: "website" },
+        {
+          name: "google-adsense-account",
+          content: "ca-pub-5032705196359857",
+        },
       ],
       link: [
         {
@@ -41,7 +44,7 @@ export default defineNuxtConfig({
       script: [
         // 第三方脚本
         {
-          src: "https://g.alicdn.com/sls/sls-js-sdk/0.3.5/web-track-browser.js",
+          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5032705196359857",
           async: true,
         },
         {

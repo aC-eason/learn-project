@@ -1,14 +1,16 @@
 <template>
   <header class="header">
     <div class="container">
+      <!-- Logo Section -->
       <div class="logo">
-        <NuxtLink to="/">
+        <NuxtLink to="/" class="logo-link">
           <div class="logo-text" role="heading" aria-level="2">
-            Kit<span>hubs</span>
+            Kit<span class="logo-accent">hubs</span>
           </div>
         </NuxtLink>
       </div>
 
+      <!-- Main Navigation -->
       <nav class="main-nav" :class="{ active: menuOpen }">
         <ul class="nav-list">
           <li class="nav-item">
@@ -18,33 +20,36 @@
               :class="{ active: currentRoute === '/' }"
               @click="handleNavLinkClick(false)"
             >
-              Home
+              <Icon name="home" class="nav-icon" />
+              <span >Home</span>
             </NuxtLink>
           </li>
 
-          <!-- Short Tools Dropdown -->
+          <!-- URL Tools Dropdown -->
           <li
             class="nav-item dropdown"
             @mouseenter="showDropdown('url')"
             @mouseleave="hideDropdown('url')"
           >
-            <NuxtLink
-              class="nav-link"
+            <button
+              class="nav-link dropdown-trigger"
               :class="{
-                active:
-                  currentRoute.startsWith('/short-urls'),
+                active: currentRoute.startsWith('/short-urls'),
                 'dropdown-active': activeDropdown === 'url',
               }"
               @click="handleNavLinkClick(true, 'url')"
               aria-haspopup="true"
               :aria-expanded="activeDropdown === 'url' ? 'true' : 'false'"
             >
-              Url Tools
+              <Icon name="link" class="nav-icon" />
+              <span>URL Tools</span>
               <Icon name="chevron-down" class="dropdown-icon" />
-            </NuxtLink>
+            </button>
             <ul
               class="dropdown-menu"
               :class="{ show: activeDropdown === 'url' }"
+              @mouseenter="keepDropdownOpen('url')"
+              @mouseleave="hideDropdown('url')"
             >
               <li>
                 <NuxtLink
@@ -52,8 +57,13 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <Icon name="code" class="tool-icon" />
-                  Short Links Tool
+                  <div class="dropdown-link-content">
+                    <Icon name="link-2" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Short Links Tool</span>
+                      <span class="tool-desc">Create shortened URLs</span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
             </ul>
@@ -65,8 +75,8 @@
             @mouseenter="showDropdown('text')"
             @mouseleave="hideDropdown('text')"
           >
-            <NuxtLink
-              class="nav-link"
+            <button
+              class="nav-link dropdown-trigger"
               :class="{
                 active:
                   currentRoute.startsWith('/json-formatter') ||
@@ -77,12 +87,15 @@
               aria-haspopup="true"
               :aria-expanded="activeDropdown === 'text' ? 'true' : 'false'"
             >
-              Text Tools
+              <Icon name="file-text" class="nav-icon" />
+              <span>Text Tools</span>
               <Icon name="chevron-down" class="dropdown-icon" />
-            </NuxtLink>
+            </button>
             <ul
               class="dropdown-menu"
               :class="{ show: activeDropdown === 'text' }"
+              @mouseenter="keepDropdownOpen('text')"
+              @mouseleave="hideDropdown('text')"
             >
               <li>
                 <NuxtLink
@@ -90,8 +103,13 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <Icon name="code" class="tool-icon" />
-                  JSON Formatter
+                  <div class="dropdown-link-content">
+                    <Icon name="code" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">JSON Formatter</span>
+                      <span class="tool-desc">Format and validate JSON</span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
               <li>
@@ -100,8 +118,43 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <Icon name="shield-check" class="tool-icon" />
-                  Sensitive Content Detector
+                  <div class="dropdown-link-content">
+                    <Icon name="shield-check" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Content Detector</span>
+                      <span class="tool-desc">Check sensitive content</span>
+                    </div>
+                  </div>
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/timestamp-converter"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <div class="dropdown-link-content">
+                    <Icon name="clock" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Timestamp Converter</span>
+                      <span class="tool-desc">Convert timestamps</span>
+                    </div>
+                  </div>
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  to="/ip-address"
+                  class="dropdown-link"
+                  @click="closeMenu"
+                >
+                  <div class="dropdown-link-content">
+                    <Icon name="clock" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Ip Address</span>
+                      <span class="tool-desc">Discover IP detailed information </span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
             </ul>
@@ -113,19 +166,23 @@
             @mouseenter="showDropdown('image')"
             @mouseleave="hideDropdown('image')"
           >
-            <NuxtLink
-              class="nav-link"
+            <button
+              class="nav-link dropdown-trigger"
               :class="{
                 active: currentRoute.startsWith('/image-compressor'),
                 'dropdown-active': activeDropdown === 'image',
               }"
+              @click="handleNavLinkClick(true, 'image')"
             >
-              Image Tools
+              <Icon name="image" class="nav-icon" />
+              <span>Image Tools</span>
               <Icon name="chevron-down" class="dropdown-icon" />
-            </NuxtLink>
+            </button>
             <ul
               class="dropdown-menu"
               :class="{ show: activeDropdown === 'image' }"
+              @mouseenter="keepDropdownOpen('image')"
+              @mouseleave="hideDropdown('image')"
             >
               <li>
                 <NuxtLink
@@ -133,8 +190,13 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <Icon name="minimize-2" class="tool-icon" />
-                  Image Compressor
+                  <div class="dropdown-link-content">
+                    <Icon name="compress" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Image Compressor</span>
+                      <span class="tool-desc">Compress images efficiently</span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
             </ul>
@@ -146,8 +208,8 @@
             @mouseenter="showDropdown('video')"
             @mouseleave="hideDropdown('video')"
           >
-            <NuxtLink
-              class="nav-link"
+            <button
+              class="nav-link dropdown-trigger"
               :class="{
                 active:
                   currentRoute.startsWith('/facebook-video-downloader') ||
@@ -156,15 +218,16 @@
                 'dropdown-active': activeDropdown === 'video',
               }"
               @click="handleNavLinkClick(true, 'video')"
-              aria-haspopup="true"
-              :aria-expanded="activeDropdown === 'video' ? 'true' : 'false'"
             >
-              Video Tools
+              <Icon name="video" class="nav-icon" />
+              <span>Video Tools</span>
               <Icon name="chevron-down" class="dropdown-icon" />
-            </NuxtLink>
+            </button>
             <ul
               class="dropdown-menu"
               :class="{ show: activeDropdown === 'video' }"
+              @mouseenter="keepDropdownOpen('video')"
+              @mouseleave="hideDropdown('video')"
             >
               <li>
                 <NuxtLink
@@ -172,22 +235,13 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <svg
-                    t="1751813932491"
-                    class="icon"
-                    viewBox="0 0 1024 1024"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    p-id="6492"
-                    width="20"
-                    height="20"
-                  >
-                    <path
-                      d="M1024 512c0-282.763636-229.236364-512-512-512C229.236364 0 0 229.236364 0 512s229.236364 512 512 512C794.763636 1024 1024 794.763636 1024 512zM374.504727 512 374.504727 414.021818l60.043636 0L434.548364 354.769455c0-79.918545 23.877818-137.495273 111.383273-137.495273l104.075636 0 0 97.745455-73.262545 0c-36.724364 0-45.056 24.389818-45.056 49.943273l0 49.058909 112.919273 0L629.201455 512l-97.512727 0 0 295.517091L434.548364 807.517091 434.548364 512 374.504727 512z"
-                      p-id="6493"
-                    ></path>
-                  </svg>
-                  Facebook Video Downloader
+                  <div class="dropdown-link-content">
+                    <Icon name="facebook" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Facebook Downloader</span>
+                      <span class="tool-desc">Download Facebook videos</span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
               <li>
@@ -196,29 +250,13 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <svg
-                    t="1751813932491"
-                    class="icon"
-                    viewBox="0 0 1024 1024"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                  >
-                    <path
-                      d="M1024 512c0-282.763636-229.236364-512-512-512C229.236364 0 0 229.236364 0 512s229.236364 512 512 512C794.763636 1024 1024 794.763636 1024 512z"
-                      fill="#E60023"
-                    />
-                    <path
-                      d="M512 704c-106.066909 0-192-85.933091-192-192s85.933091-192 192-192 192 85.933091 192 192-85.933091 192-192 192zm0-320c-70.692364 0-128 57.307636-128 128s57.307636 128 128 128 128-57.307636 128-128-57.307636-128-128-128z"
-                      fill="#FFFFFF"
-                    />
-                    <path
-                      d="M496 352c-8.837818 0-16 7.162182-16 16v192c0 8.837818 7.162182 16 16 16 52.945455 0 96-43.054545 96-96s-43.054545-96-96-96z"
-                      fill="#E60023"
-                    />
-                  </svg>
-                  Pinterest Downloader
+                  <div class="dropdown-link-content">
+                    <Icon name="pinterest" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Pinterest Downloader</span>
+                      <span class="tool-desc">Download Pinterest content</span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
               <li>
@@ -227,147 +265,159 @@
                   class="dropdown-link"
                   @click="closeMenu"
                 >
-                  <svg
-                    t="1751813812382"
-                    class="icon"
-                    viewBox="0 0 1024 1024"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    p-id="5482"
-                    width="20"
-                    height="20"
-                  >
-                    <path
-                      d="M512 306.9c-113.5 0-205.1 91.6-205.1 205.1S398.5 717.1 512 717.1 717.1 625.5 717.1 512 625.5 306.9 512 306.9z m0 338.4c-73.4 0-133.3-59.9-133.3-133.3S438.6 378.7 512 378.7 645.3 438.6 645.3 512 585.4 645.3 512 645.3zM725.5 250.7c-26.5 0-47.9 21.4-47.9 47.9s21.4 47.9 47.9 47.9 47.9-21.3 47.9-47.9c-0.1-26.6-21.4-47.9-47.9-47.9z"
-                      p-id="5483"
-                    ></path>
-                    <path
-                      d="M911.8 512c0-55.2 0.5-109.9-2.6-165-3.1-64-17.7-120.8-64.5-167.6-46.9-46.9-103.6-61.4-167.6-64.5-55.2-3.1-109.9-2.6-165-2.6-55.2 0-109.9-0.5-165 2.6-64 3.1-120.8 17.7-167.6 64.5C132.6 226.3 118.1 283 115 347c-3.1 55.2-2.6 109.9-2.6 165s-0.5 109.9 2.6 165c3.1 64 17.7 120.8 64.5 167.6 46.9 46.9 103.6 61.4 167.6 64.5 55.2 3.1 109.9 2.6 165 2.6 55.2 0 109.9 0.5 165-2.6 64-3.1 120.8-17.7 167.6-64.5 46.9-46.9 61.4-103.6 64.5-167.6 3.2-55.1 2.6-109.8 2.6-165z m-88 235.8c-7.3 18.2-16.1 31.8-30.2 45.8-14.1 14.1-27.6 22.9-45.8 30.2C695.2 844.7 570.3 840 512 840c-58.3 0-183.3 4.7-235.9-16.1-18.2-7.3-31.8-16.1-45.8-30.2-14.1-14.1-22.9-27.6-30.2-45.8C179.3 695.2 184 570.3 184 512c0-58.3-4.7-183.3 16.1-235.9 7.3-18.2 16.1-31.8 30.2-45.8s27.6-22.9 45.8-30.2C328.7 179.3 453.7 184 512 184s183.3-4.7 235.9 16.1c18.2 7.3 31.8 16.1 45.8 30.2 14.1 14.1 22.9 27.6 30.2 45.8C844.7 328.7 840 453.7 840 512c0 58.3 4.7 183.2-16.2 235.8z"
-                      p-id="5484"
-                    ></path>
-                  </svg>
-                  Instagram Downloader
+                  <div class="dropdown-link-content">
+                    <Icon name="instagram" class="tool-icon" />
+                    <div class="tool-info">
+                      <span class="tool-name">Instagram Downloader</span>
+                      <span class="tool-desc">Download Instagram videos</span>
+                    </div>
+                  </div>
                 </NuxtLink>
               </li>
             </ul>
           </li>
+
+          <!-- 移动端用户区域 - 作为菜单项 -->
+          <li class="nav-item mobile-user-item">
+            <!-- Login Button for Mobile -->
+            <div v-if="!store.userInfo" class="mobile-login-wrapper">
+              <button @click="setShowLoginModal(true)" class="mobile-login-button">
+                <Icon name="user" class="login-icon" />
+                <span class="login-text">Sign In</span>
+              </button>
+            </div>
+
+            <!-- User Menu for Mobile -->
+            <div v-else class="mobile-user-menu">
+              <button 
+                class="mobile-user-trigger"
+                @click="toggleUserDropdown"
+                :class="{ active: userDropdownOpen }"
+              >
+                <div class="user-avatar">
+                  <span class="avatar-text">{{ store.userInfo.username?.charAt(0).toUpperCase() }}</span>
+                </div>
+                <div class="user-info-text">
+                  <span class="username">{{ store.userInfo.username }}</span>
+                  <Icon name="chevron-down" class="user-chevron" :class="{ rotated: userDropdownOpen }" />
+                </div>
+              </button>
+
+              <div class="mobile-user-dropdown" :class="{ show: userDropdownOpen }">
+                <div class="user-dropdown-header">
+                  <div class="user-avatar-large">
+                    <span class="avatar-text-large">{{ store.userInfo.username?.charAt(0).toUpperCase() }}</span>
+                  </div>
+                  <div class="user-details">
+                    <div class="username-large">{{ store.userInfo.username }}</div>
+                    <div class="user-email" v-if="store.userInfo.email">
+                      {{ store.userInfo.email }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="user-dropdown-divider"></div>
+
+                <ul class="user-dropdown-list">
+                  <li>
+                    <button @click="handleLogout" class="user-dropdown-link logout-link">
+                      <Icon name="log-out" class="dropdown-item-icon" />
+                      <span>Sign Out</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
         </ul>
       </nav>
 
-      <!-- 优化后的登录/用户信息区域 -->
-      <div class="login-container">
-        <!-- 未登录状态 - 显示登录按钮 -->
-        <div v-if="!store.userInfo" class="login-link">
-          <button @click="setShowLoginModal(true)" class="login-button">
-            <el-icon class="login-icon">
-              <User />
-            </el-icon>
-            <span class="login-text">Login</span>
-          </button>
-        </div>
-
-        <!-- 已登录状态 - 显示用户头像和下拉菜单 -->
-        <div
-          v-else
-          class="user-info"
-          @mouseenter="showUserDropdown"
-          @mouseleave="hideUserDropdown"
-          @click="toggleUserDropdown"
-        >
-          <div class="user-avatar-container">
-            <div class="user-avatar">
-              <el-icon class="avatar-icon">
-                <Avatar />
-              </el-icon>
-            </div>
-            <div class="user-details">
-              <span class="username">{{ store.userInfo.username }}</span>
-              <el-icon
-                class="user-dropdown-icon"
-                :class="{ rotated: userDropdownOpen }"
-              >
-                <ArrowDown />
-              </el-icon>
-            </div>
+      <!-- Desktop User Section -->
+      <div class="user-section">
+        <div class="auth-container">
+          <!-- Login Button -->
+          <div v-if="!store.userInfo" class="login-wrapper">
+            <button @click="setShowLoginModal(true)" class="login-button">
+              <Icon name="user" class="login-icon" />
+              <span class="login-text">Sign In</span>
+            </button>
           </div>
 
-          <!-- 用户下拉菜单 -->
-          <div class="user-dropdown-menu" :class="{ show: userDropdownOpen }">
-            <div class="user-dropdown-header">
-              <div class="user-avatar-large">
-                <el-icon class="avatar-icon-large">
-                  <Avatar />
-                </el-icon>
+          <!-- User Menu -->
+          <div
+            v-else
+            class="user-menu"
+            @mouseenter="showUserDropdown"
+            @mouseleave="hideUserDropdown"
+            @click="toggleUserDropdown"
+          >
+            <div class="user-trigger">
+              <div class="user-avatar">
+                <span class="avatar-text">{{ store.userInfo.username?.charAt(0).toUpperCase() }}</span>
               </div>
-              <div class="user-info-details">
-                <div class="username-large">{{ store.userInfo.username }}</div>
-                <div class="user-email" v-if="store.userInfo.email">
-                  {{ store.userInfo.email }}
-                </div>
+              <div class="user-info-text">
+                <span class="username">{{ store.userInfo.username }}</span>
+                <Icon name="chevron-down" class="user-chevron" :class="{ rotated: userDropdownOpen }" />
               </div>
             </div>
 
-            <div class="user-dropdown-divider"></div>
+            <!-- User Dropdown -->
+            <div 
+              class="user-dropdown" 
+              :class="{ show: userDropdownOpen }"
+              @mouseenter="keepUserDropdownOpen"
+              @mouseleave="hideUserDropdown"
+            >
+              <div class="user-dropdown-header">
+                <div class="user-avatar-large">
+                  <span class="avatar-text-large">{{ store.userInfo.username?.charAt(0).toUpperCase() }}</span>
+                </div>
+                <div class="user-details">
+                  <div class="username-large">{{ store.userInfo.username }}</div>
+                  <div class="user-email" v-if="store.userInfo.email">
+                    {{ store.userInfo.email }}
+                  </div>
+                </div>
+              </div>
 
-            <ul class="user-dropdown-list">
-              <!-- <li>
-                <NuxtLink to="/profile" class="user-dropdown-link" @click="closeUserDropdown">
-                  <el-icon class="dropdown-item-icon">
-                    <User />
-                  </el-icon>
-                  Profile
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink to="/settings" class="user-dropdown-link" @click="closeUserDropdown">
-                  <el-icon class="dropdown-item-icon">
-                    <Setting />
-                  </el-icon>
-                  Settings
-                </NuxtLink>
-              </li> -->
-              <li>
-                <button
-                  @click="handleLogout"
-                  class="user-dropdown-link logout-link"
-                >
-                  <el-icon class="dropdown-item-icon">
-                    <SwitchButton />
-                  </el-icon>
-                  Log Out
-                </button>
-              </li>
-            </ul>
+              <div class="user-dropdown-divider"></div>
+
+              <ul class="user-dropdown-list">
+                <li>
+                  <button @click="handleLogout" class="user-dropdown-link logout-link">
+                    <Icon name="log-out" class="dropdown-item-icon" />
+                    <span>Sign Out</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
-      <div
-        class="nav-toggle"
+      <!-- Mobile Menu Toggle -->
+      <button
+        class="mobile-toggle"
         @click="toggleMenu"
         :class="{ active: menuOpen }"
-        role="button"
         aria-label="Toggle navigation menu"
         :aria-expanded="menuOpen ? 'true' : 'false'"
       >
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" :class="{ active: menuOpen }" @click="closeMenu"></div>
   </header>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, defineComponent, h } from "vue";
 import { useRoute } from "vue-router";
-import {
-  User,
-  Avatar,
-  ArrowDown,
-  Setting,
-  SwitchButton,
-} from "@element-plus/icons-vue";
+import { useWebsiteStore } from "@/stores/website";
 
 const store = useWebsiteStore();
 
@@ -375,7 +425,10 @@ const store = useWebsiteStore();
 const menuOpen = ref(false);
 const activeDropdown = ref(null);
 const userDropdownOpen = ref(false);
-const isDark = ref(false);
+
+// 添加定时器引用来管理延迟关闭
+const dropdownTimer = ref(null);
+const userDropdownTimer = ref(null);
 
 // Get current route
 const route = useRoute();
@@ -386,30 +439,84 @@ const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
   if (!menuOpen.value) {
     activeDropdown.value = null;
+    userDropdownOpen.value = false;
   }
+  document.body.style.overflow = menuOpen.value ? 'hidden' : '';
 };
 
 const closeMenu = () => {
   menuOpen.value = false;
   activeDropdown.value = null;
+  userDropdownOpen.value = false;
+  document.body.style.overflow = '';
 };
 
 const setShowLoginModal = (value) => {
   store.setShowLoginModal(value);
 };
 
-// 用户下拉菜单控制
+// 清除定时器的辅助函数
+const clearDropdownTimer = () => {
+  if (dropdownTimer.value) {
+    clearTimeout(dropdownTimer.value);
+    dropdownTimer.value = null;
+  }
+};
+
+const clearUserDropdownTimer = () => {
+  if (userDropdownTimer.value) {
+    clearTimeout(userDropdownTimer.value);
+    userDropdownTimer.value = null;
+  }
+};
+
+// 优化后的下拉菜单方法
+const showDropdown = (dropdownName) => {
+  if (window.innerWidth > 768) {
+    clearDropdownTimer();
+    activeDropdown.value = dropdownName;
+  }
+};
+
+const hideDropdown = (dropdownName) => {
+  if (window.innerWidth > 768) {
+    clearDropdownTimer();
+    dropdownTimer.value = setTimeout(() => {
+      if (activeDropdown.value === dropdownName) {
+        activeDropdown.value = null;
+      }
+    }, 300);
+  }
+};
+
+const keepDropdownOpen = (dropdownName) => {
+  if (window.innerWidth > 768) {
+    clearDropdownTimer();
+    activeDropdown.value = dropdownName;
+  }
+};
+
+// 优化后的用户下拉菜单方法
 const showUserDropdown = () => {
   if (window.innerWidth > 768) {
+    clearUserDropdownTimer();
     userDropdownOpen.value = true;
   }
 };
 
 const hideUserDropdown = () => {
   if (window.innerWidth > 768) {
-    setTimeout(() => {
+    clearUserDropdownTimer();
+    userDropdownTimer.value = setTimeout(() => {
       userDropdownOpen.value = false;
-    }, 150);
+    }, 300);
+  }
+};
+
+const keepUserDropdownOpen = () => {
+  if (window.innerWidth > 768) {
+    clearUserDropdownTimer();
+    userDropdownOpen.value = true;
   }
 };
 
@@ -420,10 +527,10 @@ const toggleUserDropdown = () => {
 };
 
 const closeUserDropdown = () => {
+  clearUserDropdownTimer();
   userDropdownOpen.value = false;
 };
 
-// 登出功能
 const handleLogout = async () => {
   try {
     await store.logout();
@@ -434,24 +541,6 @@ const handleLogout = async () => {
   }
 };
 
-// Desktop dropdown hover logic
-const showDropdown = (dropdownName) => {
-  if (window.innerWidth > 768) {
-    activeDropdown.value = dropdownName;
-  }
-};
-
-const hideDropdown = (dropdownName) => {
-  if (window.innerWidth > 768) {
-    setTimeout(() => {
-      if (activeDropdown.value === dropdownName) {
-        activeDropdown.value = null;
-      }
-    }, 100);
-  }
-};
-
-// Mobile dropdown click logic
 const toggleMobileDropdown = (dropdownName) => {
   if (window.innerWidth <= 768) {
     if (activeDropdown.value === dropdownName) {
@@ -474,12 +563,6 @@ const handleNavLinkClick = (isDropdownLink, dropdownName = null) => {
   }
 };
 
-const toggleTheme = () => {
-  isDark.value = !isDark.value;
-  document.documentElement.classList.toggle("dark", isDark.value);
-  localStorage.setItem("theme", isDark.value ? "dark" : "light");
-};
-
 const handleClickOutside = (event) => {
   if (!event.target.closest(".header")) {
     closeMenu();
@@ -496,13 +579,6 @@ const handleEscape = (event) => {
 
 // Lifecycle
 onMounted(() => {
-  const savedTheme = localStorage.getItem("theme");
-  isDark.value =
-    savedTheme === "dark" ||
-    (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-  document.documentElement.classList.toggle("dark", isDark.value);
-  localStorage.setItem("theme", isDark.value ? "dark" : "light");
-
   document.addEventListener("click", handleClickOutside);
   document.addEventListener("keydown", handleEscape);
 });
@@ -510,9 +586,12 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside);
   document.removeEventListener("keydown", handleEscape);
+  document.body.style.overflow = '';
+  clearDropdownTimer();
+  clearUserDropdownTimer();
 });
 
-// Simple Icon component
+// 统一的图标组件
 const Icon = defineComponent({
   props: {
     name: String,
@@ -520,22 +599,22 @@ const Icon = defineComponent({
   },
   setup(props) {
     const icons = {
-      "chevron-down": "M19 9l-7 7-7-7",
-      sun: "M12 2v2m0 16v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M2 12h2m16 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42",
-      moon: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z",
-      type: "M4 7V4h16v3M9 20h6M12 4v16",
-      code: "M16 18l6-6-6-6M8 6l-6 6 6 6",
-      "shield-check": "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-      image:
-        "M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 8.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM21 15l-5-5L5 21",
-      "minimize-2": "M4 14h6m0 0v6m0-6l-7 7M20 10h-6m0 0V4m0 6l7-7",
-      video:
-        "M23 7l-7 5 7 5V7zM1 5a2 2 0 012-2h9a2 2 0 012 2v14a2 2 0 01-2 2H3a2 2 0 01-2-2V5z",
-      facebook:
-        "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z",
-      pinterest:
-        "M8 11.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0zM12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.853 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.334.135-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.97-.527-2.297-1.155l-.624 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z",
-      user: "M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8a4 4 0 0 0 0 8Z",
+      "home": "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10",
+      "link": "M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71 M15 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.72-1.71",
+      "file-text": "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
+      "image": "M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2z M8.5 8.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z M21 15l-5-5L5 21",
+      "video": "M23 7l-7 5 7 5V7z M1 5a2 2 0 012-2h9a2 2 0 012 2v14a2 2 0 01-2 2H3a2 2 0 01-2-2V5z",
+      "chevron-down": "M6 9l6 6 6-6",
+      "user": "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2 M12 11a4 4 0 100-8 4 4 0 000 8z",
+      "log-out": "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4 M16 17l5-5-5-5 M21 12H9",
+      "link-2": "M15 7h3a5 5 0 015 5 5 5 0 01-5 5h-3m-6 0H6a5 5 0 01-5-5 5 5 0 015-5h3m0 5h6",
+      "code": "M16 18l6-6-6-6 M8 6l-6 6 6 6",
+      "shield-check": "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z M9 12l2 2 4-4",
+      "clock": "M12 2v10m0 0l4 4m-4-4l-4 4 M12 2a10 10 0 100 20 10 10 0 000-20z",
+      "compress": "M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2v3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3",
+      "facebook": "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z",
+      "pinterest": "M8 11.5a2.5 2.5 0 115 0 2.5 2.5 0 01-5 0z M12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.853 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.334.135-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.223-.334.135-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-1.013 0-1.97-.527-2.297l-.624 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z",
+      "instagram": "M4 8a4 4 0 014-4h8a4 4 0 014 4v8a4 4 0 01-4 4H8a4 4 0 01-4-4V8z M12 14a2 2 0 100-4 2 2 0 000 4z M17.5 6.5h.01",
     };
 
     return () =>
@@ -550,69 +629,73 @@ const Icon = defineComponent({
           "stroke-linecap": "round",
           "stroke-linejoin": "round",
         },
-        [h("path", { d: icons[props.name] })]
+        icons[props.name]?.split(' M').map((path, index) => 
+          h("path", { 
+            d: index === 0 ? path : `M${path}`,
+            key: index 
+          })
+        ).filter(Boolean) || []
       );
   },
 });
 </script>
 
 <style scoped>
+/* 基础样式保持不变 */
 .header {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 0;
+  background: rgba(17, 24, 39, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: all 0.3s ease;
-}
-
-:global(.dark) .header {
-  background: rgba(17, 24, 39, 0.95);
-  border-bottom-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .container {
-  width: 90%;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 1.5rem;
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 72px;
+  gap: 2rem;
 }
 
-.logo a {
+/* Logo Styles */
+.logo {
+  flex-shrink: 0;
+}
+
+.logo-link {
   text-decoration: none;
+  display: block;
 }
 
-.logo .logo-text {
-  font-size: 32px;
+.logo-text {
+  font-size: 2rem;
   font-weight: 800;
-  color: #1f2937;
-  margin: 0;
-  letter-spacing: -0.5px;
-  transition: color 0.3s ease;
-}
-
-:global(.dark) .logo .logo-text {
   color: #f9fafb;
+  letter-spacing: -0.02em;
+  transition: all 0.3s ease;
 }
 
-.logo span {
-  color: #3b82f6;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+.logo-accent {
+  background: linear-gradient(135deg, #60a5fa, #8b5cf6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
+.logo-link:hover .logo-text {
+  transform: scale(1.05);
+}
+
+/* Navigation Styles */
 .main-nav {
+  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  margin-left: 30px;
+  justify-content: center;
 }
 
 .nav-list {
@@ -628,254 +711,231 @@ const Icon = defineComponent({
   position: relative;
 }
 
-.nav-link {
+.nav-link,
+.dropdown-trigger {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.5rem;
   text-decoration: none;
-  color: #6b7280;
-  font-weight: 500;
-  font-size: 15px;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  position: relative;
-}
-
-:global(.dark) .nav-link {
   color: #d1d5db;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .nav-link:hover,
-.nav-link.active {
-  color: #3b82f6;
-  background: rgba(59, 130, 246, 0.1);
-}
-
-:global(.dark) .nav-link:hover,
-:global(.dark) .nav-link.active {
+.nav-link.active,
+.dropdown-trigger:hover,
+.dropdown-trigger.active {
   color: #60a5fa;
   background: rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
+}
+
+.nav-link:hover .nav-icon,
+.dropdown-trigger:hover .nav-icon {
+  opacity: 1;
 }
 
 .dropdown-icon {
   width: 16px;
   height: 16px;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 0.25rem;
+  flex-shrink: 0;
 }
 
-.dropdown:hover .dropdown-icon {
+.dropdown:hover .dropdown-icon,
+.dropdown-trigger.dropdown-active .dropdown-icon {
   transform: rotate(180deg);
 }
 
-@media (max-width: 768px) {
-  .nav-link.dropdown-active .dropdown-icon {
-    transform: rotate(180deg);
-  }
-  .container {
-    justify-content: space-between;
-  }
-}
-
+/* 优化的下拉菜单样式 */
 .dropdown-menu {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.25rem);
   left: 0;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0;
-  min-width: 300px;
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  padding: 0.75rem;
+  min-width: 320px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.2s ease;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
   list-style: none;
   margin: 0;
 }
 
-:global(.dark) .dropdown-menu {
-  background: #374151;
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -0.25rem;
+  left: 0;
+  right: 0;
+  height: 0.25rem;
+  background: transparent;
 }
 
 .dropdown-menu.show {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .dropdown-link {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  color: #6b7280;
+  display: block;
   text-decoration: none;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  border-radius: 8px;
-  margin: 0 0.5rem;
+  color: #d1d5db;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 0.25rem;
 }
 
-:global(.dark) .dropdown-link {
-  color: #d1d5db;
+.dropdown-link:last-child {
+  margin-bottom: 0;
 }
 
 .dropdown-link:hover {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
   transform: translateX(4px);
 }
 
-:global(.dark) .dropdown-link:hover {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
+.dropdown-link-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 .tool-icon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   opacity: 0.7;
-  transition: opacity 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .dropdown-link:hover .tool-icon {
   opacity: 1;
+  transform: scale(1.1);
 }
 
-.nav-toggle {
-  display: none;
+.tool-info {
+  display: flex;
   flex-direction: column;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 6px;
-  transition: background 0.2s ease;
+  gap: 0.25rem;
 }
 
-.nav-toggle:hover {
-  background: rgba(107, 114, 128, 0.1);
+.tool-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f9fafb;
 }
 
-.nav-toggle span {
-  width: 24px;
-  height: 2px;
-  background-color: #374151;
-  margin: 2px 0;
-  transition: all 0.3s ease;
-  border-radius: 1px;
+.tool-desc {
+  font-size: 0.85rem;
+  color: #9ca3af;
 }
 
-:global(.dark) .nav-toggle span {
-  background-color: #d1d5db;
-}
-
-.nav-toggle.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.nav-toggle.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.nav-toggle.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-/* 登录容器样式 */
-.login-container {
-  margin-left: auto;
+/* User Section Styles */
+.user-section {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  margin-left: auto;
 }
 
-/* 登录按钮样式 */
+.auth-container {
+  position: relative;
+}
+
 .login-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
   color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 0.95rem;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .login-button:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .login-icon {
-  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
-.login-text {
-  font-weight: 600;
-}
-
-/* 用户信息容器 */
-.user-info {
+/* User Menu */
+.user-menu {
   position: relative;
   cursor: pointer;
 }
 
-.user-avatar-container {
+.user-trigger {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   border-radius: 12px;
-  transition: all 0.2s ease;
-  background: rgba(59, 130, 246, 0.05);
-}
-
-.user-avatar-container:hover {
-  background: rgba(59, 130, 246, 0.1);
-}
-
-:global(.dark) .user-avatar-container {
-  background: rgba(59, 130, 246, 0.1);
-}
-
-:global(.dark) .user-avatar-container:hover {
   background: rgba(59, 130, 246, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-trigger:hover {
+  background: #374151;
+  transform: translateY(-1px);
 }
 
 .user-avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, #60a5fa, #8b5cf6);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
 }
 
-.avatar-icon {
-  font-size: 20px;
+.avatar-text {
+  line-height: 1;
 }
 
-.user-details {
+.user-info-text {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -883,226 +943,364 @@ const Icon = defineComponent({
 
 .username {
   font-weight: 600;
-  color: #1f2937;
-  font-size: 15px;
-}
-
-:global(.dark) .username {
   color: #f9fafb;
+  font-size: 0.95rem;
 }
 
-.user-dropdown-icon {
-  font-size: 14px;
-  color: #6b7280;
-  transition: transform 0.2s ease;
+.user-chevron {
+  width: 16px;
+  height: 16px;
+  color: #9ca3af;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
 }
 
-.user-dropdown-icon.rotated {
+.user-chevron.rotated {
   transform: rotate(180deg);
 }
 
-:global(.dark) .user-dropdown-icon {
-  color: #d1d5db;
-}
-
-/* 用户下拉菜单 */
-.user-dropdown-menu {
+/* 优化的用户下拉菜单 */
+.user-dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.25rem);
   right: 0;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-  padding: 0;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   min-width: 280px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
+  transform: translateY(-10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
   overflow: hidden;
-  margin-top: 0.5rem;
 }
 
-:global(.dark) .user-dropdown-menu {
-  background: #374151;
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+.user-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -0.25rem;
+  left: 0;
+  right: 0;
+  height: 0.25rem;
+  background: transparent;
 }
 
-.user-dropdown-menu.show {
+.user-dropdown.show {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .user-dropdown-header {
   padding: 1.5rem;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  background: #374151;
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-:global(.dark) .user-dropdown-header {
-  background: linear-gradient(135deg, #4b5563, #374151);
 }
 
 .user-avatar-large {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, #60a5fa, #8b5cf6);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
 }
 
-.avatar-icon-large {
-  font-size: 24px;
+.avatar-text-large {
+  line-height: 1;
 }
 
-.user-info-details {
+.user-details {
   flex: 1;
 }
 
 .username-large {
   font-weight: 700;
-  color: #1f2937;
-  font-size: 16px;
+  color: #f9fafb;
+  font-size: 1.1rem;
   margin-bottom: 0.25rem;
 }
 
-:global(.dark) .username-large {
-  color: #f9fafb;
-}
-
 .user-email {
-  font-size: 13px;
-  color: #6b7280;
-}
-
-:global(.dark) .user-email {
-  color: #d1d5db;
+  font-size: 0.85rem;
+  color: #9ca3af;
 }
 
 .user-dropdown-divider {
   height: 1px;
-  background: rgba(0, 0, 0, 0.1);
-  margin: 0;
-}
-
-:global(.dark) .user-dropdown-divider {
   background: rgba(255, 255, 255, 0.1);
 }
 
 .user-dropdown-list {
   list-style: none;
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0.75rem;
 }
 
 .user-dropdown-link {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  color: #6b7280;
+  padding: 0.75rem 1rem;
+  color: #d1d5db;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 0.95rem;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   background: none;
   width: 100%;
   text-align: left;
   cursor: pointer;
-}
-
-:global(.dark) .user-dropdown-link {
-  color: #d1d5db;
+  border-radius: 12px;
 }
 
 .user-dropdown-link:hover {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-}
-
-:global(.dark) .user-dropdown-link:hover {
   background: rgba(59, 130, 246, 0.15);
   color: #60a5fa;
+  transform: translateX(4px);
 }
 
 .logout-link {
-  color: #ef4444 !important;
-}
-
-.logout-link:hover {
-  background: rgba(239, 68, 68, 0.1) !important;
-  color: #dc2626 !important;
-}
-
-:global(.dark) .logout-link {
   color: #f87171 !important;
 }
 
-:global(.dark) .logout-link:hover {
+.logout-link:hover {
   background: rgba(239, 68, 68, 0.15) !important;
   color: #ef4444 !important;
 }
 
 .dropdown-item-icon {
-  font-size: 16px;
+  width: 18px;
+  height: 18px;
   opacity: 0.7;
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
 }
 
 .user-dropdown-link:hover .dropdown-item-icon {
   opacity: 1;
 }
 
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 4px;
+}
+
+.mobile-toggle:hover {
+  background: #60a5fa;
+}
+
+.hamburger-line {
+  width: 20px;
+  height: 2px;
+  background-color: #d1d5db;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
+}
+
+.mobile-toggle:hover .hamburger-line {
+  background-color: white;
+}
+
+.mobile-toggle.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-toggle.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-toggle.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Overlay */
+.mobile-overlay {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 移动端用户区域样式 - 作为菜单项 */
+.mobile-user-item {
+  display: none;
+}
+
+.mobile-login-wrapper {
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.mobile-login-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  justify-content: center;
+}
+
+.mobile-login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-user-menu {
+  width: 100%;
+}
+
+.mobile-user-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  color: #d1d5db;
+}
+
+.mobile-user-trigger:hover {
+  background: rgba(59, 130, 246, 0.25);
+  color: #60a5fa;
+}
+
+.mobile-user-trigger.active {
+  background: rgba(59, 130, 246, 0.25);
+  color: #60a5fa;
+}
+
+.mobile-user-dropdown {
+  margin: 0.5rem 0 0 1rem;
+  border-radius: 12px;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #374151;
+  transform: none;
+  opacity: 1;
+  visibility: visible;
+  display: none;
+  min-width: auto;
+}
+
+.mobile-user-dropdown.show {
+  display: block;
+}
+
+.mobile-user-dropdown .user-dropdown-header {
+  background: #1f2937;
+  padding: 1rem;
+}
+
+.mobile-user-dropdown .user-dropdown-list {
+  padding: 0.5rem;
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
-  .nav-toggle {
+  .container {
+    padding: 0 1rem;
+    height: 64px;
+    gap: 1rem;
+  }
+
+  .logo-text {
+    font-size: 1.75rem;
+  }
+
+  .mobile-toggle {
     display: flex;
+  }
+
+  .user-section {
+    display: none;
+  }
+
+  .mobile-user-item {
+    display: block;
+    width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
   }
 
   .main-nav {
     position: fixed;
-    top: 70px;
+    top: 64px;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    transform: translateY(-100%);
+    background: #1f2937;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    transform: translateX(-100%);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-direction: column;
     align-items: stretch;
-    gap: 0;
-    height: calc(100vh - 70px);
+    justify-content: flex-start;
+    height: calc(100vh - 64px);
     overflow-y: auto;
-  }
-
-  :global(.dark) .main-nav {
-    background: rgba(17, 24, 39, 0.98);
-    border-top-color: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
   }
 
   .main-nav.active {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
     visibility: visible;
   }
 
   .nav-list {
     flex-direction: column;
-    gap: 0;
+    gap: 0.5rem;
     width: 100%;
   }
 
@@ -1110,122 +1308,75 @@ const Icon = defineComponent({
     width: 100%;
   }
 
-  .nav-link {
+  .nav-link,
+  .dropdown-trigger {
     padding: 1rem;
     justify-content: space-between;
-    border-radius: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  :global(.dark) .nav-link {
-    border-bottom-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    width: 100%;
   }
 
   .dropdown-menu {
     position: static;
     box-shadow: none;
     border: none;
-    background: rgba(59, 130, 246, 0.05);
-    border-radius: 0;
-    margin-left: 1rem;
+    background: #374151;
+    border-radius: 12px;
+    margin: 0.5rem 0 0 1rem;
     opacity: 1;
     visibility: visible;
     transform: none;
     display: none;
-    padding: 0;
-  }
-
-  :global(.dark) .dropdown-menu {
-    background: rgba(59, 130, 246, 0.1);
+    min-width: auto;
   }
 
   .dropdown-menu.show {
     display: block;
   }
 
-  .dropdown-link {
-    margin: 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
-    padding-left: 2rem;
+  .dropdown-link-content {
+    padding: 0.75rem;
   }
 
-  :global(.dark) .dropdown-link {
-    border-bottom-color: rgba(255, 255, 255, 0.05);
+  .tool-name {
+    font-size: 0.9rem;
   }
 
-  .login-container {
-    margin-left: 0;
-    width: 100%;
-    justify-content: center;
-    padding: 1rem 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-top: 1rem;
-  }
-
-  :global(.dark) .login-container {
-    border-top-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .login-button {
-    width: auto;
-    padding: 0.8rem 1.5rem;
-  }
-
-  .user-info {
-    width: 100%;
-  }
-
-  .user-avatar-container {
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .user-dropdown-menu {
-    position: static;
-    margin-top: 0;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(59, 130, 246, 0.05);
-  }
-
-  :global(.dark) .user-dropdown-menu {
-    border-top-color: rgba(255, 255, 255, 0.1);
-    background: rgba(59, 130, 246, 0.1);
-  }
-
-  .user-dropdown-header {
-    background: transparent;
-    padding: 1rem;
+  .tool-desc {
+    font-size: 0.8rem;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 15px;
+    padding: 0 0.75rem;
   }
 
-  .logo .logo-text {
-    font-size: 28px;
+  .logo-text {
+    font-size: 1.5rem;
   }
 
-  .user-avatar {
-    width: 32px;
-    height: 32px;
+  .mobile-login-button {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9rem;
   }
 
-  .avatar-icon {
-    font-size: 18px;
+  .mobile-user-trigger {
+    padding: 0.875rem 1.25rem;
   }
+}
 
-  .username {
-    font-size: 14px;
-  }
+/* 图标统一样式 */
+.icon {
+  width: 1em;
+  height: 1em;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-  .login-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 14px;
-  }
+/* 平滑动画 */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 </style>

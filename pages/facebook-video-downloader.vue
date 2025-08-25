@@ -20,7 +20,7 @@ const faq_data = ref([
     answer:
       "No software or account is needed! Our Facebook video downloader is web-based and works on all browsers and devices, including PC, Mac, Android, and iOS.",
   },
-   {
+  {
     question: "Can I download videos from private Facebook profiles or groups?",
     answer:
       "No, our Facebook video downloader only supports downloading publicly available videos. Downloading from private profiles or groups violates Facebook’s terms of service.",
@@ -40,8 +40,53 @@ const faq_data = ref([
     answer:
       "Our tool only supports downloading public Facebook videos after they’ve been posted. Live or private videos cannot be downloaded due to platform restrictions.",
   },
-])
+]);
 
+const who_use_title = "Who Use Facebook Video Downloader?";
+const who_use_data = [
+  {
+    img: "https://cdn.kithubs.com/img/user-1.svg",
+    alt: "Content Collectors",
+    h3_title: "Content Collectors",
+    h3_class: "who-h3-red",
+    desc: "Users who like to save and archive videos for offline viewing or personal reference.",
+  },
+  {
+    img: "https://cdn.kithubs.com/img/user-2.svg",
+    alt: "Social Media Managers",
+    h3_title: "Social Media Managers",
+    h3_class: "who-h3",
+    desc: "Professionals who manage brand pages and need to repurpose Facebook content across platforms.",
+  },
+  {
+    img: "https://cdn.kithubs.com/img/user-3.svg",
+    alt: "Video Editors",
+    h3_title: "Video Editors",
+    h3_class: "who-h3-red",
+    desc: "Creators who download Facebook videos for editing, remixing, or adding to compilations.",
+  },
+  {
+    img: "https://cdn.kithubs.com/img/user-4.svg",
+    alt: "Researchers & Educators",
+    h3_title: "Researchers & Educators",
+    h3_class: "who-h3",
+    desc: "Individuals collecting video content for case studies, teaching materials, or presentations.",
+  },
+  {
+    img: "https://cdn.kithubs.com/img/user-5.svg",
+    alt: "Non-Tech Users",
+    h3_title: "Non-Tech Users",
+    h3_class: "who-h3-red", //红色logo
+    desc: "Everyday users who want an easy way to save videos from Facebook without technical steps.",
+  },
+  {
+    img: "https://cdn.kithubs.com/img/user-6.svg",
+    alt: "Mobile Data Savers",
+    h3_title: "Mobile Data Savers",
+    h3_class: "who-h3", //红色logo
+    desc: "Users with limited or expensive data plans who prefer downloading videos over streaming.",
+  },
+];
 // Computed properties
 const isValidUrl = computed(() => {
   if (!videoUrl.value) return false;
@@ -208,8 +253,6 @@ useHead({
 </script>
 <template>
   <div class="app-container">
-
-
     <div class="main-wrapper">
       <!-- Header Section -->
       <header class="hero-section">
@@ -568,8 +611,14 @@ useHead({
           </div>
         </section>
 
+        <WhoUses
+          :who_data="who_use_data"
+          :who_title="who_use_title"
+          color="#1E90FF"
+        />
+
         <!-- FAQ Section -->
-        <Faqs :faqs_data="faq_data" ></Faqs>
+        <Faqs :faqs_data="faq_data"></Faqs>
       </main>
     </div>
   </div>

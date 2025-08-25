@@ -15,8 +15,12 @@
                 work efficiency
               </p>
               <div class="hero-buttons">
-                <button class="btn btn-primary">Get Started</button>
-                <button class="btn btn-secondary">Learn More</button>
+                <NuxtLink to="/short-link-generator">
+                  <button class="btn btn-primary">Get Started</button>
+                </NuxtLink>
+                <NuxtLink to="/short-link-generator">
+                  <button class="btn btn-secondary">Learn More</button>
+                </NuxtLink>
               </div>
             </div>
             <div class="hero-image">
@@ -65,7 +69,7 @@
               </div>
               <h3 class="tool-title">{{ tool.title }}</h3>
               <p class="tool-description">{{ tool.description }}</p>
-              <a class="tool-button"  :href="tool.href">Try Now</a>
+              <a class="tool-button" :href="tool.href">Try Now</a>
             </div>
           </div>
         </div>
@@ -338,7 +342,7 @@ const popularTools = ref([
     description: "Download videos from popular platforms quickly and easily",
     icon: DownloadIcon,
     href: "/instagram-video-downloader",
-  }
+  },
 ]);
 
 const features = ref([
